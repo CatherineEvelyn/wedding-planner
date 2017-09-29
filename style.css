@@ -1,0 +1,48 @@
+body {
+    height: 100%;
+    margin: 0;
+    background-image: url("blur.jpg");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#bgImage {
+    height: 100%;
+    margin: 0;
+    background-image: url("blur.jpg");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.vendorList {
+    margin: 45px auto;
+}
+
+.vendorList ul {
+    overflow: hidden;
+    width: 97%;
+    list-style: none;
+}
+
+.vendorList ul li {
+    float: left;
+    width: 14%;
+    margin: 0 0.1%;
+}
+
+.vendorCard {
+    height: 414px;
+}
+
