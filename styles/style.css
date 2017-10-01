@@ -1,10 +1,10 @@
 body {
     height: 100%;
     margin: 0;
-    background-image: url("blur.jpg");
+    background-image: url("../images/blur.jpg");
 
     /* Full height */
-    height: 100%; 
+    height: 100%;
 
     /* Center and scale the image */
     background-position: center;
@@ -15,10 +15,10 @@ body {
 #bgImage {
     height: 100%;
     margin: 0;
-    background-image: url("blur.jpg");
+    background-image: url("../images/blur.jpg");
 
     /* Full height */
-    height: 100%; 
+    height: 100%;
 
     /* Center and scale the image */
     background-position: center;
@@ -45,4 +45,3 @@ body {
 .vendorCard {
     height: 414px;
 }
-
