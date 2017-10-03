@@ -11,7 +11,9 @@ app.secret_key = "246Pass"
 
 class User(db.Model): 
     id = db.Column(db.Integer, primary_key=True) #prim key to differentiate users
+    name = db.Column(db.String(100))
     username = db.Column(db.String(30))
+    phoneNumber = db.Column(db.Integer)
     password = db.Column(db.String(100))
 
     def __init__(self, username, password):
