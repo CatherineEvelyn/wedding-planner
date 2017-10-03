@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html>
 <body>
+{% with messages = get_flashed_messages(with_categories=True) %}
+        <ul>
+        {% for category, message in messages %}
+            <li class= "{{category}}">{{message}}</li>
+        {% endfor %}
+        </ul>
+ {% endwith %}
+
 <form  method="POST">
 <table>
         <tr>
             <td><label for="username">Email(username)</label></td>
             <td>
-                <input name="username" type="email">
+                <input name="username" type="email" value="{{request.form['username']}}">
             </td>
         </tr>
         <tr>
