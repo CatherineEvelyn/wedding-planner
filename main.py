@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, render_template, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from hashutils import *
-from validate_email import validate_email
+import re
 
 
 app = Flask(__name__)
@@ -58,9 +58,9 @@ def signup():
         username=request.form['username']
         password=request.form['password']
         verify=request.form['verify']
-        name=request.form['name']
-        phoneNumber=request.form['phoneNumber']
-        current_users = User.query.filter_by(username = username).first()
+        # name=request.form['name']
+        # phoneNumber=request.form['phoneNumber']
+        # current_users = User.query.filter_by(username = username).first()
 
         if password == '':
             flash('Please enter a password', 'error')
@@ -68,32 +68,44 @@ def signup():
         if username == '':
             flash('Please enter an email for your username', 'error')
             return redirect('/signup')
-
-        is_valid = validate_email(username)
-        if not is_valid:
+        # Check if is valid email
+        if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", username):
             flash("Username must be a valid email", 'error')
             return redirect('/signup')
-
-        if name == '':
-            flash('Please enter your name', 'error')
-            return redirect('/signup')
+        # Check if passwords match
         if password != verify:
             flash("Password and verify password don't match", 'error')
             return redirect('/signup')
-        if len(password) < 3:
-            flash("Password must be at least 3 characters long", 'error')
+        # Check if password has a minimum length of 8 characters
+        if len(password) < 8:
+            flash("Password must be at least 8 characters long", 'error')
             return redirect('/signup')
-        if len(str(phoneNumber)) < 10:
-            flash("Phone number must be 10 digits long (include area code)", 'error')
+        # Check if contains at least one digit
+        if not re.search(r'\d', password):
+            flash("Password must contain at least one number", 'error')
             return redirect('/signup')
-        if current_users != None:
-            if username in current_users:
-                flash("Duplicate user", 'error')
-                return redirect('/signup')
+        # Check if contains at least one uppercase letter
+        if not re.search(r'[A-Z]', password):
+            flash("Password must contain at least one uppercase letter.", 'error')
+            return redirect('/signup')
+        # Check if contains at least one lowercase letter
+        if not re.search(r'[a-z]', password):
+            flash("Password must contain at least one lowercase letter.", 'error')
+            return redirect('/signup')
+        # if name == '':
+        #     flash('Please enter your name', 'error')
+        #     return redirect('/signup')
+        # if len(str(phoneNumber)) < 10:
+        #     flash("Phone number must be 10 digits long (include area code)", 'error')
+        #     return redirect('/signup')
+        # if current_users != None:
+        #     if username in current_users:
+        #         flash("Duplicate user", 'error')
+        #         return redirect('/signup')
         else:
             new_user=User(username, password)
-            db.session.add(new_user)
-            db.session.commit()
+            # db.session.add(new_user)
+            # db.session.commit()
             session['username'] = username
         return render_template('testSignup.html')
 
