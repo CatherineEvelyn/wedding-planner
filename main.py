@@ -1,6 +1,6 @@
 from flask import Flask, request, redirect, render_template, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
-#from hashutils import *
+from hashutils import *
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
