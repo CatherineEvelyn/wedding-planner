@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
   </head>
   <body>
 
@@ -22,7 +22,7 @@
 
     <section id="bgImage" class="jumbotron text-center">
       <div class="container">
-        <h1 class="jumbotron-heading">Some text for title</h1>
+        <h1 class="jumbotron-heading">This is my test</h1>
         <p class="lead text-muted">Some description about the website and it's purpose</p>
         <p>
           <a href="/login" class="btn btn-primary">Log In</a>
@@ -66,7 +66,7 @@
     </footer>
 
     <!-- Optional JavaScript -->
-    <script src="main.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
