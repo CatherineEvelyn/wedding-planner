@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html>
-<body>
-{% with messages = get_flashed_messages(with_categories=True) %}
-        <ul>
-        {% for category, message in messages %}
-            <li class= "{{category}}">{{message}}</li>
-        {% endfor %}
-        </ul>
- {% endwith %}
 
-<form  method="POST">
-<table>
-        <tr>
-            <td><label for="username">Email(username)</label></td>
-            <td>
-                <input name="username" type="email" value="{{request.form['username']}}">
-            </td>
-        </tr>
-        <tr>
-            <td><label for="password">Password</label></td>
-            <td>
-                <input name="password" type="password">
-            </td>
-        </tr>
-        <tr>
-            <td><label for="verify">Verify Password</label></td>
-            <td>
-                <input name="verify" type="password">
-            </td>
-        </tr>
+<body>
+  {% with messages = get_flashed_messages(with_categories=True) %}
+  <ul>
+    {% for category, message in messages %}
+    <li class="{{category}}">{{message}}</li>
+    {% endfor %}
+  </ul>
+  {% endwith %}
+
+  <form method="POST" autocomplete="true">
+    <table>
+      <tr>
+        <td><label for="username">Email(username)</label></td>
+        <td>
+          <input name="username" type="email" value="{{request.form['username']}}" required>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="password">Password</label></td>
+        <td>
+          <input name="password" type="password" required>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="verify">Verify Password</label></td>
+        <td>
+          <input name="verify" type="password" required>
+        </td>
+      </tr>
     </table>
     <input type="submit" value="Register">
-</form>
+  </form>
 </body>
+
 </html>
