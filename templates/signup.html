@@ -1,38 +1,51 @@
-<!DOCTYPE html>
-<html>
-
-<body>
-  {% with messages = get_flashed_messages(with_categories=True) %}
-  <ul>
-    {% for category, message in messages %}
-    <li class="{{category}}">{{message}}</li>
-    {% endfor %}
-  </ul>
-  {% endwith %}
-
-  <form method="POST" autocomplete="true">
-    <table>
-      <tr>
-        <td><label for="username">Email(username)</label></td>
-        <td>
-          <input name="username" type="email" value="{{request.form['username']}}" required>
-        </td>
-      </tr>
-      <tr>
-        <td><label for="password">Password</label></td>
-        <td>
-          <input name="password" type="password" required>
-        </td>
-      </tr>
-      <tr>
-        <td><label for="verify">Verify Password</label></td>
-        <td>
-          <input name="verify" type="password" required>
-        </td>
-      </tr>
-    </table>
-    <input type="submit" value="Register">
-  </form>
-</body>
-
-</html>
+{% extends 'layout.html' %}
+{% block head %}
+    <link type="text/css" href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <!-- TODO: Flexify this page -->
+    <div class = "wrapper">
+        <div class = 'signup-container'>
+            <div class = "form-container-signup">
+                <h1>Sign up</h1>
+                <hr>
+                <form method = 'POST'>
+                    <input class = 'signup-field {% if usererrors %}error-border{% endif %}'
+                    type = 'text' placeholder = 'Username' name = 'username' value='{{ username }}'>
+                    <div class='error-msgs-wrapper'>
+                        {% if usererrors %}
+                            {% for error in usererrors %}
+                                <span class='error'>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <input class = 'signup-field {% if passerrors %}error-border{% endif %}'
+                    type = 'password' placeholder = 'Password' name = 'password'>
+                    <div class='error-msgs-wrapper'>
+                        {% if passerrors %}
+                            {% for error in passerrors %}
+                                <span class='error'>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <input class = 'signup-field {% if verifyerrors %}error-border{% endif %}'
+                    type = 'password' placeholder = 'Verify Password' name = 'verify'>
+                    <div class='error-msgs-wrapper'>
+                        {% if verifyerrors %}
+                            {% for error in verifyerrors %}
+                                <span class='error'>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <input class = "submit-button" type = 'submit' value = "Sign up"/>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
