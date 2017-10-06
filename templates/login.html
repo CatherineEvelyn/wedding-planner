@@ -1,31 +1,38 @@
-<!DOCTYPE html>
-<html>
-    <body>
-      {% with messages = get_flashed_messages(with_categories=True) %}
-        <ul>
-        {% for category, message in messages %}
-            <li class= "{{category}}">{{message}}</li>
-        {% endfor %}
-        </ul>
- {% endwith %}
-
-<div class='container'>
- 
-  <h2>LOGIN</h2>
- 
-<form  method="POST">
- 
-    <label for='username'>Email(username):</label>
-    <input type="text" name="username" id='username' class='form-control'/>
- 
-    <label for='password'> Password:</label>
-    <input type="password" name="password" id='password' class='form-control'/>
- 
- 
-  <br>
-    <input type="submit"  value="Login"/>
- 
-</form>
-</div>
-</body>
-</html>
+{% extends 'layout.html' %}
+{% block head %}
+    <link type="text/css" href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <!-- TODO: Flexify this page -->
+    <div class="wrapper">
+        <div class='signup-container'>
+            <div class="form-container-signup">
+                <h1>Login</h1>
+                <hr>
+                <form method='POST'>
+                    <input class='signup-field {% if usererror %}error-border{% endif %}'
+                    type='text' placeholder='Username' name='username' value='{{ username }}'>
+                    <div class='error-msgs-wrapper'>
+                        {% if usererror %}
+                            <span class='error'>
+                                {{ usererror }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    <input class='signup-field {% if passerror %}error-border{% endif %}' 
+                    type='password' placeholder='Password' name='password'>
+                    <div class='error-msgs-wrapper'>
+                        {% if passerror %}
+                            <span class='error'>
+                                {{ passerror }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    <input class="submit-button" type='submit' value="Login">
+                </form>
+            </div>
+            <p id="create-msg">No account yet? <a id="create-account"
+                href="/signup">Create one!</a></p>
+        </div>
+    </div>
+{% endblock %}
