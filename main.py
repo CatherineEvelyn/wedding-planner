@@ -114,16 +114,13 @@ def signup():
         # TODO This is basic, needs to expand to what the coulmns actually are
         if register_type == 'organizer':
             new_user = User(username, password)
-        else:
-            new_user = Vendor(username, password)
-
+            
         print(register_type)
         # db.session.add(new_user)
         # db.session.commit()
         session['username'] = username
         # Create a login function to auto login the user based on register_type (vendor/organizer)
         return render_template('verify_email.html')
-
 
     return render_template('signup.html')
 
