@@ -131,3 +131,56 @@ p{
 .footer{
     background-color: black;
 }
+
+/* --- FLASH MESSAGE CSS --- */
+
+.fm-container {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    align-items: center;
+    top: 30px;
+    width: 100%;
+}
+
+.flash-container-error, .flash-container-confirmation {
+    font-family: "Raleway", sans-serif;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0.5rem 0.5rem 0.5rem 2rem;
+    margin: 6px 0;
+    width: 66.67%;
+    list-style: none;
+    overflow: hidden;
+    font-size: 0.9em;
+    letter-spacing: 0.08em;
+    color: white;
+    font-weight: 700;
+    border-radius: 0 1000px 1000px 0;
+    transition: border 275ms cubic-bezier(.5,.08,0,1);
+}
+
+.flash-container-error {
+    background: #e26158;
+    border-left: 0px solid #a92b21;
+}
+
+.flash-container-error:hover {
+    border-left: 20px solid #a92b21;
+}
+
+.flash-container-confirmation {
+    background: #8bc34a;
+    border-left: 0px solid #4caf50;
+}
+
+.flash-container-confirmation:hover {
+    border-left: 20px solid #4caf50;
+}
+
+.close-flash-btn {
+    cursor: pointer;
+    float: right;
+}
