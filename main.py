@@ -104,11 +104,10 @@ def signup():
         #         return redirect('/signup')
         else:
             new_user=User(username, password)
-            # db.session.add(new_user)
-            # db.session.commit()
+            db.session.add(new_user)
+            db.session.commit()
             session['username'] = username
         return render_template('testSignup.html')
-
 
     return render_template('signup.html')
 
