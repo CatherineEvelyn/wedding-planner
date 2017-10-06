@@ -6,8 +6,7 @@ import re
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://wedding:password!@localhost:8889/wedding' #TODO set for Wedding Planner
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://wedding:password@/wedding?unix_socket=/cloudsql/noted-lead-181802:us-west1:wedding-planner'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://wedding:password@35.197.5.142/wedding' #TODO set for Wedding Planner
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "246Pass"

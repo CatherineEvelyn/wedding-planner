@@ -14,3 +14,4 @@ NOTE: You must be using python version 3 and above to use this repository
 2. run `python main.py` in this projects root directory
 3. navigate browser to localhost:5000
 4. enjoy!
+5. Really Enjoy!
