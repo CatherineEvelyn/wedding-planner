@@ -10,6 +10,7 @@ div.wrapper {
     display: flex;
     height: -webkit-calc(100vh - 57px);
     height: calc(100vh - 57px);
+    flex-flow: column;
     margin: auto;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
@@ -19,6 +20,9 @@ div.wrapper {
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
+}
+div.wrapper h1{
+  margin-bottom: 1em;
 }
 
 .signup-container {
@@ -33,6 +37,34 @@ div.wrapper {
     background-color: white;
     -webkit-box-shadow: 0 0 4px #9c9c9c;
             box-shadow: 0 0 4px #9c9c9c;
+}
+
+.signup-tabs{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+.vendor-signup{
+  display: none;
+}
+.toggle-form{
+  font-size: 2rem;
+  margin: 0 1rem;
+  color: #9e9e9e;
+  cursor: pointer;
+  text-decoration: none;
+}
+.toggle-form:hover{
+  color: #B3E5FC;
+  text-decoration: none;
+}
+.active-form{
+  color: #33B8F7;
+  text-decoration: none;
+}
+.vendor-only{
+  display: none;
 }
 
 .signup-field {
