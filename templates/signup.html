@@ -2,12 +2,13 @@
 {% block head %}
     <link type="text/css" href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
 {% endblock %}
-{% block content %}
+{% block body %}
     <!-- TODO: Flexify this page -->
-    <div class = "wrapper">
-        <div class = 'signup-container'>
-            <div class = "form-container-signup">
-                <h1>Sign up</h1>
+    <div class="wrapper">
+        <div class='signup-container'>
+            <!-- Sign up for regular users -->
+            <div class = "form-container-signup organizer-signup">
+                <h1>Organizer</h1>
                 <hr>
                 <form method = 'POST'>
                     <input class = 'signup-field {% if usererrors %}error-border{% endif %}'
@@ -43,6 +44,50 @@
                             {% endfor %}
                         {% endif %}
                     </div>
+                    <input class = "submit-button" type = 'submit' value = "Sign up"/>
+                </form>
+            </div>
+            <!-- Signup for vendors only -->
+            <div class = "form-container-signup vendor-signup">
+                <h1>Vendor</h1>
+                <hr>
+                <form name="vendor-form" method='POST'>
+                    <input class = 'signup-field {% if usererrors %}error-border{% endif %}'
+                    type = 'text' placeholder = 'Username' name = 'username' value='{{ username }}'>
+                    <div class='error-msgs-wrapper'>
+                        {% if usererrors %}
+                            {% for error in usererrors %}
+                                <span class='error'>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <input class = 'signup-field {% if passerrors %}error-border{% endif %}'
+                    type = 'password' placeholder = 'Password' name = 'password'>
+                    <div class='error-msgs-wrapper'>
+                        {% if passerrors %}
+                            {% for error in passerrors %}
+                                <span class='error'>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <input class = 'signup-field {% if verifyerrors %}error-border{% endif %}'
+                    type = 'password' placeholder = 'Verify Password' name = 'verify'>
+                    <div class='error-msgs-wrapper'>
+                        {% if verifyerrors %}
+                            {% for error in verifyerrors %}
+                                <span class='error'>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <label> I wish to sign up as a Vendor
+                      <input type="checkbox" value="false" required>
+                    </label>
                     <input class = "submit-button" type = 'submit' value = "Sign up"/>
                 </form>
             </div>
