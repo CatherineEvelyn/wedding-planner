@@ -1,0 +1,35 @@
+<input class = 'signup-field {% if usererrors %}error-border{% endif %}'
+type = 'text' placeholder = 'Username' name = 'username' value='{{ username }}'>
+<div class='error-msgs-wrapper'>
+  {% with messages = get_flashed_messages(category_filter=['user_error']) %}
+    {% if messages %}
+      {% for message in messages %}
+        <span class='error'>{{ message }}</span>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+<input class = 'signup-field {% if passerrors %}error-border{% endif %}'
+type = 'password' placeholder = 'Password' name = 'password'>
+<div class='error-msgs-wrapper'>
+  {% with messages = get_flashed_messages(category_filter=['pass_error']) %}
+    {% if messages %}
+      {% for message in messages %}
+        <span class='error'>{{ message }}</span>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+<input class='signup-field {% if verifyerrors %}error-border{% endif %}'
+        type='password'
+        placeholder='Verify Password'
+        name='verify'>
+<div class='error-msgs-wrapper'>
+  {% with messages = get_flashed_messages(category_filter=['verify_error']) %}
+    {% if messages %}
+      {% for message in messages %}
+        <span class='error'>{{ message }}</span>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
