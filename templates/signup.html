@@ -3,49 +3,36 @@
     <link type="text/css" href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-    <!-- TODO: Flexify this page -->
-    <div class = "wrapper">
-        <div class = 'signup-container'>
-            <div class = "form-container-signup">
-                <h1>Sign up</h1>
-                <hr>
-                <form method = 'POST'>
-                    <input class = 'signup-field {% if usererrors %}error-border{% endif %}'
-                    type = 'text' placeholder = 'Username' name = 'username' value='{{ username }}'>
-                    <div class='error-msgs-wrapper'>
-                        {% if usererrors %}
-                            {% for error in usererrors %}
-                                <span class='error'>
-                                    {{ error }}
-                                </span>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    <input class = 'signup-field {% if passerrors %}error-border{% endif %}'
-                    type = 'password' placeholder = 'Password' name = 'password'>
-                    <div class='error-msgs-wrapper'>
-                        {% if passerrors %}
-                            {% for error in passerrors %}
-                                <span class='error'>
-                                    {{ error }}
-                                </span>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    <input class = 'signup-field {% if verifyerrors %}error-border{% endif %}'
-                    type = 'password' placeholder = 'Verify Password' name = 'verify'>
-                    <div class='error-msgs-wrapper'>
-                        {% if verifyerrors %}
-                            {% for error in verifyerrors %}
-                                <span class='error'>
-                                    {{ error }}
-                                </span>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    <input class = "submit-button" type = 'submit' value = "Sign up"/>
-                </form>
-            </div>
-        </div>
+<!-- TODO: Flexify this page -->
+<div class="wrapper">
+  <h1> Signup </h1>
+  <div class='signup-container'>
+    <div class="signup-tabs">
+      <a href="#" class="toggle-form active-form"> Organizer </a>
+      <span> | </span>
+      <a href="#" class="toggle-form show-vendor"> Vendor </a>
     </div>
+    <hr>
+    <!-- Sign up for regular users -->
+    <div class="form-container-signup organizer-signup">
+        <form method='POST'>
+          <!-- Grabs the inputs from components/register_inputs.html -->
+          {% include 'components/register_inputs.html' %}
+          <input name="organizer_signup" class="submit-button" type='submit' value="Sign up"/>
+        </form>
+    </div>
+
+    <!-- Sign up for vendor users -->
+    <div class="form-container-signup vendor-signup">
+      <form method='POST'>
+        <!-- Grabs the inputs from components/register_inputs.html -->
+        {% include 'components/register_inputs.html' %}
+        <label> I wish to sign up as a Vendor
+          <input name="is_vendor" type="checkbox" required>
+        </label>
+        <input name="vendor_signup" class="submit-button" type='submit' value="Sign up"/>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}

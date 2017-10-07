@@ -54,43 +54,21 @@ def index():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST': #is user signing up
-        username=request.form['username']
-        password=request.form['password']
-        verify=request.form['verify']
+        form = request.form
+        username = form['username']
+        password = form['password']
+        verify = form['verify']
+        register_type = 'organizer'
+
+        if 'vendor_signup' in form:
+            print("Vendor Signup")
+            register_type = 'vendor'
+
+        # XXX Not sure if we need this
         # name=request.form['name']
         # phoneNumber=request.form['phoneNumber']
         # current_users = User.query.filter_by(username = username).first()
 
-        if password == '':
-            flash('Please enter a password', 'error')
-            return redirect('/signup')
-        if username == '':
-            flash('Please enter an email for your username', 'error')
-            return redirect('/signup')
-        # Check if is valid email
-        if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", username):
-            flash("Username must be a valid email", 'error')
-            return redirect('/signup')
-        # Check if passwords match
-        if password != verify:
-            flash("Password and verify password don't match", 'error')
-            return redirect('/signup')
-        # Check if password has a minimum length of 8 characters
-        if len(password) < 8:
-            flash("Password must be at least 8 characters long", 'error')
-            return redirect('/signup')
-        # Check if contains at least one digit
-        if not re.search(r'\d', password):
-            flash("Password must contain at least one number", 'error')
-            return redirect('/signup')
-        # Check if contains at least one uppercase letter
-        if not re.search(r'[A-Z]', password):
-            flash("Password must contain at least one uppercase letter.", 'error')
-            return redirect('/signup')
-        # Check if contains at least one lowercase letter
-        if not re.search(r'[a-z]', password):
-            flash("Password must contain at least one lowercase letter.", 'error')
-            return redirect('/signup')
         # if name == '':
         #     flash('Please enter your name', 'error')
         #     return redirect('/signup')
@@ -101,12 +79,48 @@ def signup():
         #     if username in current_users:
         #         flash("Duplicate user", 'error')
         #         return redirect('/signup')
-        else:
-            new_user=User(username, password)
-            db.session.add(new_user)
-            db.session.commit()
-            session['username'] = username
-        return render_template('testSignup.html')
+
+        if password == '':
+            flash('Please enter a password', 'pass_error')
+            return redirect('/signup')
+        if username == '':
+            flash('Please enter an email for your username', 'user_error')
+            return redirect('/signup')
+        # Check if is valid email
+        if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", username):
+            flash("Username must be a valid email", 'user_error')
+            return redirect('/signup')
+        # Check if passwords match
+        if password != verify:
+            flash("Password and verify password don't match", 'verify_error')
+            return redirect('/signup')
+        # Check if password has a minimum length of 8 characters
+        if len(password) < 8:
+            flash("Password must be at least 8 characters long", 'pass_error')
+            return redirect('/signup')
+        # Check if contains at least one digit
+        if not re.search(r'\d', password):
+            flash("Password must contain at least one number", 'pass_error')
+            return redirect('/signup')
+        # Check if contains at least one uppercase letter
+        if not re.search(r'[A-Z]', password):
+            flash("Password must contain at least one uppercase letter.", 'pass_error')
+            return redirect('/signup')
+        # Check if contains at least one lowercase letter
+        if not re.search(r'[a-z]', password):
+            flash("Password must contain at least one lowercase letter.", 'pass_error')
+            return redirect('/signup')
+
+        # TODO This is basic, needs to expand to what the coulmns actually are
+        if register_type == 'organizer':
+            new_user = User(username, password)
+            
+        print(register_type)
+        # db.session.add(new_user)
+        # db.session.commit()
+        session['username'] = username
+        # Create a login function to auto login the user based on register_type (vendor/organizer)
+        return render_template('verify_email.html')
 
     return render_template('signup.html')
 
