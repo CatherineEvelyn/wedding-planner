@@ -11,12 +11,50 @@ app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "246Pass"
 
+user_vendor = db.Table('user_vendor',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('vendor_id', db.Integer, db.ForeignKey('vendors.id'))
+    )
+
+class Vendor(db.Model):
+    __tablename__ = 'vendors'
+    id = db.Column(db.Integer, primary_key=True) #prim key to differentiate vendors
+    businessName = db.Column(db.String(100))
+    contactName = db.Column(db.String(50))
+    email = db.Column(db.String(50))
+    streetAddress = db.Column(db.String(100))
+    city = db.Column(db.String(50))
+    zipcode = db.Column(db.Integer)
+    rating = db.Column(db.Integer)
+    vendorType = db.Column(db.Integer)
+    priceMin = db.Column(db.Integer)
+    priceMax = db.Column(db.Integer)
+    password = db.Column(db.String(100))
+
+    #children = db.relationship("User", secondary=user_vendor)
+
+    def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, priceMin, priceMax, password):
+        self.businessName = businessName
+        self.contactName = contactName
+        self.email = email
+        self.streetAddress = streetAddress
+        self.city = city
+        self.zipcode = zipcode
+        self.rating = rating
+        self.vendorType = vendorType
+        self.priceMin = priceMin
+        self.priceMax = priceMax
+        self.password = password
+
+
 class User(db.Model):
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True) #prim key to differentiate users
     name = db.Column(db.String(100))
     username = db.Column(db.String(30))
     phoneNumber = db.Column(db.Integer)
     password = db.Column(db.String(100))
+    userVendors = db.relationship('Vendor', secondary=user_vendor, backref='user')
 
     def __init__(self, username, password):
         self.username = username
