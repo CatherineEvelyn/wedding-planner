@@ -31,10 +31,15 @@ div.wrapper {
 .form-container-signup {
     font-family: "Raleway", sans-serif;
     border-left: 4px solid #03a9f4;
+    border-radius: 4px;
     padding: 30px;
     background-color: white;
-    -webkit-box-shadow: 0 0 4px #9c9c9c;
-            box-shadow: 0 0 4px #9c9c9c;
+    -webkit-box-shadow: 0 1px 8px 0 rgba(0,0,0,.2), 
+                        0 3px 4px 0 rgba(0,0,0,.14), 
+                        0 3px 3px -2px rgba(0,0,0,.12);
+            box-shadow: 0 1px 8px 0 rgba(0,0,0,.2), 
+                        0 3px 4px 0 rgba(0,0,0,.14), 
+                        0 3px 3px -2px rgba(0,0,0,.12)c;
 }
 
 .signup-field {
