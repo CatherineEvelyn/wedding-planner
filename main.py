@@ -24,22 +24,32 @@ class User(db.Model):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    usererrors, passerrors, verifyerrors = [], [], []
+    errors = {'usererrors': usererrors,
+              'passerrors': passerrors} # initializing errors object
+
     if request.method == 'POST':
         username = request.form['username'] #get username/pass
         password = request.form['password']
         user=User.query.filter_by(username=username).first() #check if username in use yet
-        if username and password:
-        #if username in db and pass correct...
+        if not username:
+            usererrors.append("This field cannot be left blank.")
+        if not password:
+            passerrors.append("This field cannot be left blank.")
+        elif user and password != user.password:
+            passerrors.append("That password is incorrect.")
+
+        if username and password and not user:
+            usererrors.append("That user doesn't exist.")
+
+        if user:
+            #if username in db and pass correct...
             session['username'] = username #starts session
             return render_template('testSignup.html') #TODO where to redirect to?
-        elif not username:
-            flash("Username not yet registered", 'error')
-            return redirect('/login')
-        else:
-            flash('Incorrect password', 'error')
-            return redirect('/login')
 
-    return render_template('login.html')
+        return render_template('login.html', errors=errors, username=username)
+
+    return render_template('login.html', errors=errors)
 
 """@app.route('/logout')
 def logout():
@@ -53,11 +63,16 @@ def index():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    usererrors, passerrors, verifyerrors = [], [], []
+    errors = {'usererrors': usererrors,
+              'passerrors': passerrors,
+              'verifyerrors': verifyerrors} # initializing errors object
+
     if request.method == 'POST': #is user signing up
         form = request.form
-        username = form['username']
-        password = form['password']
-        verify = form['verify']
+        username=form['username']
+        password=form['password']
+        verify=form['verify']
         register_type = 'organizer'
 
         if 'vendor_signup' in form:
@@ -69,60 +84,47 @@ def signup():
         # phoneNumber=request.form['phoneNumber']
         # current_users = User.query.filter_by(username = username).first()
 
-        # if name == '':
-        #     flash('Please enter your name', 'error')
-        #     return redirect('/signup')
-        # if len(str(phoneNumber)) < 10:
-        #     flash("Phone number must be 10 digits long (include area code)", 'error')
-        #     return redirect('/signup')
-        # if current_users != None:
-        #     if username in current_users:
-        #         flash("Duplicate user", 'error')
-        #         return redirect('/signup')
-
-        if password == '':
-            flash('Please enter a password', 'pass_error')
-            return redirect('/signup')
-        if username == '':
-            flash('Please enter an email for your username', 'user_error')
-            return redirect('/signup')
+        if not username:
+            usererrors.append('This field cannot be left blank.')
         # Check if is valid email
-        if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", username):
-            flash("Username must be a valid email", 'user_error')
-            return redirect('/signup')
-        # Check if passwords match
+        elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", username):
+            usererrors.append('Username must be a valid email.')
+
+        if not password:
+            passerrors.append('This field cannot be left blank.')
+        else:
+            # Check if password has a minimum length of 8 characters
+            if len(password) < 8:
+                passerrors.append("Password must be at least 8 characters long.")
+            # Check if contains at least one digit
+            if not re.search(r'\d', password):
+                passerrors.append("Password must contain at least one number.")
+            # Check if contains at least one uppercase letter
+            if not re.search(r'[A-Z]', password):
+                passerrors.append("Password must contain at least one uppercase letter.")
+            # Check if contains at least one lowercase letter
+            if not re.search(r'[a-z]', password):
+                passerrors.append("Password must contain at least one lowercase letter.")
+
         if password != verify:
-            flash("Password and verify password don't match", 'verify_error')
-            return redirect('/signup')
-        # Check if password has a minimum length of 8 characters
-        if len(password) < 8:
-            flash("Password must be at least 8 characters long", 'pass_error')
-            return redirect('/signup')
-        # Check if contains at least one digit
-        if not re.search(r'\d', password):
-            flash("Password must contain at least one number", 'pass_error')
-            return redirect('/signup')
-        # Check if contains at least one uppercase letter
-        if not re.search(r'[A-Z]', password):
-            flash("Password must contain at least one uppercase letter.", 'pass_error')
-            return redirect('/signup')
-        # Check if contains at least one lowercase letter
-        if not re.search(r'[a-z]', password):
-            flash("Password must contain at least one lowercase letter.", 'pass_error')
-            return redirect('/signup')
+            verifyerrors.append("Your passwords don't match.")
 
         # TODO This is basic, needs to expand to what the coulmns actually are
         if register_type == 'organizer':
             new_user = User(username, password)
-            
-        print(register_type)
-        # db.session.add(new_user)
-        # db.session.commit()
-        session['username'] = username
-        # Create a login function to auto login the user based on register_type (vendor/organizer)
-        return render_template('verify_email.html')
 
-    return render_template('signup.html')
+        print(register_type)
+        if not usererrors and not passerrors and not verifyerrors:
+            new_user=User(username, password)
+            db.session.add(new_user)
+            db.session.commit()
+            session['username'] = username
+            return render_template('verify_email.html')
+
+        return render_template('signup.html', errors=errors, username=username)
+            
+
+    return render_template('signup.html', errors=errors)
 
 if __name__ == '__main__': #run app
     app.run()

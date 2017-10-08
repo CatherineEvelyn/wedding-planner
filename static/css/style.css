@@ -147,6 +147,10 @@ p {
     width: 100%;
 }
 
+.flash {
+    display: inline-block;
+}
+
 .flash-container-error, .flash-container-confirmation {
     font-family: "Raleway", sans-serif;
     position: relative;

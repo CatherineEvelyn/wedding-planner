@@ -1,35 +1,33 @@
-<input class = 'signup-field {% if usererrors %}error-border{% endif %}'
+<input class = 'signup-field {% if errors["usererrors"] %}error-border{% endif %}'
 type = 'text' placeholder = 'Username' name = 'username' value='{{ username }}'>
 <div class='error-msgs-wrapper'>
-  {% with messages = get_flashed_messages(category_filter=['user_error']) %}
-    {% if messages %}
-      {% for message in messages %}
-        <span class='error'>{{ message }}</span>
-      {% endfor %}
+    {% if errors["usererrors"] %}
+        {% for error in errors["usererrors"] %}
+            <p class='error'>
+                {{ error }}
+            </p>
+        {% endfor %}
     {% endif %}
-  {% endwith %}
 </div>
-<input class = 'signup-field {% if passerrors %}error-border{% endif %}'
+<input class = 'signup-field {% if errors["passerrors"] %}error-border{% endif %}'
 type = 'password' placeholder = 'Password' name = 'password'>
 <div class='error-msgs-wrapper'>
-  {% with messages = get_flashed_messages(category_filter=['pass_error']) %}
-    {% if messages %}
-      {% for message in messages %}
-        <span class='error'>{{ message }}</span>
-      {% endfor %}
+    {% if errors["passerrors"] %}
+        {% for error in errors["passerrors"] %}
+            <p class='error'>
+                {{ error }}
+            </p>
+        {% endfor %}
     {% endif %}
-  {% endwith %}
 </div>
-<input class='signup-field {% if verifyerrors %}error-border{% endif %}'
-        type='password'
-        placeholder='Verify Password'
-        name='verify'>
+<input class = 'signup-field {% if errors["verifyerrors"] %}error-border{% endif %}'
+type = 'password' placeholder = 'Verify Password' name = 'verify'>
 <div class='error-msgs-wrapper'>
-  {% with messages = get_flashed_messages(category_filter=['verify_error']) %}
-    {% if messages %}
-      {% for message in messages %}
-        <span class='error'>{{ message }}</span>
-      {% endfor %}
+    {% if errors["verifyerrors"] %}
+        {% for error in errors["verifyerrors"] %}
+            <p class='error'>
+                {{ error }}
+            </p>
+        {% endfor %}
     {% endif %}
-  {% endwith %}
 </div>
