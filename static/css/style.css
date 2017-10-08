@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
 body {
     height: 100%;
     margin: 0;
@@ -10,7 +11,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Lato', 'Playfair Display', serif;
 }
 
 p {
@@ -39,7 +40,7 @@ p {
 #venue{
     text-align: center;
     background-image: url("../images/venue.jpg");
-    background-position: center; 
+    background-position: center;
     opacity: 0.7;
 }
 
@@ -49,7 +50,7 @@ p {
 
 #photographer{
     background-image: url("../images/photographer.jpg");
-    background-position: center; 
+    background-position: center;
     opacity: 0.7;
 }
 
@@ -60,7 +61,7 @@ p {
 #video{
     background-image: url("../images/video.jpg");
     background-position: center;
-    opacity: 0.7;     
+    opacity: 0.7;
 }
 #video:hover{
     opacity: 1.0;
@@ -68,7 +69,7 @@ p {
 
 #caterer{
     background-image: url("../images/caterer.jpg");
-    background-position: center; 
+    background-position: center;
     opacity: 0.7;
 }
 
@@ -78,7 +79,7 @@ p {
 
 #music{
     background-image: url("../images/guitar.jpg");
-    background-position: center; 
+    background-position: center;
     opacity: 0.7;
 }
 
@@ -88,7 +89,7 @@ p {
 
 #hair{
     background-image: url("../images/hairstyle.jpg");
-    background-position: center; 
+    background-position: center;
     opacity: 0.6;
 }
 
@@ -98,7 +99,7 @@ p {
 
 #tailor{
     background-image: url("../images/tailor.jpg");
-    background-position: center; 
+    background-position: center;
     opacity: 0.6;
 }
 

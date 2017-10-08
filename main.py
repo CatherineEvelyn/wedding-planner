@@ -73,6 +73,13 @@ def signup():
         username=form['username']
         password=form['password']
         verify=form['verify']
+        register_type = 'organizer'
+
+        if 'vendor_signup' in form:
+            print("Vendor Signup")
+            register_type = 'vendor'
+
+        # XXX Not sure if we need this
         # name=request.form['name']
         # phoneNumber=request.form['phoneNumber']
         # current_users = User.query.filter_by(username = username).first()
@@ -101,24 +108,21 @@ def signup():
 
         if password != verify:
             verifyerrors.append("Your passwords don't match.")
-        # if name == '':
-        #     flash('Please enter your name', 'error')
-        #     return redirect('/signup')
-        # if len(str(phoneNumber)) < 10:
-        #     flash("Phone number must be 10 digits long (include area code)", 'error')
-        #     return redirect('/signup')
-        # if current_users != None:
-        #     if username in current_users:
-        #         flash("Duplicate user", 'error')
-        #         return redirect('/signup')
+
+        # TODO This is basic, needs to expand to what the coulmns actually are
+        if register_type == 'organizer':
+            new_user = User(username, password)
+
+        print(register_type)
         if not usererrors and not passerrors and not verifyerrors:
             new_user=User(username, password)
             db.session.add(new_user)
             db.session.commit()
             session['username'] = username
-            return render_template('testSignup.html')
+            return render_template('verify_email.html')
 
         return render_template('signup.html', errors=errors, username=username)
+            
 
     return render_template('signup.html', errors=errors)
 

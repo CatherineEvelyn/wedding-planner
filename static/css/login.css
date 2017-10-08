@@ -2,7 +2,7 @@
 
 form {
     width: 340px;
-    margin-top: 15px;
+    margin-top: 1rem;
 }
 
 div.wrapper {
@@ -12,6 +12,7 @@ div.wrapper {
     display: flex;
     height: -webkit-calc(100vh - 57px);
     height: calc(100vh - 57px);
+    flex-flow: column;
     margin: auto;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
@@ -21,6 +22,10 @@ div.wrapper {
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
+}
+div.wrapper h1 {
+    display: inline-block;
+    margin-bottom: 0;
 }
 
 .signup-container {
@@ -40,6 +45,37 @@ div.wrapper {
             box-shadow: 0 1px 8px 0 rgba(0,0,0,.2), 
                         0 3px 4px 0 rgba(0,0,0,.14), 
                         0 3px 3px -2px rgba(0,0,0,.12);
+}
+
+.signup-tabs {
+  display: inline-flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  bottom: 0.25rem;
+}
+
+.vendor-signup {
+  display: none;
+}
+
+.toggle-form {
+  font-size: 1rem;
+  margin: 0 1rem;
+  color: #9e9e9e;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.toggle-form:hover {
+  color: #B3E5FC;
+  text-decoration: none;
+}
+
+.active-form {
+  color: #33B8F7;
+  text-decoration: none;
 }
 
 .signup-field {
