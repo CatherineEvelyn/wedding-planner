@@ -19,6 +19,10 @@ p {
     font-family: 'Raleway', sans-serif;
 }
 
+.navbar-brand {
+    font-family: "Playfair Display", serif;
+}
+
 #mainNavbar{
     background-color:#3f1c29;
 }
