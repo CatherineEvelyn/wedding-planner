@@ -10,28 +10,32 @@
                 <h1>Login</h1>
                 <hr>
                 <form method='POST'>
-                    <input class='signup-field {% if usererror %}error-border{% endif %}'
+                    <input class='signup-field {% if errors["usererrors"] %}error-border{% endif %}'
                     type='text' placeholder='Username' name='username' value='{{ username }}'>
                     <div class='error-msgs-wrapper'>
-                        {% if usererror %}
-                            <span class='error'>
-                                {{ usererror }}
-                            </span>
+                        {% if errors["usererrors"] %}
+                            {% for error in errors["usererrors"] %}
+                                <p class='error'>
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
                         {% endif %}
                     </div>
-                    <input class='signup-field {% if passerror %}error-border{% endif %}' 
+                    <input class='signup-field {% if errors["passerrors"] %}error-border{% endif %}' 
                     type='password' placeholder='Password' name='password'>
                     <div class='error-msgs-wrapper'>
-                        {% if passerror %}
-                            <span class='error'>
-                                {{ passerror }}
-                            </span>
+                        {% if errors["passerrors"] %}
+                            {% for error in errors["passerrors"] %}
+                                <p class='error'>
+                                    {{ error }}
+                                </p>
+                            {% endfor %}
                         {% endif %}
                     </div>
                     <input class="submit-button" type='submit' value="Login">
                 </form>
             </div>
-            <p id="create-msg">No account yet? <a id="create-account"
+            <p id="create-msg">Don't have an account? <a id="create-account"
                 href="/signup">Create one!</a></p>
         </div>
     </div>

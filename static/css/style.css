@@ -13,7 +13,7 @@ body {
     font-family: 'Playfair Display', serif;
 }
 
-p{
+p {
     font-family: 'Raleway', sans-serif;
 }
 
@@ -143,6 +143,10 @@ p{
     align-items: center;
     top: 30px;
     width: 100%;
+}
+
+.flash {
+    display: inline-block;
 }
 
 .flash-container-error, .flash-container-confirmation {

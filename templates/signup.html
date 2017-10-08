@@ -10,36 +10,36 @@
                 <h1>Sign up</h1>
                 <hr>
                 <form method = 'POST'>
-                    <input class = 'signup-field {% if usererrors %}error-border{% endif %}'
+                    <input class = 'signup-field {% if errors["usererrors"] %}error-border{% endif %}'
                     type = 'text' placeholder = 'Username' name = 'username' value='{{ username }}'>
                     <div class='error-msgs-wrapper'>
-                        {% if usererrors %}
-                            {% for error in usererrors %}
-                                <span class='error'>
+                        {% if errors["usererrors"] %}
+                            {% for error in errors["usererrors"] %}
+                                <p class='error'>
                                     {{ error }}
-                                </span>
+                                </p>
                             {% endfor %}
                         {% endif %}
                     </div>
-                    <input class = 'signup-field {% if passerrors %}error-border{% endif %}'
+                    <input class = 'signup-field {% if errors["passerrors"] %}error-border{% endif %}'
                     type = 'password' placeholder = 'Password' name = 'password'>
                     <div class='error-msgs-wrapper'>
-                        {% if passerrors %}
-                            {% for error in passerrors %}
-                                <span class='error'>
+                        {% if errors["passerrors"] %}
+                            {% for error in errors["passerrors"] %}
+                                <p class='error'>
                                     {{ error }}
-                                </span>
+                                </p>
                             {% endfor %}
                         {% endif %}
                     </div>
-                    <input class = 'signup-field {% if verifyerrors %}error-border{% endif %}'
+                    <input class = 'signup-field {% if errors["verifyerrors"] %}error-border{% endif %}'
                     type = 'password' placeholder = 'Verify Password' name = 'verify'>
                     <div class='error-msgs-wrapper'>
-                        {% if verifyerrors %}
-                            {% for error in verifyerrors %}
-                                <span class='error'>
+                        {% if errors["verifyerrors"] %}
+                            {% for error in errors["verifyerrors"] %}
+                                <p class='error'>
                                     {{ error }}
-                                </span>
+                                </p>
                             {% endfor %}
                         {% endif %}
                     </div>
