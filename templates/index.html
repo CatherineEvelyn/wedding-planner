@@ -1,4 +1,7 @@
 {% extends "layout.html" %}
+{% block head %}
+    <link type="text/css" href="{{ url_for('static', filename='css/mainpage.css') }}" rel="stylesheet">
+{% endblock %}
 {% block body %}
     <section id="bgImage" class="jumbotron text-center">
       <div class="container">
