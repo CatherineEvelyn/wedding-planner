@@ -1,0 +1,91 @@
+#venue{
+    text-align: center;
+    background-image: url("../images/venue.jpg");
+    background-position: center;
+    opacity: 0.7;
+}
+
+#venue:hover{
+    opacity: 1.0;
+}
+
+#photographer{
+    background-image: url("../images/photographer.jpg");
+    background-position: center;
+    opacity: 0.7;
+}
+
+#photographer:hover{
+    opacity: 1.0;
+}
+
+#video{
+    background-image: url("../images/video.jpg");
+    background-position: center;
+    opacity: 0.7;
+}
+#video:hover{
+    opacity: 1.0;
+}
+
+#caterer{
+    background-image: url("../images/caterer.jpg");
+    background-position: center;
+    opacity: 0.7;
+}
+
+#caterer:hover{
+    opacity: 1.0;
+}
+
+#music{
+    background-image: url("../images/guitar.jpg");
+    background-position: center;
+    opacity: 0.7;
+}
+
+#music:hover{
+    opacity: 1.0;
+}
+
+#hair{
+    background-image: url("../images/hairstyle.jpg");
+    background-position: center;
+    opacity: 0.6;
+}
+
+#hair:hover{
+    opacity: 1.0;
+}
+
+#tailor{
+    background-image: url("../images/tailor.jpg");
+    background-position: center;
+    opacity: 0.6;
+}
+
+#tailor:hover{
+    opacity: 1.0;
+}
+
+.vendorList {
+    margin: 45px auto;
+}
+
+.vendorList ul {
+    overflow: hidden;
+    width: 97%;
+    list-style: none;
+}
+
+.vendorList ul li {
+    display: table-cell;
+    vertical-align: bottom;
+    float: left;
+    width: 13%;
+    margin: 4px;
+}
+
+.vendorCard {
+    height: 414px;
+}
