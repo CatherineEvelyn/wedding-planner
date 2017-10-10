@@ -13,7 +13,13 @@
   "keywords": [
     "python"
   ],
-  "author": "Evelyn Hung, Kristen Sharkey, Zach Foutz, Jared George, Sean Stevens",
+  "authors": [
+      "Evelyn Hung", 
+      "Kristen Sharkey", 
+      "Zach Foutz", 
+      "Jared George", 
+      "Sean Stevens"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/CatherineEvelyn/wedding-planner/issues"

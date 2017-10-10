@@ -6,39 +6,59 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='node_modules/bulma/css/bulma.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='components/bulma/css/bulma.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='components/mdi/css/materialdesignicons.min.css') }}" media="all">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"> {% block head %} {% endblock %}
 </head>
 
 <body>
-    <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8 py-4">
-                    <h4 class="text-white">Header</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                </div>
-                <div class="col-sm-4 py-4">
-                    <h4 class="text-white">Menu</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Link to page 1</a></li>
-                        <li><a href="#" class="text-white">Link to page 2</a></li>
-                        <li><a href="#" class="text-white">Link to page 3</a></li>
-                    </ul>
+    <nav class="navbar" role="navigation" aria-label="dropdown navigation">
+        <div class="navbar-brand">
+            <a href="/" class="navbar-item">
+                <span>My Wedding Planner</span>
+            </a>
+        </div>
+        
+        <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+                Vendors
+            </a>
+            <div class="navbar-dropdown is-boxed">
+                <a class="navbar-item">
+                    Venues
+                </a>
+                <a class="navbar-item">
+                    Photographers
+                </a>
+                <a class="navbar-item">
+                    Videographers
+                </a>
+                <a class="navbar-item">
+                    Caterers
+                </a>
+                <a class="navbar-item">
+                    Music
+                </a>
+                <a class="navbar-item">
+                    Cosmetics
+                </a>
+                <a class="navbar-item">
+                    Tailors
+                </a>
+            </div>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="field is-grouped">
+                    <p class="control">
+                        <a class="button is-primary" href="/login">
+                            <span><i class="mdi mdi-login-variant mdi-light"></i> Login</span>
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="mainNavbar" class="navbar navbar-dark bg-dark">
-        <div class="container d-flex justify-content-between">
-            <a href="#" class="navbar-brand">My Wedding Planner</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        </div>
-    </div>
+    </nav>
     {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
     <div id="fm-container" class="fm-container">
         {% for category, message in messages %}

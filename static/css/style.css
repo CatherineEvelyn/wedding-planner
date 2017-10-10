@@ -12,7 +12,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Lato', sans-serif;
 }
 
 p {
@@ -21,6 +21,7 @@ p {
 
 .navbar-brand {
     font-family: "Playfair Display", serif;
+    font-size: 1.4em;
 }
 
 #mainNavbar{
