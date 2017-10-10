@@ -10,55 +10,57 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='components/mdi/css/materialdesignicons.min.css') }}" media="all">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"> {% block head %} {% endblock %}
 </head>
-
 <body>
-    <nav class="navbar" role="navigation" aria-label="dropdown navigation">
-        <div class="navbar-brand">
-            <a href="/" class="navbar-item">
-                <span>My Wedding Planner</span>
-            </a>
-        </div>
-        
-        <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-                Vendors
-            </a>
-            <div class="navbar-dropdown is-boxed">
-                <a class="navbar-item">
-                    Venues
-                </a>
-                <a class="navbar-item">
-                    Photographers
-                </a>
-                <a class="navbar-item">
-                    Videographers
-                </a>
-                <a class="navbar-item">
-                    Caterers
-                </a>
-                <a class="navbar-item">
-                    Music
-                </a>
-                <a class="navbar-item">
-                    Cosmetics
-                </a>
-                <a class="navbar-item">
-                    Tailors
+    <div class="container is-white">
+        <nav class="navbar" role="navigation" aria-label="dropdown navigation">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-item">
+                    <span>My Wedding Planner</span>
                 </a>
             </div>
-        </div>
-        <div class="navbar-end">
-            <div class="navbar-item">
-                <div class="field is-grouped">
-                    <p class="control">
-                        <a class="button is-primary" href="/login">
-                            <span><i class="mdi mdi-login-variant mdi-light"></i> Login</span>
-                        </a>
-                    </p>
+            
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Vendors
+                </a>
+                <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item">
+                        Venues
+                    </a>
+                    <a class="navbar-item">
+                        Photographers
+                    </a>
+                    <a class="navbar-item">
+                        Videographers
+                    </a>
+                    <a class="navbar-item">
+                        Caterers
+                    </a>
+                    <a class="navbar-item">
+                        Music
+                    </a>
+                    <a class="navbar-item">
+                        Cosmetics
+                    </a>
+                    <a class="navbar-item">
+                        Tailors
+                    </a>
                 </div>
             </div>
-        </div>
-    </nav>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button is-primary" href="/login">
+                                <span><i class="mdi mdi-login-variant mdi-light"></i> Login</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
     {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
     <div id="fm-container" class="fm-container">
         {% for category, message in messages %}
@@ -68,12 +70,17 @@
         </ul>
         {% endfor %}
     </div>
-    {% endif %} {% endwith %} {% block body %}{% endblock %}
-    <footer class="text-muted">
+    {% endif %} {% endwith %} 
+    <div class="container is-fluid is-marginless bg-image">
+        {% block body %} {% endblock %}
+    </div>
+    <footer class="footer">
         <div class="container">
-            <p class="float-right">
-                <a href="#">Back to top</a>
-            </p>
+            <div class="content has-text-centered">
+                <p>
+                    <strong><a href="#">Back to top</a></strong>
+                </p>
+            </div>
         </div>
     </footer>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
