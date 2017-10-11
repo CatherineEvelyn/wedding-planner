@@ -1,6 +1,8 @@
 from flask import Flask, request, redirect, render_template, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from hashutils import *
+from validate_email import validate_email
+
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -46,6 +48,10 @@ def logout():
     return redirect('/')
 """
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST': #is user signing up
@@ -55,6 +61,7 @@ def signup():
         # name=request.form['name']
         # phoneNumber=request.form['phoneNumber']
         current_users = User.query.filter_by(username = username).first()
+
         if password == '':
             flash('Please enter a password', 'error')
             return redirect('/signup')
