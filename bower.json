@@ -1,0 +1,29 @@
+{
+  "name": "wedding-planner",
+  "description": "A wedding planner application for organizers and vendors alike",
+  "main": "main.js",
+  "authors": [
+    "Evelyn Hung",
+    "Kristen Sharkey",
+    "Zach Foutz",
+    "Jared George",
+    "Sean Stevens"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "python"
+  ],
+  "homepage": "https://github.com/CatherineEvelyn/wedding-planner",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bulma": "^0.5.3",
+    "mdi": "^2.0.46"
+  }
+}

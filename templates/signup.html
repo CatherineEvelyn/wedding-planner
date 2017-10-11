@@ -1,42 +1,39 @@
-<!DOCTYPE html>
-<html>
-  <body>
-  {% with messages = get_flashed_messages(with_categories=True) %}
-          <ul>
-          {% for category, message in messages %}
-              <li class= "{{category}}">{{message}}</li>
-          {% endfor %}
-          </ul>
-   {% endwith %}
+{% extends 'layout.html' %}
+{% block head %}
+    <link type="text/css" href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <!-- TODO: Flexify this page -->
+    <div class = "wrapper">
+        <div class = 'signup-container'>
+            <div class = "form-container-signup">
+                <h1 class="title is-2 is-marginless">Sign up</h1>
+                <div class="signup-tabs">
+                    <a href="#" class="toggle-form active-form"> Organizer </a>
+                    <span> | </span>
+                    <a href="#" class="toggle-form show-vendor"> Vendor </a>
+                </div>
+                <hr>
+                <div class="organizer-signup">
+                    <form method='POST'>
+                        <!-- Grabs the inputs from components/register_inputs.html -->
+                        {% include 'components/register_inputs.html' %}
+                        <input name="organizer_signup" class="submit-button" type='submit' value="Sign up"/>
+                    </form>
+                </div>
 
-    <form  method="POST">
-      <table>
-        <tr>
-          <td>
-            <label for="username">Email(username)</label>
-          </td>
-          <td>
-            <input name="username" type="email" value="{{request.form['username']}}">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="password">Password</label>
-          </td>
-          <td>
-            <input name="password" type="password">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="verify">Verify Password</label>
-          </td>
-          <td>
-            <input name="verify" type="password">
-          </td>
-        </tr>
-      </table>
-      <input type="submit" value="Register">
-    </form>
-  </body>
-</html>
+                <!-- Sign up for vendor users -->
+                <div class="vendor-signup">
+                    <form method='POST'>
+                    <!-- Grabs the inputs from components/register_inputs.html -->
+                    {% include 'components/register_inputs.html' %}
+                    <label> I wish to sign up as a Vendor
+                        <input name="is_vendor" type="checkbox" required>
+                    </label>
+                    <input name="vendor_signup" class="submit-button" type='submit' value="Sign up"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

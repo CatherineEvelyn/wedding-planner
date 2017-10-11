@@ -1,0 +1,64 @@
+#venue,
+#photographer,
+#video,
+#caterer,
+#music,
+#hair,
+#tailor {
+    padding: 0.75rem;
+    height: 18em;
+    overflow: hidden;
+    transition: opacity 275ms cubic-bezier(0.5, 0.08, 0, 1);
+}
+
+#venue:hover,
+#photographer:hover,
+#video:hover,
+#caterer:hover,
+#music:hover,
+#hair:hover,
+#tailor:hover {
+    opacity: 1.0;
+}
+
+#venue {
+    background-image: url("../images/venue.jpg");
+    background-position: center;
+    opacity: 0.7;
+}
+
+#photographer {
+    background-image: url("../images/photographer.jpg");
+    background-position: center;
+    opacity: 0.7;
+}
+
+#video {
+    background-image: url("../images/video.jpg");
+    background-position: center;
+    opacity: 0.7;
+}
+
+#caterer {
+    background-image: url("../images/caterer.jpg");
+    background-position: center;
+    opacity: 0.7;
+}
+
+#music {
+    background-image: url("../images/guitar.jpg");
+    background-position: center;
+    opacity: 0.7;
+}
+
+#hair {
+    background-image: url("../images/hairstyle.jpg");
+    background-position: center;
+    opacity: 0.6;
+}
+
+#tailor {
+    background-image: url("../images/tailor.jpg");
+    background-position: center;
+    opacity: 0.6;
+}
