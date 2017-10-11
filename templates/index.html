@@ -3,40 +3,65 @@
     <link type="text/css" href="{{ url_for('static', filename='css/mainpage.css') }}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-    <section id="bgImage" class="jumbotron text-center">
-      <div class="container">
-        <h1 class="jumbotron-heading">My Wedding Planner</h1>
-        <p class="lead text-muted">Your wedding plans, all in one place.</p>
-        <p>
-          <a href="/login" class="btn btn-primary">Log In</a>
-          <a href="/signup" class="btn btn-secondary">Register</a>
-        </p>
-      </div>
+    <section id="bgImage" class="section">
+        <div class="container has-text-centered">
+            <h1 class="title is-1 mainpage-title">My Wedding Planner</h1>
+            <p class="subtitle">Your wedding plans, all in one place.</p>
+            <div class="field is-grouped is-grouped-centered">
+                <p class="control">
+                    <a class="button is-info" href="/login">
+                        <span><i class="mdi mdi-login-variant mdi-light"></i> Login</span>
+                    </a>
+                </p>
+                <p class="control">
+                    <a class="button is-info" href="/signup">
+                        <span><i class="mdi mdi-account-plus mdi-light"></i> Sign up</span>
+                    </a>
+                </p>
+            </div>
+        </div>
     </section>
 
-    <div class="vendorList">
-      <ul>
-        <li>
-          <div id="venue" class="vendorCard" class="overlay" href="#">Venues</div>
-        </li>
-        <li>
-          <div id="photographer" class="vendorCard" href="#">Photographers</div>
-        </li>
-        <li>
-          <div id="video" class="vendorCard" href="#">Videographers</div>
-        </li>
-        <li>
-          <div id="caterer" class="vendorCard" style="background-color: #99ddff" href="#">Caterers</div>
-        </li>
-        <li>
-          <div id="music" class="vendorCard" style="background-color: #ffb3ff" href="#">Band/DJ</div>
-        </li>
-        <li>
-          <div id="hair"class="vendorCard" style="background-color: #ffff4d" href="#">Hairstyle & Make Up Artists</div>
-        </li>
-        <li>
-          <div id="tailor" class="vendorCard" style="background-color: #80ffff" href="#">Tailors</div>
-        </li>
-      </ul>
+    <div class="section">
+        <div class="container is-fluid">
+            <div class="columns">
+                    <div class="column">
+                        <div id="venue">
+                            <div href="#">Venues</div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div id="photographer">
+                            <div href="#">Photographers</div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div id="video">
+                            <div href="#">Videographers</div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div id="caterer">
+                            <div style="background-color: #99ddff" href="#">Caterers</div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div id="music">
+                            <div style="background-color: #ffb3ff" href="#">Band/DJ</div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div id="hair">
+                            <div style="background-color: #ffff4d" href="#">Cosmetics</div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div id="tailor">
+                            <div style="background-color: #80ffff" href="#">Tailors</div>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
     </div>
 {% endblock %}

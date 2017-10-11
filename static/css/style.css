@@ -18,8 +18,20 @@ p {
     font-size: 1.4em;
 }
 
+.mainpage-title {
+    font-family: "Playfair Display", serif;
+}
+
+#bgImage {
+    background: url("../images/rings-banner2.jpg");
+    /* Center and scale the image */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .bg-image {
-    background-color: white;
+    background-color: #f7dfef;
 
     /* Center and scale the image */
     /* background-position: center;
