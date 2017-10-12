@@ -3,16 +3,25 @@
     <link type="text/css" href="{{ url_for('static', filename='css/mainpage.css') }}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-    <section id="bgImage" class="jumbotron text-center">
-      <div class="container">
-        <h1 class="jumbotron-heading">My Wedding Planner</h1>
-        <p class="lead text-muted">Your wedding plans, all in one place.</p>
-        <p>
-          <a href="/login" class="btn btn-primary">Log In</a>
-          <a href="/signup" class="btn btn-secondary">Register</a>
-        </p>
-      </div>
+    <section id="bgImage" class="section">
+        <div class="container has-text-centered">
+            <h1 class="title is-1 mainpage-title">My Wedding Planner</h1>
+            <p class="subtitle">Your wedding plans, all in one place.</p>
+            <div class="field is-grouped is-grouped-centered">
+                <p class="control">
+                    <a class="button is-info" href="/login">
+                        <span><i class="mdi mdi-login-variant mdi-light"></i> Login</span>
+                    </a>
+                </p>
+                <p class="control">
+                    <a class="button is-info" href="/signup">
+                        <span><i class="mdi mdi-account-plus mdi-light"></i> Sign up</span>
+                    </a>
+                </p>
+            </div>
+        </div>
     </section>
+
     <div class="vendorList">
       <ul>
         <li>

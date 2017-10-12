@@ -6,10 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='components/bulma/css/bulma.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='components/mdi/css/materialdesignicons.min.css') }}" media="all">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"> {% block head %} {% endblock %}
 </head>
-
 <body>
 
     <div class="collapse bg-dark" id="navbarHeader">
@@ -30,17 +30,9 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </nav>
     </div>
 
-    <div id="mainNavbar" class="navbar navbar-dark bg-dark">
-        <div class="container d-flex justify-content-between">
-            <a href="#" class="navbar-brand">My Wedding Planner</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        </div>
-    </div>
     {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
     <div id="fm-container" class="fm-container">
         {% for category, message in messages %}
@@ -50,12 +42,17 @@
         </ul>
         {% endfor %}
     </div>
-    {% endif %} {% endwith %} {% block body %}{% endblock %}
-    <footer class="text-muted">
+    {% endif %} {% endwith %} 
+    <div class="container is-fluid is-marginless bg-image">
+        {% block body %} {% endblock %}
+    </div>
+    <footer class="footer">
         <div class="container">
-            <p class="float-right">
-                <a href="#">Back to top</a>
-            </p>
+            <div class="content has-text-centered">
+                <p>
+                    <strong><a href="#">Back to top</a></strong>
+                </p>
+            </div>
         </div>
     </footer>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
