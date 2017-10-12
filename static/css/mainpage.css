@@ -3,7 +3,7 @@
     background-position: center;
     opacity: 0.9;
     font-size: 24px;
-    background-image: url("../images/venue.jpg");
+    background-image: url("../images/venue3.jpg");
     color: white;
     text-shadow: #000 0px 0px 1px;
     -webkit-font-smoothing: antialiased;
@@ -15,7 +15,7 @@
 }
 
 #photographer{
-    background-image: url("../images/photographer.jpg");
+    background-image: url("../images/photographer3.jpg");
     text-align: center;
     background-position: center;
     opacity: 0.9;
@@ -34,7 +34,7 @@
 }
 
 #video{
-    background-image: url("../images/video.jpg");
+    background-image: url("../images/video3.jpg");
     text-align: center;
     background-position: center;
     opacity: 0.9;
@@ -50,7 +50,7 @@
 }
 
 #caterer{
-    background-image: url("../images/caterer.jpg");
+    background-image: url("../images/caterer3.jpg");
     text-align: center;
     background-position: center;
     opacity: 0.9;
@@ -69,7 +69,7 @@
 }
 
 #music{
-    background-image: url("../images/guitar.jpg");
+    background-image: url("../images/guitar3.jpg");
     text-align: center;
     background-position: center;
     opacity: 0.9;
@@ -85,7 +85,7 @@
 }
 
 #hair{
-    background-image: url("../images/hairstyle.jpg");
+    background-image: url("../images/hairstyle3.jpg");
     text-align: center;
     background-position: center;
     opacity: 0.9;
@@ -104,7 +104,7 @@
 }
 
 #tailor{
-    background-image: url("../images/tailor.jpg");
+    background-image: url("../images/tailor3.jpg");
     text-align: center;
     background-position: center;
     opacity: 0.9;
