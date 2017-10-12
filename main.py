@@ -11,13 +11,19 @@ app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "246Pass"
 
-user_vendor = db.Table('user_vendor',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('vendor_id', db.Integer, db.ForeignKey('vendors.id'))
-)
+class User_Vendor(db.Model):
+    __tablename__ = "user_vendor"
+    vendors_id = db.Column(db.Integer, db.ForeignKey('vendor.id'), primary_key=True)
+    users_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    eventDate = db.Column(db.Date)
+    eventStartTime = db.Column(db.Time)
+    eventEendTime = db.Column(db.Time)
+    user = db.relationship("User", back_populates="vendor")
+    vendor = db.relationship("Vendor", back_populates="user")
+
 
 class Vendor(db.Model):
-    __tablename__ = 'vendors'
+    __tablename__ = 'vendor'
     id = db.Column(db.Integer, primary_key=True) #prim key to differentiate vendors
     businessName = db.Column(db.String(100))
     contactName = db.Column(db.String(50))
@@ -30,8 +36,8 @@ class Vendor(db.Model):
     priceMin = db.Column(db.Integer)
     priceMax = db.Column(db.Integer)
     password = db.Column(db.String(100))
+    users = db.relationship("User_Vendor", back_populates="vendor")
 
-    #children = db.relationship("User", secondary=user_vendor)
 
     def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, priceMin, priceMax, password):
         self.businessName = businessName
@@ -47,16 +53,17 @@ class Vendor(db.Model):
         self.password = password
 
 class User(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True) #prim key to differentiate users
     name = db.Column(db.String(100))
-    username = db.Column(db.String(30))
+    email = db.Column(db.String(30))
     phoneNumber = db.Column(db.Integer)
     password = db.Column(db.String(100))
-    # userVendors = db.relationship('Vendor', secondary=user_vendor, backref='user')
+    numberOfGuests = db.Column(db.Integer)
+    vendors= db.relationship("User_Vendor", back_populates="user")
 
-    def __init__(self, username, password):
-        self.username = username
+    def __init__(self, email, password):
+        self.email = email
         self.password = password
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -66,12 +73,12 @@ def login():
               'passerrors': passerrors} # initializing errors object
 
     if request.method == 'POST':
-        username = request.form['username'] #get username/pass
+        email = request.form['email'] #get email/pass
         password = request.form['password']
-        user = User.query.filter_by(username=username).first() # check if username in use yet
-        vendor = Vendor.query.filter_by(email=username).first()
+        user = User.query.filter_by(email=email).first() # check if email in use yet
+        vendor = Vendor.query.filter_by(email=email).first()
 
-        if username == '':
+        if email == '':
             usererrors.append("This field cannot be left blank.")
         if password == '':
             passerrors.append("This field cannot be left blank.")
@@ -80,23 +87,23 @@ def login():
             if not check_pw_hash(password, user.password):
                 passerrors.append("That password is incorrect.")
             else:
-                session['username'] = username #starts session
+                session['email'] = email #starts session
                 return redirect('organizer')
         elif vendor:
             if not check_pw_hash(password, vendor.password):
                 passerrors.append("That password is incorrect.")
             else:
-                session['username'] = username #starts session
+                session['email'] = email #starts session
                 return redirect('profile')
         else:
             usererrors.append("That user doesn't exist.")
 
-        return render_template('login.html', errors=errors, username=username)
+        return render_template('login.html', errors=errors, email=email)
     return render_template('login.html', errors=errors)
 
 @app.route('/logout')
 def logout():
-    del session['username']
+    del session['email']
     return redirect('/')
 
 @app.route('/')
@@ -120,7 +127,7 @@ def signup():
 
     if request.method == 'POST': #is user signing up
         form = request.form
-        username=form['username']
+        email=form['email']
         password=form['password']
         verify=form['verify']
         register_type = 'organizer'
@@ -132,13 +139,13 @@ def signup():
         # XXX Not sure if we need this
         # name=request.form['name']
         # phoneNumber=request.form['phoneNumber']
-        # current_users = User.query.filter_by(username = username).first()
+        # current_users = User.query.filter_by(email=email).first()
 
-        if not username:
+        if not email:
             usererrors.append('This field cannot be left blank.')
         # Check if is valid email
-        elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", username):
-            usererrors.append('Username must be a valid email.')
+        elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+            usererrors.append('Email must be a valid email.')
 
         if not password:
             passerrors.append('This field cannot be left blank.')
@@ -162,33 +169,33 @@ def signup():
         if not usererrors and not passerrors and not verifyerrors:
             # Register new organizer, or vendor
             if register_type == 'organizer':
-                user = User.query.filter_by(username=username).first()
-                # Check if username already exists
+                user = User.query.filter_by(email=email).first()
+                # Check if email already exists
                 if not user:
                     # Hash the password before sending to DB
-                    new_user = User(username, make_pw_hash(password))
+                    new_user = User(email, make_pw_hash(password))
                     db.session.add(new_user)
                     db.session.commit()
-                    session['username'] = username
+                    session['email'] = email
                     return render_template('verify_email.html')
                 else:
-                    usererrors.append("Username already exists")
+                    usererrors.append("Email already exists")
             else:
-                vendor = Vendor.query.filter_by(email=username).first()
-                # Check if username already exists
+                vendor = Vendor.query.filter_by(email=email).first()
+                # Check if email already exists
                 if not vendor:
                     # Hash the password before sending to DB
                     # TODO add the rest of the vendor fields
-                    new_vendor = Vendor(username, None, None, None, None, None, None, None, None, None, make_pw_hash(password))
+                    new_vendor = Vendor(email, None, None, None, None, None, None, None, None, None, make_pw_hash(password))
                     db.session.add(new_vendor)
                     db.session.commit()
-                    session['username'] = username
+                    session['email'] = email
                     return render_template('verify_email.html')
                 else:
-                    usererrors.append("Username already exists")
+                    usererrors.append("Email already exists")
 
         # If method == post
-        return render_template('signup.html', errors=errors, username=username)
+        return render_template('signup.html', errors=errors, email=email)
     # method == get
     return render_template('signup.html', errors=errors)
 
