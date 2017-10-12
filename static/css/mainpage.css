@@ -6,7 +6,7 @@
 #hair,
 #tailor {
     padding: 0.75rem;
-    height: 18em;
+    height: 12em;
     overflow: hidden;
     transition: opacity 275ms cubic-bezier(0.5, 0.08, 0, 1);
 }
