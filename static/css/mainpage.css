@@ -1,64 +1,142 @@
-#venue,
-#photographer,
-#video,
-#caterer,
-#music,
-#hair,
-#tailor {
-    padding: 0.75rem;
-    height: 18em;
+#venue{
+    text-align: center;
+    background-position: center;
+    opacity: 0.9;
+    font-size: 24px;
+    background-image: url("../images/venue3.jpg");
+    color: white;
+    text-shadow: #000 0px 0px 1px;
+    -webkit-font-smoothing: antialiased;
+}
+
+#venue:hover{
+    background-image: url("../images/venue2.jpg");
+    color: black;
+}
+
+#photographer{
+    background-image: url("../images/photographer3.jpg");
+    text-align: center;
+    background-position: center;
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 24px;
+    color: white;
+    text-shadow: #000 0px 0px 1px;
+    -webkit-font-smoothing: antialiased;
+}
+
+#photographer:hover{
+    background-image: url("../images/photographer2.jpg");
+    color: black;
+}
+
+#video{
+    background-image: url("../images/video3.jpg");
+    text-align: center;
+    background-position: center;
+    opacity: 0.9;
+    font-size: 24px;
+    color: white;
+    text-shadow: #000 0px 0px 1px;
+    -webkit-font-smoothing: antialiased;
+}
+
+#video:hover{
+    background-image: url("../images/video2.jpg");
+    color: black;
+}
+
+#caterer{
+    background-image: url("../images/caterer3.jpg");
+    text-align: center;
+    background-position: center;
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 24px;
+    color: white;
+    text-shadow: #000 0px 0px 1px;
+    -webkit-font-smoothing: antialiased;
+}
+
+#caterer:hover{
+    background-image: url("../images/caterer2.jpg");
+    color: black;
+}
+
+#music{
+    background-image: url("../images/guitar3.jpg");
+    text-align: center;
+    background-position: center;
+    opacity: 0.9;
+    font-size: 24px;
+    color: white;
+    text-shadow: #000 0px 0px 1px;
+    -webkit-font-smoothing: antialiased;
+}
+
+#music:hover{
+    background-image: url("../images/guitar2.jpg");
+    color: black;
+}
+
+#hair{
+    background-image: url("../images/hairstyle3.jpg");
+    text-align: center;
+    background-position: center;
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 24px;
+    color: white;
+    text-shadow: #000 0px 0px 1px;
+    -webkit-font-smoothing: antialiased;
+}
+
+#hair:hover{
+    background-image: url("../images/hairstyle2.jpg");
+    color: black;
+}
+
+#tailor{
+    background-image: url("../images/tailor3.jpg");
+    text-align: center;
+    background-position: center;
+    opacity: 0.9;
+    font-size: 24px;
+    color: white;
+    text-shadow: #000 0px 0px 1px;
+    -webkit-font-smoothing: antialiased;
+}
+
+#tailor:hover{
+    background-image: url("../images/tailor2.jpg");
+    color: black;
+}
+
+.vendorList {
+    margin: 45px auto;
+}
+
+.vendorList ul {
     overflow: hidden;
-    transition: opacity 275ms cubic-bezier(0.5, 0.08, 0, 1);
+    width: 97%;
+    list-style: none;
 }
 
-#venue:hover,
-#photographer:hover,
-#video:hover,
-#caterer:hover,
-#music:hover,
-#hair:hover,
-#tailor:hover {
-    opacity: 1.0;
+.vendorList ul li {
+    display: table-cell;
+    vertical-align: bottom;
+    float: left;
+    width: 13%;
+    margin: 4px;
 }
 
-#venue {
-    background-image: url("../images/venue.jpg");
-    background-position: center;
-    opacity: 0.7;
-}
-
-#photographer {
-    background-image: url("../images/photographer.jpg");
-    background-position: center;
-    opacity: 0.7;
-}
-
-#video {
-    background-image: url("../images/video.jpg");
-    background-position: center;
-    opacity: 0.7;
-}
-
-#caterer {
-    background-image: url("../images/caterer.jpg");
-    background-position: center;
-    opacity: 0.7;
-}
-
-#music {
-    background-image: url("../images/guitar.jpg");
-    background-position: center;
-    opacity: 0.7;
-}
-
-#hair {
-    background-image: url("../images/hairstyle.jpg");
-    background-position: center;
-    opacity: 0.6;
-}
-
-#tailor {
-    background-image: url("../images/tailor.jpg");
-    background-position: center;
-    opacity: 0.6;
+.vendorCard {
+    height: 414px;
 }

@@ -11,51 +11,23 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"> {% block head %} {% endblock %}
 </head>
 <body>
-    <div class="container is-white">
-        <nav class="navbar" role="navigation" aria-label="dropdown navigation">
-            <div class="navbar-brand">
-                <a href="/" class="navbar-item">
-                    <span>My Wedding Planner</span>
-                </a>
-            </div>
-            
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                    Vendors
-                </a>
-                <div class="navbar-dropdown is-boxed">
-                    <a class="navbar-item">
-                        Venues
-                    </a>
-                    <a class="navbar-item">
-                        Photographers
-                    </a>
-                    <a class="navbar-item">
-                        Videographers
-                    </a>
-                    <a class="navbar-item">
-                        Caterers
-                    </a>
-                    <a class="navbar-item">
-                        Music
-                    </a>
-                    <a class="navbar-item">
-                        Cosmetics
-                    </a>
-                    <a class="navbar-item">
-                        Tailors
-                    </a>
+
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 py-4">
+                    <h4 class="text-white">Your wedding vendors, in one place.</h4>
+                    <p class="text-muted">Your wedding should be a memorable experience. But the stress of finding the venue, choosing the caterer
+                       and others can put a strain on you and your loved one. With The Wedding Planner you can easily find the venodrs for you, and keep 
+                       all the information in one place.</p>
                 </div>
-            </div>
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="field is-grouped">
-                        <p class="control">
-                            <a class="button is-primary" href="/login">
-                                <span><i class="mdi mdi-login-variant mdi-light"></i> Login</span>
-                            </a>
-                        </p>
-                    </div>
+                <div class="col-sm-4 py-4">
+                    <h4 class="text-white">Menu</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Log-in</a></li>
+                        <li><a href="#" class="text-white">Register</a></li>
+                        <li><a href="#" class="text-white">Vendor List</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
