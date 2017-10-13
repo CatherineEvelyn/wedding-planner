@@ -10,3 +10,31 @@
 -->
 
  <!-- TODO: Use bulma to design this page -->
+{% extends 'layout.html' %}
+{% block body %}
+<ul>
+  <li> <a href="#venues" class="getVendorByType" data-type="venues">Venues</a></li>
+  <li> <a href="#photographers" class="getVendorByType" data-type="photographers">Photographers</a></li>
+  <li> <a href="#videographers" class="getVendorByType" data-type="videographers">Videographers</a></li>
+  <li> <a href="#caterers" class="getVendorByType" data-type="caterers">Caterers</a></li>
+  <li> <a href="#bands" class="getVendorByType" data-type="band">Band/DJ</a></li>
+  <li> <a href="#hair" class="getVendorByType" data-type="hair">Hairstyle &amp; Make Up Artists</a></li>
+  <li> <a href="#tailors" class="getVendorByType" data-type="tailors">Tailors</a></li>
+</ul>
+{% endblock %}
+{% block scripts %}
+<script defer>
+  var loc, tag;
+  update_tag();
+  $(window).on('popstate', e => {
+    update_tag();
+  })
+  function update_tag(){
+    loc = window.location.href.split('#');
+    tag = loc.length > 1 ? loc[1] : '';
+    if(tag != '' && !api_call_made){
+      getVendorByType(tag);
+    }
+  }
+</script>
+{% endblock %}

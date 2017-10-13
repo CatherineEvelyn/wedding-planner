@@ -18,7 +18,7 @@
                 <div class="col-sm-8 py-4">
                     <h4 class="text-white">Your wedding vendors, in one place.</h4>
                     <p class="text-muted">Your wedding should be a memorable experience. But the stress of finding the venue, choosing the caterer
-                       and others can put a strain on you and your loved one. With The Wedding Planner you can easily find the venodrs for you, and keep 
+                       and others can put a strain on you and your loved one. With The Wedding Planner you can easily find the venodrs for you, and keep
                        all the information in one place.</p>
                 </div>
                 <div class="col-sm-4 py-4">
@@ -50,7 +50,8 @@
         </ul>
         {% endfor %}
     </div>
-    {% endif %} {% endwith %} {% block body %}{% endblock %}
+    {% endif %} {% endwith %}
+    {% block body %}{% endblock %}
     <footer class="text-muted">
         <div class="container">
             <p class="float-right">
@@ -66,6 +67,7 @@
     </script>
     <!-- Optional JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
 </body>
 
 </html>
