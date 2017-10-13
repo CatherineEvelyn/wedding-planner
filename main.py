@@ -13,13 +13,13 @@ app.secret_key = "246Pass"
 
 class User_Vendor(db.Model):
     __tablename__ = "user_vendor"
-    vendors_id = db.Column(db.Integer, db.ForeignKey('vendor.id'), primary_key=True)
+    vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id'), primary_key=True)
     users_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     eventDate = db.Column(db.Date)
     eventStartTime = db.Column(db.Time)
     eventEendTime = db.Column(db.Time)
-    user = db.relationship("User", back_populates="vendor")
-    vendor = db.relationship("Vendor", back_populates="user")
+    #user = db.relationship("User", back_populates="vendor")
+    #vendor = db.relationship("Vendor", back_populates="user")
 
 
 class Vendor(db.Model):
@@ -36,7 +36,7 @@ class Vendor(db.Model):
     priceMin = db.Column(db.Integer)
     priceMax = db.Column(db.Integer)
     password = db.Column(db.String(100))
-    users = db.relationship("User_Vendor", back_populates="vendor")
+    users = db.relationship("User_Vendor") #, back_populates="vendor"
 
 
     def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, priceMin, priceMax, password):
@@ -60,7 +60,7 @@ class User(db.Model):
     phoneNumber = db.Column(db.Integer)
     password = db.Column(db.String(100))
     numberOfGuests = db.Column(db.Integer)
-    vendors= db.relationship("User_Vendor", back_populates="user")
+    vendor = db.relationship("User_Vendor") #, back_populates="user"
 
     def __init__(self, email, password):
         self.email = email
