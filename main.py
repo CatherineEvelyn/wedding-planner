@@ -2,6 +2,8 @@ from flask import Flask, request, redirect, render_template, url_for, session, f
 from flask_sqlalchemy import SQLAlchemy
 from hashutils import *
 import re
+from faker import Faker
+import random
 
 
 app = Flask(__name__)
@@ -191,6 +193,36 @@ def signup():
         return render_template('signup.html', errors=errors, username=username)
     # method == get
     return render_template('signup.html', errors=errors)
+
+
+# FOR TESTING PURPOSES ONLY
+@app.route('/gendata')
+def genData():
+  vendorTypes = ['venue', 'photographer', 'videographer', 'caterer', 'music', 'cosmetics', 'tailor']
+  fake = Faker()
+  for i in range(5):
+    user = User(
+      fake.email(),
+      fake.password(length=10, digits=True, upper_case=True, lower_case=True)
+    )
+    vendor = Vendor(
+      fake.email(),
+      fake.company(),
+      fake.name(),
+      fake.street_address(),
+      fake.city(),
+      fake.zipcode(),
+      random.randrange(1, 6),
+      random.choice(vendorTypes),
+      random.randrange(1, 101),
+      random.randrange(101, 501),
+      fake.password(length=10, digits=True, upper_case=True, lower_case=True)
+    )
+    db.session.add(user)
+    db.session.add(vendor)
+    db.session.commit()
+  return redirect('/') 
+# END TESTING #
 
 if __name__ == '__main__': #run app
     app.run()
