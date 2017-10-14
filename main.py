@@ -13,13 +13,21 @@ app.secret_key = "246Pass"
 
 class User_Vendor(db.Model):
     __tablename__ = "user_vendor"
-    vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id'), primary_key=True)
-    users_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True) 
+    vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id', primary_key=True))
+    users_id = db.Column(db.Integer, db.ForeignKey('user.id', primary_key=True))
     eventDate = db.Column(db.Date)
     eventStartTime = db.Column(db.Time)
     eventEendTime = db.Column(db.Time)
-    #user = db.relationship("User", back_populates="vendor")
-    #vendor = db.relationship("Vendor", back_populates="user")
+    user = db.relationship("User")
+    vendor = db.relationship("Vendor")
+
+    def __init__(self, vendor_id, users_id, eventDate, eventStartTime, eventEendTime):
+        self.vendor_id = vendor_id
+        self.users_id = users_id
+        self.eventDate = eventDate
+        self.eventStartTime = eventStartTime
+        self.eventEendTime = eventEendTime
 
 
 class Vendor(db.Model):
@@ -36,7 +44,7 @@ class Vendor(db.Model):
     priceMin = db.Column(db.Integer)
     priceMax = db.Column(db.Integer)
     password = db.Column(db.String(100))
-    users = db.relationship("User_Vendor") #, back_populates="vendor"
+    users = db.relationship("User_Vendor")#, backrefs="vendor")
 
 
     def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, priceMin, priceMax, password):
@@ -60,7 +68,7 @@ class User(db.Model):
     phoneNumber = db.Column(db.Integer)
     password = db.Column(db.String(100))
     numberOfGuests = db.Column(db.Integer)
-    vendor = db.relationship("User_Vendor") #, back_populates="user"
+    vendor = db.relationship("User_Vendor")#, backrefs="user")
 
     def __init__(self, email, password):
         self.email = email
@@ -117,6 +125,24 @@ def profile():
 @app.route('/organizer')
 def organizer():
     return render_template("organizer.html")
+
+@app.route('/book', methods=['POST', 'GET'])
+def book():
+    if request.method == "GET":
+        return render_template("book.html")
+    if request.method == "POST":
+        vendor =Vendor.query.filter_by(email="kim@email.com").first()
+        users=User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
+        vendor_id=vendor.id
+        users_id=users.id
+        eventDate = request.form["eventDate"]
+        eventStartTime = request.form["eventStartTime"]
+        eventEendTime = request.form["eventEendTime"]
+        new_Booking = User_Vendor(vendor_id, users_id,eventDate, eventStartTime, eventEendTime)
+        db.session.add(new_Booking)
+        db.session.commit()
+        return redirect("/")
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
