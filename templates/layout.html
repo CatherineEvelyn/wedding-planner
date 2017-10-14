@@ -6,41 +6,61 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='components/bulma/css/bulma.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='components/mdi/css/materialdesignicons.min.css') }}" media="all">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"> {% block head %} {% endblock %}
 </head>
-
 <body>
-
-    <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8 py-4">
-                    <h4 class="text-white">Your wedding vendors, in one place.</h4>
-                    <p class="text-muted">Your wedding should be a memorable experience. But the stress of finding the venue, choosing the caterer
-                       and others can put a strain on you and your loved one. With The Wedding Planner you can easily find the venodrs for you, and keep 
-                       all the information in one place.</p>
-                </div>
-                <div class="col-sm-4 py-4">
-                    <h4 class="text-white">Menu</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Log-in</a></li>
-                        <li><a href="#" class="text-white">Register</a></li>
-                        <li><a href="#" class="text-white">Vendor List</a></li>
-                    </ul>
+    <div class="container is-white">
+        <nav class="navbar" role="navigation" aria-label="dropdown navigation">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-item">
+                    <span>My Wedding Planner</span>
+                </a>
+            </div>
+            
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Vendors
+                </a>
+                <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item">
+                        Venues
+                    </a>
+                    <a class="navbar-item">
+                        Photographers
+                    </a>
+                    <a class="navbar-item">
+                        Videographers
+                    </a>
+                    <a class="navbar-item">
+                        Caterers
+                    </a>
+                    <a class="navbar-item">
+                        Music
+                    </a>
+                    <a class="navbar-item">
+                        Cosmetics
+                    </a>
+                    <a class="navbar-item">
+                        Tailors
+                    </a>
                 </div>
             </div>
-        </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button is-primary" href="/login">
+                                <span><i class="mdi mdi-login-variant mdi-light"></i> Login</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </div>
 
-    <div id="mainNavbar" class="navbar navbar-dark bg-dark">
-        <div class="container d-flex justify-content-between">
-            <a href="#" class="navbar-brand">My Wedding Planner</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        </div>
-    </div>
     {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
     <div id="fm-container" class="fm-container">
         {% for category, message in messages %}
@@ -50,12 +70,17 @@
         </ul>
         {% endfor %}
     </div>
-    {% endif %} {% endwith %} {% block body %}{% endblock %}
-    <footer class="text-muted">
+    {% endif %} {% endwith %} 
+    <div class="container is-fluid is-marginless bg-image">
+        {% block body %} {% endblock %}
+    </div>
+    <footer class="footer">
         <div class="container">
-            <p class="float-right">
-                <a href="#">Back to top</a>
-            </p>
+            <div class="content has-text-centered">
+                <p>
+                    <strong><a href="#">Back to top</a></strong>
+                </p>
+            </div>
         </div>
     </footer>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

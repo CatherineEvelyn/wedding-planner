@@ -78,48 +78,6 @@ div.wrapper h1 {
   text-decoration: none;
 }
 
-.signup-field {
-    width: 90%;
-    font-family: "Raleway", sans-serif;
-    border: 2px solid transparent;
-    margin: 0.75rem 5%;
-    font-weight: 700;
-    font-size: 1em;
-    color: #787d88;
-    background-color: #fff;
-    padding: 10px 18px;
-    -webkit-border-radius: 6px;
-            border-radius: 6px;
-    -webkit-transition: border 120ms ease-in;
-    -o-transition: border 120ms ease-in;
-    transition: border 120ms ease-in;
-}
-
-.signup-field::-webkit-input-placeholder {
-    color: #c3c8d5;
-}
-
-.signup-field::-moz-placeholder {
-    color: #c3c8d5;
-}
-
-.signup-field:-ms-input-placeholder {
-    color: #c3c8d5;
-}
-
-.signup-field::placeholder {
-    color: #c3c8d5;
-}
-
-.signup-field:hover {
-    border: 2px solid #c3c8d5;
-}
-
-.signup-field:focus {
-    outline: none;
-    border: 2px solid #03a9f4;
-}
-
 .submit-button {
     font-family: "Raleway", sans-serif;
     background-color: #03a9f4;
@@ -148,20 +106,7 @@ div.wrapper h1 {
 
 .error-msgs-wrapper {
     position: relative;
-    right: -6px;
-    top: -8px;
     overflow: hidden;
-}
-
-.error {
-    color: #f44336;
-    font-size: 0.8rem;
-    margin-bottom: 0;
-    margin-left: 1rem;
-}
-
-.error-border {
-    border-color: #f44336;
 }
 
 #create-msg {

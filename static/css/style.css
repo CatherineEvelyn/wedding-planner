@@ -3,16 +3,10 @@
 body {
     height: 100%;
     margin: 0;
-    background-image: url("../images/blur2.jpg");
 
     /* Full height */
     height: 100%;
-
-    /* Center and scale the image */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Lato', sans-serif;
 }
 
 p {
@@ -21,29 +15,28 @@ p {
 
 .navbar-brand {
     font-family: "Playfair Display", serif;
+    font-size: 1.4em;
 }
 
-#mainNavbar{
-    background-color:#3f1c29;
+.mainpage-title {
+    font-family: "Playfair Display", serif;
 }
 
 #bgImage {
-    padding: 40px;
-    height: 100%;
-    margin: 0;
-    background-image: url("../images/rings-banner2.jpg");
-
-    /* Full height */
-    height: 100%;
-
+    background: url("../images/rings-banner2.jpg");
     /* Center and scale the image */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-.footer{
-    background-color: black;
+.bg-image {
+    background-color: #f7dfef;
+
+    /* Center and scale the image */
+    /* background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; */
 }
 
 /* --- FLASH MESSAGE CSS --- */

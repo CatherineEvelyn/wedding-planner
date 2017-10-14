@@ -1,142 +1,107 @@
-#venue{
-    text-align: center;
-    background-position: center;
-    opacity: 0.9;
-    font-size: 24px;
-    background-image: url("../images/venue3.jpg");
-    color: white;
-    text-shadow: #000 0px 0px 1px;
-    -webkit-font-smoothing: antialiased;
+#venue,
+#photographer,
+#video,
+#caterer,
+#music,
+#hair,
+#tailor {
+  padding: 0.75rem;
+  height: 12em;
+  overflow: hidden;
 }
 
-#venue:hover{
-    background-image: url("../images/venue2.jpg");
-    color: black;
+.vendor-card {
+  position: relative;
+  border: 4px solid white;
+  border-radius: 2em;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  -webkit-transform: translate3d(0,0,0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+  transform: translate3d(0,0,0);
+  transform: translateZ(0);
 }
 
-#photographer{
-    background-image: url("../images/photographer3.jpg");
-    text-align: center;
-    background-position: center;
-    opacity: 0.9;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    font-size: 24px;
-    color: white;
-    text-shadow: #000 0px 0px 1px;
-    -webkit-font-smoothing: antialiased;
+.vendor-icon, .vendor-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 375ms cubic-bezier(0.5, 0.08, 0, 1);
 }
 
-#photographer:hover{
-    background-image: url("../images/photographer2.jpg");
-    color: black;
+.vendor-text {
+  top: 70%;
+  opacity: 0;
 }
 
-#video{
-    background-image: url("../images/video3.jpg");
-    text-align: center;
-    background-position: center;
-    opacity: 0.9;
-    font-size: 24px;
-    color: white;
-    text-shadow: #000 0px 0px 1px;
-    -webkit-font-smoothing: antialiased;
+.vendor-text {
+  font-family: "Lato", sans-serif;
+  font-size: 1.2em;
+  color: white;
+  font-weight: bold;
+  text-shadow: 0px 0px 9px #4a4949;
 }
 
-#video:hover{
-    background-image: url("../images/video2.jpg");
-    color: black;
+.vendor-card-image {
+  filter: blur(5px);
+  transition: all 375ms cubic-bezier(0.5, 0.08, 0, 1);
 }
 
-#caterer{
-    background-image: url("../images/caterer3.jpg");
-    text-align: center;
-    background-position: center;
-    opacity: 0.9;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    font-size: 24px;
-    color: white;
-    text-shadow: #000 0px 0px 1px;
-    -webkit-font-smoothing: antialiased;
+.in-focus {
+  filter: blur(1px);
+  opacity: 1.0;
 }
 
-#caterer:hover{
-    background-image: url("../images/caterer2.jpg");
-    color: black;
+.slide-up {
+  transform: translate(-50%, -72%);
 }
 
-#music{
-    background-image: url("../images/guitar3.jpg");
-    text-align: center;
-    background-position: center;
-    opacity: 0.9;
-    font-size: 24px;
-    color: white;
-    text-shadow: #000 0px 0px 1px;
-    -webkit-font-smoothing: antialiased;
+.text-shown {
+  opacity: 1.0;
 }
 
-#music:hover{
-    background-image: url("../images/guitar2.jpg");
-    color: black;
+#venue {
+  background-image: url("../images/venue.jpg");
+  background-position: center;
+  opacity: 0.7;
 }
 
-#hair{
-    background-image: url("../images/hairstyle3.jpg");
-    text-align: center;
-    background-position: center;
-    opacity: 0.9;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    font-size: 24px;
-    color: white;
-    text-shadow: #000 0px 0px 1px;
-    -webkit-font-smoothing: antialiased;
+#photographer {
+  background-image: url("../images/photographer.jpg");
+  background-position: center;
+  opacity: 0.7;
 }
 
-#hair:hover{
-    background-image: url("../images/hairstyle2.jpg");
-    color: black;
+#video {
+  background-image: url("../images/video.jpg");
+  background-position: center;
+  opacity: 0.7;
 }
 
-#tailor{
-    background-image: url("../images/tailor3.jpg");
-    text-align: center;
-    background-position: center;
-    opacity: 0.9;
-    font-size: 24px;
-    color: white;
-    text-shadow: #000 0px 0px 1px;
-    -webkit-font-smoothing: antialiased;
+#caterer {
+  background-image: url("../images/caterer.jpg");
+  background-position: center;
+  opacity: 0.7;
 }
 
-#tailor:hover{
-    background-image: url("../images/tailor2.jpg");
-    color: black;
+#music {
+  background-image: url("../images/guitar.jpg");
+  background-position: center;
+  opacity: 0.7;
 }
 
-.vendorList {
-    margin: 45px auto;
+#hair {
+  background-image: url("../images/hairstyle.jpg");
+  background-position: center;
+  opacity: 0.6;
 }
 
-.vendorList ul {
-    overflow: hidden;
-    width: 97%;
-    list-style: none;
-}
-
-.vendorList ul li {
-    display: table-cell;
-    vertical-align: bottom;
-    float: left;
-    width: 13%;
-    margin: 4px;
-}
-
-.vendorCard {
-    height: 414px;
+#tailor {
+  background-image: url("../images/tailor.jpg");
+  background-position: center;
+  opacity: 0.6;
 }
