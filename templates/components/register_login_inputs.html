@@ -1,6 +1,6 @@
 <div class="field">
   <div class="control has-icons-left">
-    <input class="input is-medium is-info{% if errors['usererrors'] %}is-danger{% endif %}" 
+    <input class="input is-medium {% if errors['usererrors'] %}is-danger{% endif %}" 
       type="text" placeholder="Email" name="email" value="{{ email }}">
     <span class="icon is-left">
       <i class="mdi mdi-email-outline"></i>
@@ -8,7 +8,8 @@
     <div class="error-msgs-wrapper">
       {% if errors["usererrors"] %}
         {% for error in errors["usererrors"] %}
-          <p class="error">
+          <p class="help is-danger">
+            <i class="mdi mdi-alert-circle"></i>
             {{ error }}
           </p>
         {% endfor %}
@@ -18,15 +19,16 @@
 </div>
 <div class="field">
   <div class="control has-icons-left">
-    <input class="input is-medium is-info{% if errors['usererrors'] %}is-danger{% endif %}" 
+    <input class="input is-medium {% if errors['passerrors'] %}is-danger{% endif %}" 
       type="password" placeholder="Password" name="password">
     <span class="icon is-left">
       <i class="mdi mdi-lock-outline"></i>
     </span>
     <div class="error-msgs-wrapper">
-      {% if errors["usererrors"] %}
-        {% for error in errors["usererrors"] %}
-          <p class="error">
+      {% if errors["passerrors"] %}
+        {% for error in errors["passerrors"] %}
+          <p class="help-is-danger">
+            <i class="mdi mdi-alert-circle"></i>
             {{ error }}
           </p>
         {% endfor %}
