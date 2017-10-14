@@ -1,22 +1,36 @@
-<input class='signup-field {% if errors["usererrors"] %}error-border{% endif %}'
-type='text' placeholder='Email' name='email' value='{{ email }}'>
-<div class='error-msgs-wrapper'>
-    {% if errors["usererrors"] %}
+<div class="field">
+  <div class="control has-icons-left">
+    <input class="input is-medium is-info{% if errors['usererrors'] %}is-danger{% endif %}" 
+      type="text" placeholder="Email" name="email" value="{{ email }}">
+    <span class="icon is-left">
+      <i class="mdi mdi-email-outline"></i>
+    </span>
+    <div class="error-msgs-wrapper">
+      {% if errors["usererrors"] %}
         {% for error in errors["usererrors"] %}
-            <p class='error'>
-                {{ error }}
-            </p>
+          <p class="error">
+            {{ error }}
+          </p>
         {% endfor %}
-    {% endif %}
+      {% endif %}
+    </div>
+  </div>
 </div>
-<input class='signup-field {% if errors["passerrors"] %}error-border{% endif %}' 
-type='password' placeholder='Password' name='password'>
-<div class='error-msgs-wrapper'>
-    {% if errors["passerrors"] %}
-        {% for error in errors["passerrors"] %}
-            <p class='error'>
-                {{ error }}
-            </p>
+<div class="field">
+  <div class="control has-icons-left">
+    <input class="input is-medium is-info{% if errors['usererrors'] %}is-danger{% endif %}" 
+      type="password" placeholder="Password" name="password">
+    <span class="icon is-left">
+      <i class="mdi mdi-lock-outline"></i>
+    </span>
+    <div class="error-msgs-wrapper">
+      {% if errors["usererrors"] %}
+        {% for error in errors["usererrors"] %}
+          <p class="error">
+            {{ error }}
+          </p>
         {% endfor %}
-    {% endif %}
+      {% endif %}
+    </div>
+  </div>
 </div>
