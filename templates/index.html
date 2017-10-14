@@ -1,38 +1,40 @@
 {% extends "layout.html" %}
+{% block head %}
+    <link type="text/css" href="{{ url_for('static', filename='css/mainpage.css') }}" rel="stylesheet">
+{% endblock %}
 {% block body %}
     <section id="bgImage" class="jumbotron text-center">
       <div class="container">
-        <h1 class="jumbotron-heading">This is my test</h1>
-        <p class="lead text-muted">Some description about the website and it's purpose</p>
+        <h1 class="jumbotron-heading">My Wedding Planner</h1>
+        <p class="lead text-muted">Your wedding plans, all in one place.</p>
         <p>
           <a href="/login" class="btn btn-primary">Log In</a>
           <a href="/signup" class="btn btn-secondary">Register</a>
         </p>
       </div>
     </section>
-
     <div class="vendorList">
       <ul>
         <li>
-          <div class="vendorCard" style="background-color: #a6ff4d" href="#">Venues</div>
+          <div id="venue" class="vendorCard" class="overlay" href="#">Venues</div>
         </li>
         <li>
-          <div class="vendorCard" style="background-color: #cc99ff" href="#">Photographers</div>
+          <div id="photographer" class="vendorCard" href="#">Photographers</div>
         </li>
         <li>
-          <div class="vendorCard" style="background-color: #6699ff" href="#">Videographers</div>
+          <div id="video" class="vendorCard" href="#">Videographers</div>
         </li>
         <li>
-          <div class="vendorCard" style="background-color: #99ddff" href="#">Caterers</div>
+          <div id="caterer" class="vendorCard" style="background-color: #99ddff" href="#">Caterers</div>
         </li>
         <li>
-          <div class="vendorCard" style="background-color: #ffb3ff" href="#">Band/DJ</div>
+          <div id="music" class="vendorCard" style="background-color: #ffb3ff" href="#">Band/DJ</div>
         </li>
         <li>
-          <div class="vendorCard" style="background-color: #ffff4d" href="#">Hairstyle & Make Up Artists</div>
+          <div id="hair"class="vendorCard" style="background-color: #ffff4d" href="#">Hairstyle & Make Up Artists</div>
         </li>
         <li>
-          <div class="vendorCard" style="background-color: #80ffff" href="#">Tailors</div>
+          <div id="tailor" class="vendorCard" style="background-color: #80ffff" href="#">Tailors</div>
         </li>
       </ul>
     </div>
