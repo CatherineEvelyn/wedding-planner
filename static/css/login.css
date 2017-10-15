@@ -1,50 +1,49 @@
 /* --- SIGNUP FORM --- */
 
 form {
-    width: 340px;
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 div.wrapper {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    height: -webkit-calc(100vh - 57px);
-    height: calc(100vh - 57px);
-    flex-flow: column;
-    margin: auto;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-        -ms-flex-align: center;
-            align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: -webkit-calc(100vh - 52px);
+  height: calc(100vh - 52px);
+  flex-flow: column;
+  margin: auto;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+    -ms-flex-pack: center;
+      justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+    -ms-flex-align: center;
+      align-items: center;
 }
+
 div.wrapper h1 {
-    display: inline-block;
-    margin-bottom: 0;
+  display: inline-block;
+  margin-bottom: 0;
 }
 
 .signup-container {
-    display: table-cell;
-    vertical-align: middle;
+  width: 30%;
 }
 
 .form-container-signup {
-    font-family: "Raleway", sans-serif;
-    border-left: 4px solid #03a9f4;
-    border-radius: 4px;
-    padding: 30px;
-    background-color: white;
-    -webkit-box-shadow: 0 1px 8px 0 rgba(0,0,0,.2), 
-                        0 3px 4px 0 rgba(0,0,0,.14), 
-                        0 3px 3px -2px rgba(0,0,0,.12);
-            box-shadow: 0 1px 8px 0 rgba(0,0,0,.2), 
-                        0 3px 4px 0 rgba(0,0,0,.14), 
-                        0 3px 3px -2px rgba(0,0,0,.12);
+  font-family: "Raleway", sans-serif;
+  border-left: 4px solid #03a9f4;
+  border-radius: 4px;
+  padding: 30px;
+  background-color: white;
+  -webkit-box-shadow: 0 1px 8px 0 rgba(0,0,0,.2), 
+            0 3px 4px 0 rgba(0,0,0,.14), 
+            0 3px 3px -2px rgba(0,0,0,.12);
+      box-shadow: 0 1px 8px 0 rgba(0,0,0,.2), 
+            0 3px 4px 0 rgba(0,0,0,.14), 
+            0 3px 3px -2px rgba(0,0,0,.12);
 }
 
 .signup-tabs {
@@ -61,67 +60,92 @@ div.wrapper h1 {
 }
 
 .toggle-form {
-  font-size: 1rem;
-  margin: 0 1rem;
+  font-size: 0.8rem;
   color: #9e9e9e;
   cursor: pointer;
   text-decoration: none;
 }
 
-.toggle-form:hover {
-  color: #B3E5FC;
-  text-decoration: none;
+.tabs:not(:last-child) {
+  margin-bottom: 0;
 }
 
-.active-form {
-  color: #33B8F7;
-  text-decoration: none;
+.tabs {
+  margin-left: 1.3rem;
+  position: relative;
+  bottom: 6px;
+}
+
+.tabs a {
+  padding: 0.4em 0.8em;
+}
+
+.expanded-form {
+  width: 60%;
+}
+
+.zip-input {
+  max-width: 50%;
+}
+
+.state-zip-group {
+  max-width: 33%;
 }
 
 .submit-button {
-    font-family: "Raleway", sans-serif;
-    background-color: #03a9f4;
-    width: 100%;
-    margin: 30px 0 10px;
-    font-weight: bold;
-    -webkit-border-radius: 6px;
-            border-radius: 6px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 3px solid #0089c7;
-    font-size: 1.1em;
-    padding: 14px 18px;
-    color: #FFF;
+  font-family: "Raleway", sans-serif;
+  background-color: #03a9f4;
+  width: 100%;
+  margin: 30px 0 10px;
+  font-weight: bold;
+  -webkit-border-radius: 6px;
+      border-radius: 6px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 3px solid #0089c7;
+  font-size: 1.1em;
+  padding: 14px 18px;
+  color: #FFF;
 }
 
 .submit-button:focus {
-    outline: none;
+  outline: none;
 }
 
-.submit-button:hover{
-    cursor: pointer;
-    background-color: #26b7f9;
+.submit-button:hover {
+  cursor: pointer;
+  background-color: #26b7f9;
+}
+
+.large-form-submit {
+  display: block;
+  width: 50%;
+  margin: 1.5rem auto 0;
+}
+
+.checkbox {
+  margin: auto;
 }
 
 .error-msgs-wrapper {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 #create-msg {
-    font-size: 0.8em;
-    text-align: center;
-    text-decoration: none;
+  font-size: 0.8em;
+  text-align: center;
+  text-decoration: none;
 }
 
 #create-account:link, #create-account:visited {
-    font-family: "Raleway", sans-serif;
-    font-weight: 500;
-    color: #03a9f4;
-    text-decoration: none;
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  color: #03a9f4;
+  text-decoration: none;
 }
 
 #create-account:hover, #create-account:visited:hover {
-    color: #0089c7;
+  color: #0089c7;
 }

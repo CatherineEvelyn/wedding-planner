@@ -8,15 +8,17 @@ function addSignupListener() {
     let $self = $(e.currentTarget);
     console.log($self);
 
-    $('.toggle-form').removeClass('active-form');
-    $self.addClass('active-form');
+    $('.toggle-form').parent().removeClass('is-active');
+    $self.parent().addClass('is-active');
 
     if ($self.hasClass('show-vendor')) {
       $('.vendor-signup').show();
       $('.organizer-signup').hide();
+      $('.signup-container').addClass('expanded-form');
     } else {
       $('.vendor-signup').hide();
       $('.organizer-signup').show();
+      $('.signup-container').removeClass('expanded-form');
     }
   })
 }
