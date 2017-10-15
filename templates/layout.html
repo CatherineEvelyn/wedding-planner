@@ -39,7 +39,8 @@
         </ul>
         {% endfor %}
     </div>
-    {% endif %} {% endwith %} {% block body %}{% endblock %}
+    {% endif %} {% endwith %}
+    {% block body %}{% endblock %}
     <footer class="text-muted">
         <div class="container">
             <p class="float-right">
@@ -55,6 +56,7 @@
     </script>
     <!-- Optional JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
 </body>
 
 </html>
