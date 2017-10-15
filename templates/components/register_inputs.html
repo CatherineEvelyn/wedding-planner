@@ -1,5 +1,5 @@
 <input class = 'signup-field {% if errors["usererrors"] %}error-border{% endif %}'
-type = 'text' placeholder = 'Username' name = 'username' value='{{ username }}'>
+type = 'text' placeholder = 'Email' name = 'email' value='{{ email }}'>
 <div class='error-msgs-wrapper'>
     {% if errors["usererrors"] %}
         {% for error in errors["usererrors"] %}
