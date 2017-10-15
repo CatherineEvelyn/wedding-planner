@@ -20,16 +20,16 @@ class User_Vendor(db.Model):
     users_id = db.Column(db.Integer, db.ForeignKey('user.id', primary_key=True))
     eventDate = db.Column(db.Date)
     eventStartTime = db.Column(db.Time)
-    eventEendTime = db.Column(db.Time)
+    eventEndTime = db.Column(db.Time)
     user = db.relationship("User")
     vendor = db.relationship("Vendor")
 
-    def __init__(self, vendor_id, users_id, eventDate, eventStartTime, eventEendTime):
+    def __init__(self, vendor_id, users_id, eventDate, eventStartTime, eventEndTime):
         self.vendor_id = vendor_id
         self.users_id = users_id
         self.eventDate = eventDate
         self.eventStartTime = eventStartTime
-        self.eventEendTime = eventEendTime
+        self.eventEndTime = eventEndTime
 
 
 class Vendor(db.Model):
@@ -139,8 +139,8 @@ def book():
         users_id=users.id
         eventDate = request.form["eventDate"]
         eventStartTime = request.form["eventStartTime"]
-        eventEendTime = request.form["eventEendTime"]
-        new_Booking = User_Vendor(vendor_id, users_id,eventDate, eventStartTime, eventEendTime)
+        eventEndTime = request.form["eventEndTime"]
+        new_Booking = User_Vendor(vendor_id, users_id,eventDate, eventStartTime, eventEndTime)
         db.session.add(new_Booking)
         db.session.commit()
         return redirect("/")
@@ -205,7 +205,7 @@ def signup():
                     db.session.add(new_user)
                     db.session.commit()
                     session['email'] = email
-                    return render_template('verify_email.html')
+                    return render_template('confirmation-page.html')
                 else:
                     usererrors.append("Email is already in use.")
             else:
@@ -218,7 +218,7 @@ def signup():
                     db.session.add(new_vendor)
                     db.session.commit()
                     session['email'] = email
-                    return render_template('verify_email.html')
+                    return render_template('confirmation-page.html')
                 else:
                     usererrors.append("Email is already in use.")
 
