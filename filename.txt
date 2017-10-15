@@ -1,0 +1,43 @@
+diff --git a/main.py b/main.py
+index 1fd264b..1a9178c 100644
+--- a/main.py
++++ b/main.py
+@@ -21,6 +21,13 @@ class User_Vendor(db.Model):
+     #user = db.relationship("User", back_populates="vendor")
+     #vendor = db.relationship("Vendor", back_populates="user")
+ 
++    def __init__(self, vendor_id, users_id, eventDate, eventStartTime, eventEendTime):
++        self.vendor_id = vendor_id
++        self.users_id = users_id
++        self.eventDate = eventDate
++        self.eventStartTime = eventStartTime
++        self.eventEendTime = eventEendTime
++
+ 
+ class Vendor(db.Model):
+     __tablename__ = 'vendor'
+@@ -118,6 +125,24 @@ def profile():
+ def organizer():
+     return render_template("organizer.html")
+ 
++@app.route('/book', methods=['POST', 'GET'])
++def book():
++    if request.method == "GET":
++        return render_template("book.html")
++    if request.method == "POST":
++        #vendor =Vendor.query.filter_by(email="kim@email.com").first()
++        #users=User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
++        vendor_id=1
++        users_id=1
++        eventDate = request.form["eventDate"]
++        eventStartTime = request.form["eventStartTime"]
++        eventEendTime = request.form["eventEendTime"]
++        new_Booking = User_Vendor("vendor_id", "users_id","eventDate", "eventStartTime", "eventEendTime")
++        db.session.add(new_Booking)
++        db.session.commit()
++        redirect("/")
++
++
+ @app.route('/signup', methods=['GET', 'POST'])
+ def signup():
+     usererrors, passerrors, verifyerrors = [], [], []

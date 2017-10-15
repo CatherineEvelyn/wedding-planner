@@ -2,6 +2,8 @@ from flask import Flask, request, redirect, render_template, url_for, session, f
 from flask_sqlalchemy import SQLAlchemy
 from hashutils import *
 import re
+from faker import Faker
+import random
 
 
 app = Flask(__name__)
@@ -11,13 +13,27 @@ app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "246Pass"
 
-user_vendor = db.Table('user_vendor',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('vendor_id', db.Integer, db.ForeignKey('vendors.id'))
-)
+class User_Vendor(db.Model):
+    __tablename__ = "user_vendor"
+    id = db.Column(db.Integer, primary_key=True) 
+    vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id', primary_key=True))
+    users_id = db.Column(db.Integer, db.ForeignKey('user.id', primary_key=True))
+    eventDate = db.Column(db.Date)
+    eventStartTime = db.Column(db.Time)
+    eventEendTime = db.Column(db.Time)
+    user = db.relationship("User")
+    vendor = db.relationship("Vendor")
+
+    def __init__(self, vendor_id, users_id, eventDate, eventStartTime, eventEendTime):
+        self.vendor_id = vendor_id
+        self.users_id = users_id
+        self.eventDate = eventDate
+        self.eventStartTime = eventStartTime
+        self.eventEendTime = eventEendTime
+
 
 class Vendor(db.Model):
-    __tablename__ = 'vendors'
+    __tablename__ = 'vendor'
     id = db.Column(db.Integer, primary_key=True) #prim key to differentiate vendors
     businessName = db.Column(db.String(100))
     contactName = db.Column(db.String(50))
@@ -30,8 +46,8 @@ class Vendor(db.Model):
     priceMin = db.Column(db.Integer)
     priceMax = db.Column(db.Integer)
     password = db.Column(db.String(100))
+    users = db.relationship("User_Vendor")#, backrefs="vendor")
 
-    #children = db.relationship("User", secondary=user_vendor)
 
     def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, priceMin, priceMax, password):
         self.businessName = businessName
@@ -47,13 +63,14 @@ class Vendor(db.Model):
         self.password = password
 
 class User(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True) #prim key to differentiate users
     name = db.Column(db.String(100))
     email = db.Column(db.String(30))
     phoneNumber = db.Column(db.Integer)
     password = db.Column(db.String(100))
-    # userVendors = db.relationship('Vendor', secondary=user_vendor, backref='user')
+    numberOfGuests = db.Column(db.Integer)
+    vendor = db.relationship("User_Vendor")#, backrefs="user")
 
     def __init__(self, email, password):
         self.email = email
@@ -111,6 +128,24 @@ def profile():
 def organizer():
     return render_template("organizer.html")
 
+@app.route('/book', methods=['POST', 'GET'])
+def book():
+    if request.method == "GET":
+        return render_template("book.html")
+    if request.method == "POST":
+        vendor =Vendor.query.filter_by(email="kim@email.com").first()
+        users=User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
+        vendor_id=vendor.id
+        users_id=users.id
+        eventDate = request.form["eventDate"]
+        eventStartTime = request.form["eventStartTime"]
+        eventEendTime = request.form["eventEendTime"]
+        new_Booking = User_Vendor(vendor_id, users_id,eventDate, eventStartTime, eventEendTime)
+        db.session.add(new_Booking)
+        db.session.commit()
+        return redirect("/")
+
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     usererrors, passerrors, verifyerrors = [], [], []
@@ -132,7 +167,7 @@ def signup():
         # XXX Not sure if we need this
         # name=request.form['name']
         # phoneNumber=request.form['phoneNumber']
-        # current_users = User.query.filter_by(email = email).first()
+        # current_users = User.query.filter_by(email=email).first()
 
         if not email:
             usererrors.append('This field cannot be left blank.')
@@ -172,7 +207,7 @@ def signup():
                     session['email'] = email
                     return render_template('verify_email.html')
                 else:
-                    usererrors.append("email already exists")
+                    usererrors.append("Email is already in use.")
             else:
                 vendor = Vendor.query.filter_by(email=email).first()
                 # Check if email already exists
@@ -185,12 +220,42 @@ def signup():
                     session['email'] = email
                     return render_template('verify_email.html')
                 else:
-                    usererrors.append("email already exists")
+                    usererrors.append("Email is already in use.")
 
         # If method == post
         return render_template('signup.html', errors=errors, email=email)
     # method == get
     return render_template('signup.html', errors=errors)
+
+
+# FOR TESTING PURPOSES ONLY
+@app.route('/gendata')
+def genData():
+  vendorTypes = ['venue', 'photographer', 'videographer', 'caterer', 'music', 'cosmetics', 'tailor']
+  fake = Faker()
+  for i in range(5):
+    user = User(
+      fake.email(),
+      fake.password(length=10, digits=True, upper_case=True, lower_case=True)
+    )
+    vendor = Vendor(
+      fake.email(),
+      fake.company(),
+      fake.name(),
+      fake.street_address(),
+      fake.city(),
+      fake.zipcode(),
+      random.randrange(1, 6),
+      random.choice(vendorTypes),
+      random.randrange(1, 101),
+      random.randrange(101, 501),
+      fake.password(length=10, digits=True, upper_case=True, lower_case=True)
+    )
+    db.session.add(user)
+    db.session.add(vendor)
+    db.session.commit()
+  return redirect('/') 
+# END TESTING #
 
 if __name__ == '__main__': #run app
     app.run()
