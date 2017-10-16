@@ -70,6 +70,7 @@ class User(db.Model):
     phoneNumber = db.Column(db.Integer)
     password = db.Column(db.String(100))
     numberOfGuests = db.Column(db.Integer)
+    eventDate = db.Column(db.Date)
     vendor = db.relationship("User_Vendor")#, backrefs="user")
 
     def __init__(self, email, password):
