@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, url_for, session, flash
+from flask import Flask, request, redirect, render_template, url_for, session, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from hashutils import *
 import re
@@ -145,6 +145,32 @@ def book():
         db.session.commit()
         return redirect("/")
 
+@app.route('/vendor-list')
+def vendorList():
+    return render_template('vendor-list.html')
+
+# AJAX call to return data from the DB as a json array
+@app.route('/vendor')
+def vendor():
+    vendor_type = request.args.get("type")
+    query = Vendor.query.filter_by(vendorType=vendor_type)
+    vendors = []
+    for vendor in query:
+        vendors.append({
+            "id": vendor.id,
+            "businessName": vendor.businessName,
+            "contactName": vendor.contactName,
+            "email":vendor.email,
+            "streetAddress": vendor.streetAddress,
+            "city": vendor.city,
+            "zipcode": vendor.zipcode,
+            "rating": vendor.rating,
+            "vendorType": vendor.vendorType,
+            "prinMin": vendor.priceMin,
+            "priceMax": vendor.priceMax
+        })
+    return jsonify(type=vendor_type, vendors=vendors)
+    # return jsonify({"type": vendor_type, "vendors": vendors})
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
