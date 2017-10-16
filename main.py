@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template, url_for, session, f
 from flask_sqlalchemy import SQLAlchemy
 from hashutils import *
 import re
-from faker import Faker
+#from faker import Faker
 import random
 
 
