@@ -1,52 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='components/bulma/css/bulma.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='components/mdi/css/materialdesignicons.min.css') }}" media="all">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"> {% block head %} {% endblock %}
-</head>
+  </head>
+  <body>
+    <div class="container is-white">
+      <nav class="navbar" role="navigation" aria-label="dropdown navigation">
+        <div class="navbar-brand">
+          <a href="/" class="navbar-item">
+            <span>My Wedding Planner</span>
+          </a>
+        </div>
 
-<body>
-
-    <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8 py-4">
-                    <a href="/gendata">Generate Vendors!</a>
-                </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Vendors
+          </a>
+          <div class="navbar-dropdown is-boxed">
+            <a class="navbar-item">
+              Venues
+            </a>
+            <a class="navbar-item">
+              Photographers
+            </a>
+            <a class="navbar-item">
+              Videographers
+            </a>
+            <a class="navbar-item">
+              Caterers
+            </a>
+            <a class="navbar-item">
+              Music
+            </a>
+            <a class="navbar-item">
+              Cosmetics
+            </a>
+            <a class="navbar-item">
+              Tailors
+            </a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <a href="/gendata">
+            Generate Data
+          </a>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="field is-grouped">
+              <p class="control">
+                <a class="button is-info is-outlined" href="/login">
+                  <span><i class="mdi mdi-login-variant"></i> Login</span>
+                </a>
+              </p>
             </div>
+          </div>
         </div>
+      </nav>
     </div>
 
-    <div id="mainNavbar" class="navbar navbar-dark bg-dark">
-        <div class="container d-flex justify-content-between">
-            <a href="#" class="navbar-brand">My Wedding Planner</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        </div>
-    </div>
     {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
     <div id="fm-container" class="fm-container">
-        {% for category, message in messages %}
-        <ul id="flash-container" class="flash-container-{{ category }}">
-            <li class="flash">{{ message }}</li>
-            <img class="close-flash-btn" src="/static/images/close-btn.png">
-        </ul>
-        {% endfor %}
+      {% for category, message in messages %}
+      <ul id="flash-container" class="flash-container-{{ category }}">
+        <li class="flash">{{ message }}</li>
+        <img class="close-flash-btn" src="/static/images/close-btn.png">
+      </ul>
+      {% endfor %}
     </div>
     {% endif %} {% endwith %}
-    {% block body %}{% endblock %}
-    <footer class="text-muted">
-        <div class="container">
-            <p class="float-right">
-                <a href="#">Back to top</a>
-            </p>
+    <div class="container is-fluid is-marginless bg-image">
+      {% block body %} {% endblock %}
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p>
+            <strong><a href="#">Back to top</a></strong>
+          </p>
         </div>
+      </div>
     </footer>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -56,7 +95,5 @@
     </script>
     <!-- Optional JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    {% block scripts %}{% endblock %}
-</body>
-
+  </body>
 </html>
