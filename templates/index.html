@@ -3,6 +3,7 @@
     <link type="text/css" href="{{ url_for('static', filename='css/mainpage.css') }}" rel="stylesheet">
 {% endblock %}
 {% block body %}
+  <div class="container is-fluid is-marginless bg-image">
     <section id="bgImage" class="section">
         <div class="container has-text-centered">
             <h1 class="title is-1 mainpage-title">My Wedding Planner</h1>
@@ -22,10 +23,10 @@
         </div>
     </section>
     <div class="section">
-        <div class="container is-fluid">
+        <div class="container">
             <div class="columns">
                     <div class="column">
-                        <a href="/vendors?type=venues">
+                        <a href="/vendors?type=venue">
                             <div class="vendor-card">
                                 <div class="vendor-card-image" id="venue"></div>
                                 <div class="vendor-icon">
@@ -38,7 +39,7 @@
                         </a>
                     </div>
                     <div class="column">
-                        <a href="/vendors?type=photographers">
+                        <a href="/vendors?type=photographer">
                             <div class="vendor-card">
                                 <div class="vendor-card-image" id="photographer"></div>
                                 <div class="vendor-icon">
@@ -51,7 +52,7 @@
                         </a>
                     </div>
                     <div class="column">
-                        <a href="/vendors?type=videographers">
+                        <a href="/vendors?type=videographer">
                             <div class="vendor-card">
                                 <div class="vendor-card-image" id="video"></div>
                                 <div class="vendor-icon">
@@ -64,7 +65,7 @@
                         </a>
                     </div>
                     <div class="column">
-                        <a href="/vendors?type=caterers">
+                        <a href="/vendors?type=caterer">
                             <div class="vendor-card">
                                 <div class="vendor-card-image" id="caterer"></div>
                                 <div class="vendor-icon">
@@ -106,7 +107,7 @@
                         </a>
                     </div>
                     <div class="column">
-                        <a href="/vendors?type=tailors">
+                        <a href="/vendors?type=tailor">
                             <div class="vendor-card">
                                 <div class="vendor-card-image" id="tailor"></div>
                                 <div class="vendor-icon">
@@ -122,4 +123,5 @@
             </div>
         </div>
     </div>
+  </div>
 {% endblock %}

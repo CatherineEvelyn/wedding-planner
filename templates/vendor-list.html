@@ -10,17 +10,85 @@
 -->
 
  <!-- TODO: Use bulma to design this page -->
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vendor-list.css') }}">
+{% endblock %}
 {% extends 'layout.html' %}
 {% block body %}
-<ul>
-  <li> <a href="#venues" class="getVendorByType" data-type="venues">Venues</a></li>
-  <li> <a href="#photographers" class="getVendorByType" data-type="photographers">Photographers</a></li>
-  <li> <a href="#videographers" class="getVendorByType" data-type="videographers">Videographers</a></li>
-  <li> <a href="#caterers" class="getVendorByType" data-type="caterers">Caterers</a></li>
-  <li> <a href="#bands" class="getVendorByType" data-type="band">Band/DJ</a></li>
-  <li> <a href="#hair" class="getVendorByType" data-type="hair">Hairstyle &amp; Make Up Artists</a></li>
-  <li> <a href="#tailors" class="getVendorByType" data-type="tailors">Tailors</a></li>
-</ul>
+<div class="container">
+  <div class="section">
+    <div class="columns">
+      <div class="column is-one-quarter">
+        <aside class="menu vendor-search-menu">
+          <p class="menu-label">
+            Vendor Search
+          </p>
+          <div class="field">
+            <div class="control has-icons-left">
+              <input class="input" type="text" placeholder="Name, type, location...">
+              <span class="icon is-left">
+                <i class="mdi mdi-magnify"></i>
+              </span>
+            </div>
+          </div>
+          <p class="menu-label">
+            Vendor Types
+          </p>
+          <ul class="menu-list">
+            <li>
+              <a class="getVendorByType" data-type="venue">
+                Venues
+              </a>
+            </li>
+            <li>
+              <a class="getVendorByType" data-type="photographer">
+                Photographers
+              </a>
+            </li>
+            <li>
+              <a class="getVendorByType" data-type="videographer">
+                Videographers
+              </a>
+            </li>
+            <li>
+              <a class="getVendorByType" data-type="caterer">
+                Caterers
+              </a>
+            </li>
+            <li>
+              <a class="getVendorByType" data-type="music">
+                Band/DJ
+              </a>
+            </li>
+            <li>
+              <a class="getVendorByType" data-type="cosmetics">
+                Hairstyle &amp; Make Up Artists
+              </a>
+            </li>
+            <li>
+              <a class="getVendorByType" data-type="tailor">
+                Tailors
+              </a>
+            </li>
+          </ul>
+        </aside>
+      </div>
+      <div class="column">
+        <div class="tile is-ancestor">
+          {% for vendor in vendors %}
+            <div class="tile is-parent">
+              <article class="tile is-child notification is-primary">
+                <p class="title">{{ vendor.contactName }}</p>
+                <p class="subtitle">{{ vendor.vendorType }}</p>
+                <small>{{ vendor.streetAddress }}, {{ vendor.city }}</small>
+              </article>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 {% block scripts %}
 <script defer>

@@ -15,7 +15,7 @@ app.secret_key = "246Pass"
 
 class User_Vendor(db.Model):
     __tablename__ = "user_vendor"
-    id = db.Column(db.Integer, primary_key=True) 
+    id = db.Column(db.Integer, primary_key=True)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id', primary_key=True))
     users_id = db.Column(db.Integer, db.ForeignKey('user.id', primary_key=True))
     eventDate = db.Column(db.Date)
@@ -133,10 +133,10 @@ def book():
     if request.method == "GET":
         return render_template("book.html")
     if request.method == "POST":
-        vendor =Vendor.query.filter_by(email="kim@email.com").first()
-        users=User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
-        vendor_id=vendor.id
-        users_id=users.id
+        vendor = Vendor.query.filter_by(email="kim@email.com").first()
+        users = User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
+        vendor_id = vendor.id
+        users_id = users.id
         eventDate = request.form["eventDate"]
         eventStartTime = request.form["eventStartTime"]
         eventEndTime = request.form["eventEndTime"]
@@ -145,15 +145,17 @@ def book():
         db.session.commit()
         return redirect("/")
 
-@app.route('/vendor-list')
+@app.route('/vendors', methods=['GET', 'POST'])
 def vendorList():
-    return render_template('vendor-list.html')
+    vendor_type = request.args.get("type")
+    vendors = Vendor.query.filter_by(vendorType=vendor_type).all()
+    return render_template('vendor-list.html', vendors=vendors)
 
 # AJAX call to return data from the DB as a json array
-@app.route('/vendor')
+@app.route('/getvendors')
 def vendor():
     vendor_type = request.args.get("type")
-    query = Vendor.query.filter_by(vendorType=vendor_type)
+    query = Vendor.query.filter_by(vendorType=vendor_type).all()
     vendors = []
     for vendor in query:
         vendors.append({
@@ -262,7 +264,7 @@ def genData():
   for i in range(5):
     user = User(
       fake.email(),
-      fake.password(length=10, digits=True, upper_case=True, lower_case=True)
+      make_pw_hash(fake.password(length=10, digits=True, upper_case=True, lower_case=True))
     )
     vendor = Vendor(
       fake.email(),
@@ -275,12 +277,12 @@ def genData():
       random.choice(vendorTypes),
       random.randrange(1, 101),
       random.randrange(101, 501),
-      fake.password(length=10, digits=True, upper_case=True, lower_case=True)
+      make_pw_hash(fake.password(length=10, digits=True, upper_case=True, lower_case=True))
     )
     db.session.add(user)
     db.session.add(vendor)
     db.session.commit()
-  return redirect('/') 
+  return redirect('/')
 # END TESTING #
 
 if __name__ == '__main__': #run app

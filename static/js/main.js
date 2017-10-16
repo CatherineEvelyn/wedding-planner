@@ -50,7 +50,7 @@ function addAjaxListeners(){
 function getVendorByType(type){
   $.ajax({
     method: 'GET',
-    url: '/vendor?type=' + type
+    url: '/getvendors?type=' + type
   })
   .done(json => {
     console.log(json);

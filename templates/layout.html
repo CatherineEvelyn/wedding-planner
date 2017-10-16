@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"> {% block head %} {% endblock %}
   </head>
   <body>
-    <div class="container is-white">
+    <div class="container">
       <nav class="navbar" role="navigation" aria-label="dropdown navigation">
         <div class="navbar-brand">
           <a href="/" class="navbar-item">
@@ -19,29 +19,29 @@
         </div>
 
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
+          <a href="/vendors" class="navbar-link">
             Vendors
           </a>
           <div class="navbar-dropdown is-boxed">
-            <a class="navbar-item">
+            <a class="navbar-item" href="/vendors?type=venue">
               Venues
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="/vendors?type=photographer">
               Photographers
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="/vendors?type=videographer">
               Videographers
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="/vendors?type=caterer">
               Caterers
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="/vendors?type=music">
               Music
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="/vendors?type=cosmetics">
               Cosmetics
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="/vendors?type=tailor">
               Tailors
             </a>
           </div>
@@ -75,9 +75,7 @@
       {% endfor %}
     </div>
     {% endif %} {% endwith %}
-    <div class="container is-fluid is-marginless bg-image">
       {% block body %} {% endblock %}
-    </div>
     <footer class="footer">
       <div class="container">
         <div class="content has-text-centered">
