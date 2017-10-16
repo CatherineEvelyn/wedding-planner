@@ -1,0 +1,15 @@
+<!-- TODO: This page will show a confirmation that we have received user's registration form.
+    This page explains to user that registration is complete/success and that they can log in, bla bla bla.
+    It should have a button to go to login.html
+-->
+
+<!-- I've copy pasted these lines of codes from verify_email.html and deleted that page -->
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>SUCCESS!</h1>
+    <p>Thank you for signing up. We sent an email to <b>{{session['email']}}</b> to verify your account</p>
+    <p>Once you have verified your email, use the link below to login to your account</p>
+    <a href="/login">Login</a>
+  </body>
+</html>

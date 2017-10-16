@@ -1,5 +1,6 @@
 $(function () {
   addSignupListener();
+  addBlur();
 });
 
 function addSignupListener() {
@@ -18,4 +19,21 @@ function addSignupListener() {
       $('.organizer-signup').show();
     }
   })
+}
+
+function addBlur() {
+  $('.vendor-card').on({
+    mouseover: e => {
+      let $self = $(e.currentTarget);
+      $self.children('.vendor-card-image').addClass('in-focus');
+      $self.children('.vendor-icon').addClass('slide-up');
+      $self.children('.vendor-text').addClass('text-shown');
+    },
+    mouseleave: e => {
+      let $self = $(e.currentTarget);
+      $self.children('.vendor-card-image').removeClass('in-focus');
+      $self.children('.vendor-icon').removeClass('slide-up');
+      $self.children('.vendor-text').removeClass('text-shown');
+    }
+  });
 }
