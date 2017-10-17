@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template, url_for, session, f
 from flask_sqlalchemy import SQLAlchemy
 from hashutils import *
 import re
-from faker import Faker
+#from faker import Faker
 import random
 
 
@@ -46,10 +46,12 @@ class Vendor(db.Model):
     priceMin = db.Column(db.Integer)
     priceMax = db.Column(db.Integer)
     password = db.Column(db.String(100))
+    state = db.Column(db.String(2))
+
     users = db.relationship("User_Vendor")#, backrefs="vendor")
 
 
-    def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, priceMin, priceMax, password):
+    def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, priceMin, priceMax, password, state):
         self.businessName = businessName
         self.contactName = contactName
         self.email = email
@@ -61,6 +63,7 @@ class Vendor(db.Model):
         self.priceMin = priceMin
         self.priceMax = priceMax
         self.password = password
+        self.state = state
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -239,9 +242,9 @@ def signup():
                 vendor = Vendor.query.filter_by(email=email).first()
                 # Check if email already exists
                 if not vendor:
-                    # Hash the password before sending to DB
+                    # Hash the password before sending to DB#
                     # TODO add the rest of the vendor fields
-                    new_vendor = Vendor(email, None, None, None, None, None, None, None, None, None, make_pw_hash(password))
+                    new_vendor = Vendor(email, None, None, None, None, None, None, None, None, None, make_pw_hash(password), None)
                     db.session.add(new_vendor)
                     db.session.commit()
                     session['email'] = email
@@ -256,7 +259,7 @@ def signup():
 
 
 # FOR TESTING PURPOSES ONLY
-@app.route('/gendata')
+'''@app.route('/gendata')
 def genData():
   vendorTypes = ['venue', 'photographer', 'videographer', 'caterer', 'music', 'cosmetics', 'tailor']
   fake = Faker()
@@ -283,6 +286,6 @@ def genData():
     db.session.commit()
   return redirect('/') 
 # END TESTING #
-
+'''
 if __name__ == '__main__': #run app
     app.run()
