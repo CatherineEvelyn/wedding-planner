@@ -54,22 +54,32 @@ function getVendorByType(type){
   })
   .done(json => {
     console.log(json);
+    displayVendors(json);
     api_call_made = false;
   })
 }
 
 function displayVendors(json) {
-  const $vendorCardWrapper = $('<div />', {"class": "tile is-parent vendor-list-card"}).append(
-    $("<article />", {"class": "tile is-child notification is-info"}).append(
-      $("<p />", {"class": "title"}),
-      $("<p />", {"class": "subtitle"}),
-      $("<p />"),
+  let $wrapper = $(".vendor-list-card-wrapper")
+
+  $wrapper.empty();
+
+  $.each(json.vendors, function(index, value) {
+    let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
+    let $card = $("<article />", {"class": "tile is-child notification is-info"});
+
+    $card.append(
+      $("<p />", {"class": "title", "html": value.contactName}), 
+      $("<p />", {"class": "subtitle", "html": value.vendorType}),
+      $("<p />", {"html": value.businessName}),
       $("<p />").append(
-        $("<small />")
-      ),
+        $("<small />", {"html": value.streetAddress})
+      ), 
       $("<p />").append(
-        $("<small />")
+        $("<small />", {"html": value.city})
       )
-    )
-  );
+    );
+    $vendorCardWrapper.append($card);
+    $wrapper.append($vendorCardWrapper);
+  });
 }
