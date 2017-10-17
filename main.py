@@ -28,9 +28,9 @@ class UserVendor(db.Model):
     vendor = db.relationship('Vendor', backref="user_assoc")
     user = db.relationship('User', backref="vendor_assoc")
 
-    def __init__(self, vendor_id, users_id, eventDate, eventStartTime, eventEndTime):
+    def __init__(self, vendor_id, user_id, eventDate, eventStartTime, eventEndTime):
         self.vendor_id = vendor_id
-        self.users_id = users_id
+        self.user_id = user_id
         self.eventDate = eventDate
         self.eventStartTime = eventStartTime
         self.eventEndTime = eventEndTime
@@ -147,14 +147,14 @@ def book():
     if request.method == "GET":
         return render_template("book.html")
     if request.method == "POST":
-        vendor =Vendor.query.filter_by(email="kim@email.com").first()
+        vendor =Vendor.query.filter_by(email="TestVendor@email.com").first()
         users=User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
-        vendor_id=vendor.id
-        users_id=users.id
+        vendor_id=1
+        users_id=1
         eventDate = request.form["eventDate"]
         eventStartTime = request.form["eventStartTime"]
         eventEndTime = request.form["eventEndTime"]
-        new_Booking = User_Vendor(vendor_id, users_id,eventDate, eventStartTime, eventEndTime)
+        new_Booking = UserVendor(users_id, vendor_id, eventDate, eventStartTime, eventEndTime)
         db.session.add(new_Booking)
         db.session.commit()
         return redirect("/")
