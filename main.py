@@ -147,8 +147,11 @@ def book():
 
 @app.route('/vendors', methods=['GET', 'POST'])
 def vendorList():
-    vendor_type = request.args.get("type")
-    vendors = Vendor.query.filter_by(vendorType=vendor_type).all()
+    if request.args.get("type"):
+        vendor_type = request.args.get("type")
+        vendors = Vendor.query.filter_by(vendorType=vendor_type).all()
+    else:
+        vendors = Vendor.query.all()
     return render_template('vendor-list.html', vendors=vendors)
 
 # AJAX call to return data from the DB as a json array

@@ -15,17 +15,17 @@
 {% endblock %}
 {% extends 'layout.html' %}
 {% block body %}
-<div class="container">
+<div class="container is-fluid">
   <div class="section">
     <div class="columns">
-      <div class="column is-one-quarter">
-        <aside class="menu vendor-search-menu">
+      <div class="column is-2">
+        <aside class="menu vendor-search-menu sticky">
           <p class="menu-label">
             Vendor Search
           </p>
           <div class="field">
             <div class="control has-icons-left">
-              <input class="input" type="text" placeholder="Name, type, location...">
+              <input class="input is-small" type="text" placeholder="Name, type, location...">
               <span class="icon is-left">
                 <i class="mdi mdi-magnify"></i>
               </span>
@@ -73,14 +73,17 @@
           </ul>
         </aside>
       </div>
+      <div class="column is-narrow"></div>
       <div class="column">
-        <div class="tile is-ancestor">
+        <div class="tile is-ancestor vendor-list-card-wrapper">
           {% for vendor in vendors %}
-            <div class="tile is-parent">
-              <article class="tile is-child notification is-primary">
+            <div class="tile is-parent vendor-list-card">
+              <article class="tile is-child notification is-info">
                 <p class="title">{{ vendor.contactName }}</p>
                 <p class="subtitle">{{ vendor.vendorType }}</p>
-                <small>{{ vendor.streetAddress }}, {{ vendor.city }}</small>
+                <p>{{ vendor.businessName }}</p>
+                <p><small>{{ vendor.streetAddress }}</small></p>
+                <p><small>{{ vendor.city }}</small></p>
               </article>
             </div>
           {% endfor %}
@@ -104,5 +107,8 @@
       getVendorByType(tag);
     }
   }
+  
+  var elements = $('.sticky');
+  Stickyfill.add(elements);
 </script>
 {% endblock %}

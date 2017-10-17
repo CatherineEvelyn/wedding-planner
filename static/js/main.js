@@ -57,3 +57,19 @@ function getVendorByType(type){
     api_call_made = false;
   })
 }
+
+function displayVendors(json) {
+  const $vendorCardWrapper = $('<div />', {"class": "tile is-parent vendor-list-card"}).append(
+    $("<article />", {"class": "tile is-child notification is-info"}).append(
+      $("<p />", {"class": "title"}),
+      $("<p />", {"class": "subtitle"}),
+      $("<p />"),
+      $("<p />").append(
+        $("<small />")
+      ),
+      $("<p />").append(
+        $("<small />")
+      )
+    )
+  );
+}

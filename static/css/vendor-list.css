@@ -1,3 +1,19 @@
-.vendor-search-menu {
-  display: inline-block;
+.vendor-list-card {
+  flex-basis: auto;
+}
+
+.vendor-list-card-wrapper {
+  flex-wrap: wrap;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20px;
+}
+
+.sticky:before,
+.sticky:after {
+  content: '';
+  display: table;
 }

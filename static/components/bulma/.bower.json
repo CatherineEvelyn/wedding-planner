@@ -32,6 +32,5 @@
   },
   "_source": "https://github.com/jgthms/bulma.git",
   "_target": "^0.6.0",
-  "_originalSource": "bulma",
-  "_direct": true
+  "_originalSource": "bulma"
 }
