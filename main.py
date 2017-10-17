@@ -4,7 +4,12 @@ from hashutils import *
 import re
 #from faker import Faker
 import random
+from sqlalchemy import create_engine
+engine = create_engine('sqlite:///association_tables.sqlite')
 
+from sqlalchemy.orm import sessionmaker
+#session = sessionmaker()
+#session.configure(bind=engine)
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -13,16 +18,15 @@ app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "246Pass"
 
-class User_Vendor(db.Model):
-    __tablename__ = "user_vendor"
-    id = db.Column(db.Integer, primary_key=True) 
-    vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id', primary_key=True))
-    users_id = db.Column(db.Integer, db.ForeignKey('user.id', primary_key=True))
+class UserVendor(db.Model):
+    __tablename__ = 'user_vendor'
+    vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     eventDate = db.Column(db.Date)
     eventStartTime = db.Column(db.Time)
     eventEndTime = db.Column(db.Time)
-    user = db.relationship("User")
-    vendor = db.relationship("Vendor")
+    vendor = db.relationship('Vendor', backref="user_assoc")
+    user = db.relationship('User', backref="vendor_assoc")
 
     def __init__(self, vendor_id, users_id, eventDate, eventStartTime, eventEndTime):
         self.vendor_id = vendor_id
@@ -34,7 +38,7 @@ class User_Vendor(db.Model):
 
 class Vendor(db.Model):
     __tablename__ = 'vendor'
-    id = db.Column(db.Integer, primary_key=True) #prim key to differentiate vendors
+    id = db.Column(db.Integer, primary_key=True)
     businessName = db.Column(db.String(100))
     contactName = db.Column(db.String(50))
     email = db.Column(db.String(50))
@@ -47,8 +51,10 @@ class Vendor(db.Model):
     priceMax = db.Column(db.Integer)
     password = db.Column(db.String(100))
     state = db.Column(db.String(2))
-
-    users = db.relationship("User_Vendor")#, backrefs="vendor")
+    users = db.relationship(
+        'User',
+        secondary='user_vendor'
+    )
 
 
     def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, priceMin, priceMax, password, state):
@@ -67,14 +73,17 @@ class Vendor(db.Model):
 
 class User(db.Model):
     __tablename__ = 'user'
-    id = db.Column(db.Integer, primary_key=True) #prim key to differentiate users
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(30))
     phoneNumber = db.Column(db.Integer)
     password = db.Column(db.String(100))
     numberOfGuests = db.Column(db.Integer)
     eventDate = db.Column(db.Date)
-    vendor = db.relationship("User_Vendor")#, backrefs="user")
+    vendors = db.relationship(
+        'Vendor',
+        secondary='user_vendor'
+    )
 
     def __init__(self, email, password):
         self.email = email
@@ -126,11 +135,12 @@ def index():
 
 @app.route('/profile')
 def profile():
-    return render_template("profile.html")
+    
+    return render_template("vendor-account.html")
 
 @app.route('/organizer')
 def organizer():
-    return render_template("organizer.html")
+    return render_template("user-account.html")
 
 @app.route('/book', methods=['POST', 'GET'])
 def book():
