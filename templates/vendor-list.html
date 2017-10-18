@@ -12,15 +12,19 @@
  <!-- TODO: Use bulma to design this page -->
 {% extends 'layout.html' %}
 {% block body %}
-<ul>
-  <li> <a href="#venues" class="getVendorByType" data-type="venues">Venues</a></li>
-  <li> <a href="#photographers" class="getVendorByType" data-type="photographers">Photographers</a></li>
-  <li> <a href="#videographers" class="getVendorByType" data-type="videographers">Videographers</a></li>
-  <li> <a href="#caterers" class="getVendorByType" data-type="caterers">Caterers</a></li>
-  <li> <a href="#bands" class="getVendorByType" data-type="band">Band/DJ</a></li>
-  <li> <a href="#hair" class="getVendorByType" data-type="hair">Hairstyle &amp; Make Up Artists</a></li>
-  <li> <a href="#tailors" class="getVendorByType" data-type="tailors">Tailors</a></li>
-</ul>
+<div class="columns">
+  <ul class="column vendor-menu auto">
+    <li class="active"> <a href="#venues" class="getVendorByType" data-type="venues">Venues</a></li>
+    <li> <a href="#photographers" class="getVendorByType" data-type="photographers">Photographers</a></li>
+    <li> <a href="#videographers" class="getVendorByType" data-type="videographers">Videographers</a></li>
+    <li> <a href="#caterers" class="getVendorByType" data-type="caterers">Caterers</a></li>
+    <li> <a href="#music" class="getVendorByType" data-type="music">Music</a></li>
+    <li> <a href="#cosmetics" class="getVendorByType" data-type="cosmetics">Cosmetics</a></li>
+    <li> <a href="#tailors" class="getVendorByType" data-type="tailors">Tailors</a></li>
+  </ul>
+  <!-- AJAX loaded html will appear here  -->
+  <div class="vendors column"></div>
+</div>
 {% endblock %}
 {% block scripts %}
 <script defer>

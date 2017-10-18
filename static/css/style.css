@@ -12,7 +12,9 @@ body {
 p {
     font-family: 'Lato', sans-serif;
 }
-
+.navbar{
+  margin-bottom: 2rem;
+}
 .navbar-brand {
     font-family: "Playfair Display", serif;
     font-size: 1.4em;
@@ -94,4 +96,45 @@ p {
 .close-flash-btn {
     cursor: pointer;
     float: right;
+}
+
+
+/*Vendor Styles*/
+.vendor-menu{
+  background: #fff;
+  height: inherit;
+  padding: 0 10px;
+  margin: 0;
+  max-width: 200px;
+}
+.vendor-menu li{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.vendor-menu li a{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 15px;
+  margin: 0;
+  color: #333;
+}
+.vendor-menu li a:hover{
+  background: rgba(244,143,177,.08);
+}
+.vendor-menu.active{
+  background: #eee;
+}
+.vendors{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-flow: row wrap;
+  background: #fff;
+  margin: 0;
+}
+.vendors .card{
+  flex: 1;
+  margin: 10px;
 }

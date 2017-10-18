@@ -135,7 +135,7 @@ def index():
 
 @app.route('/profile')
 def profile():
-    
+
     return render_template("vendor-account.html")
 
 @app.route('/organizer')
@@ -184,7 +184,6 @@ def vendor():
             "priceMax": vendor.priceMax
         })
     return jsonify(type=vendor_type, vendors=vendors)
-    # return jsonify({"type": vendor_type, "vendors": vendors})
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -294,7 +293,7 @@ def genData():
     db.session.add(user)
     db.session.add(vendor)
     db.session.commit()
-  return redirect('/') 
+  return redirect('/')
 # END TESTING #
 '''
 if __name__ == '__main__': #run app

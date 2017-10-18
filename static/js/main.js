@@ -53,7 +53,31 @@ function getVendorByType(type){
     url: '/vendor?type=' + type
   })
   .done(json => {
+    appendVendors(json);
     console.log(json);
     api_call_made = false;
   })
+}
+function makeCard(vendor){
+  let card = $('<div class="card">');
+  let card_content = $('<div class="card-content">');
+
+  let title = $('<p class="title">').text(vendor.businessName);
+  let email = $('<p>').text(vendor.email);
+
+  card_content.append(title, makeParagraph(vendor.email), makeParagraph(vendor.streetAddress), makeParagraph(vendor.city));
+  card.append(card_content);
+  return card;
+}
+
+function makeParagraph(text){
+  return $('<p>').text(text);
+}
+function appendVendors(obj){
+  let container = $('.vendors');
+  container.empty();
+  for(let index in obj.vendors){
+    let vendor = obj.vendors[index];
+    container.append(makeCard(vendor));
+  }
 }
