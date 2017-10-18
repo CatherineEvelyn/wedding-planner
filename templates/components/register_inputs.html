@@ -1,13 +1,13 @@
 <div class="field">
   <div class="control has-icons-left">
-    <input class="input is-medium {% if errors['usererrors'] %}is-danger{% endif %}" 
+    <input class="input is-medium {% if errors['u_usererrors'] %}is-danger{% endif %}" 
       type="text" placeholder="Email" name="email" value="{{ email }}">
     <span class="icon is-left">
       <i class="mdi mdi-email-outline"></i>
     </span>
     <div class="error-msgs-wrapper">
-      {% if errors["usererrors"] %}
-        {% for error in errors["usererrors"] %}
+      {% if errors["u_usererrors"] %}
+        {% for error in errors["u_usererrors"] %}
           <p class="help is-danger">
             <i class="mdi mdi-alert-circle"></i>
             {{ error }}
@@ -19,14 +19,14 @@
 </div>
 <div class="field">
   <div class="control has-icons-left">
-    <input class="input is-medium {% if errors['passerrors'] %}is-danger{% endif %}" 
+    <input class="input is-medium {% if errors['u_passerrors'] %}is-danger{% endif %}" 
       type="password" placeholder="Password" name="password">
     <span class="icon is-left">
       <i class="mdi mdi-lock-outline"></i>
     </span>
     <div class="error-msgs-wrapper">
-      {% if errors["passerrors"] %}
-        {% for error in errors["passerrors"] %}
+      {% if errors["u_passerrors"] %}
+        {% for error in errors["u_passerrors"] %}
           <p class="help is-danger">
             <i class="mdi mdi-alert-circle"></i>
             {{ error }}
@@ -38,14 +38,14 @@
 </div>
 <div class="field">
   <div class="control has-icons-left">
-    <input class="input is-medium {% if errors['verifyerrors'] %}is-danger{% endif %}"
+    <input class="input is-medium {% if errors['u_verifyerrors'] %}is-danger{% endif %}"
       type="password" placeholder="Verify Password" name="verify">
     <span class="icon is-left">
       <i class="mdi mdi-checkbox-marked-circle-outline"></i>
     </span>
     <div class="error-msgs-wrapper">
-      {% if errors["verifyerrors"] %}
-        {% for error in errors["verifyerrors"] %}
+      {% if errors["u_verifyerrors"] %}
+        {% for error in errors["u_verifyerrors"] %}
           <p class="help is-danger">
             <i class="mdi mdi-alert-circle"></i>
             {{ error }}

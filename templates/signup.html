@@ -4,21 +4,21 @@
 {% endblock %}
 {% block body %}
   <div class="wrapper">
-    <div class="signup-container">
+    <div class="signup-container {% if type == 'vendor' %}expanded-form{% endif %}">
       <div class="form-container-signup">
         <h1 class="title is-2 is-marginless">Sign up</h1>
         <div class="signup-tabs tabs is-toggle">
           <ul>
-            <li class="is-active">
+            <li class="{% if type == 'organizer' %}is-active{% endif %}">
               <a href="#" class="toggle-form"> Organizer </a>
             </li>
-            <li>
+            <li class="{% if type == 'vendor' %}is-active{% endif %}">
               <a href="#" class="toggle-form show-vendor"> Vendor </a>
             </li>
           </ul>
         </div>
         <hr>
-        <div class="organizer-signup">
+        <div class="organizer-signup" style="{% if type == 'vendor' %}display: none;{% endif %}">
           <form method='POST'>
             <!-- Grabs the inputs from components/register_inputs.html -->
             {% include 'components/register_inputs.html' %}
@@ -27,7 +27,7 @@
         </div>
       
         <!-- Sign up for vendor users -->
-        <div class="vendor-signup">
+        <div class="vendor-signup" style="{% if type == 'vendor' %}display: block;{% endif %}">
           <form method='POST'>
             <!-- Grabs the inputs from components/register_inputs.html -->
             {% include 'components/register_vendor_inputs.html' %}

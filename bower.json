@@ -23,7 +23,7 @@
     "tests"
   ],
   "dependencies": {
-    "bulma": "^0.5.3",
+    "bulma": "^0.6.0",
     "mdi": "^2.0.46"
   }
 }
