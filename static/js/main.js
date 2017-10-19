@@ -52,12 +52,26 @@ function addAjaxListeners(){
 function getVendorByType(type){
   $.ajax({
     method: 'GET',
-    url: '/getvendors?type=' + type
+    url: '/getvendors',
+    data: {
+      "type": type
+    }
   })
   .done(json => {
-    appendVendors(json);
-    console.log(json);
     displayVendors(json);
+    console.log(json);
+    api_call_made = false;
+  })
+}
+
+function getAllVendors(){
+  $.ajax({
+    method: 'GET',
+    url: '/getvendors',
+  })
+  .done(json => {
+    displayVendors(json);
+    console.log(json);
     api_call_made = false;
   })
 }
@@ -79,7 +93,7 @@ function displayVendors(json) {
         $("<small />", {"html": value.streetAddress})
       ), 
       $("<p />").append(
-        $("<small />", {"html": value.city})
+        $("<small />", {"html": value.city + ", " + value.state})
       )
     );
     $vendorCardWrapper.append($card);

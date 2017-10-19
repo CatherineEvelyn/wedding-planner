@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template, url_for, session, f
 from flask_sqlalchemy import SQLAlchemy
 from hashutils import *
 import re
-#from faker import Faker
+from faker import Faker
 import random
 from sqlalchemy import create_engine
 engine = create_engine('sqlite:///association_tables.sqlite')
@@ -135,7 +135,6 @@ def index():
 
 @app.route('/profile')
 def profile():
-
     return render_template("vendor-account.html")
 
 @app.route('/organizer')
@@ -159,20 +158,18 @@ def book():
         db.session.commit()
         return redirect("/")
 
-@app.route('/vendors', methods=['GET', 'POST'])
+@app.route('/vendor-list', methods=['GET', 'POST'])
 def vendorList():
-    if request.args.get("type"):
-        vendor_type = request.args.get("type")
-        vendors = Vendor.query.filter_by(vendorType=vendor_type).all()
-    else:
-        vendors = Vendor.query.all()
-    return render_template('vendor-list.html', vendors=vendors)
+    return render_template('vendor-list.html')
 
 # AJAX call to return data from the DB as a json array
 @app.route('/getvendors')
 def vendor():
     vendor_type = request.args.get("type")
-    query = Vendor.query.filter_by(vendorType=vendor_type).all()
+    if vendor_type:
+        query = Vendor.query.filter_by(vendorType=vendor_type)
+    else:
+        query = Vendor.query.all()
     vendors = []
     for vendor in query:
         vendors.append({
@@ -183,6 +180,7 @@ def vendor():
             "streetAddress": vendor.streetAddress,
             "city": vendor.city,
             "zipcode": vendor.zipcode,
+            "state": vendor.state,
             "rating": vendor.rating,
             "vendorType": vendor.vendorType,
             "prinMin": vendor.priceMin,
@@ -384,7 +382,7 @@ def signup():
 
 
 # FOR TESTING PURPOSES ONLY
-'''@app.route('/gendata')
+@app.route('/gendata')
 def genData():
   vendorTypes = ['venue', 'photographer', 'videographer', 'caterer', 'music', 'cosmetics', 'tailor']
   fake = Faker()
@@ -404,13 +402,14 @@ def genData():
       random.choice(vendorTypes),
       random.randrange(1, 101),
       random.randrange(101, 501),
-      make_pw_hash(fake.password(length=10, digits=True, upper_case=True, lower_case=True))
+      make_pw_hash(fake.password(length=10, digits=True, upper_case=True, lower_case=True)),
+      fake.state_abbr()
     )
     db.session.add(user)
     db.session.add(vendor)
     db.session.commit()
   return redirect('/')
 # END TESTING #
-'''
+
 if __name__ == '__main__': #run app
     app.run()

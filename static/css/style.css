@@ -12,9 +12,7 @@ body {
 p {
     font-family: 'Lato', sans-serif;
 }
-.navbar{
-  margin-bottom: 2rem;
-}
+
 .navbar-brand {
     font-family: "Playfair Display", serif;
     font-size: 1.4em;
