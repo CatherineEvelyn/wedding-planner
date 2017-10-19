@@ -191,8 +191,8 @@ def signup():
     (u_usererrors, u_passerrors, u_verifyerrors, 
     v_usererrors, v_passerrors, v_verifyerrors,
     nameerrors, businesserrors, vendortypeerrors, 
-    addresserrors, zipcodeerrors, priceminerrors, 
-    pricemaxerrors)  = ([], [], [], [], [], [], [], [], [], [], [], [], [])
+    addresserrors, cityerrors, zipcodeerrors, 
+    priceminerrors, pricemaxerrors)  = ([], [], [], [], [], [], [], [], [], [], [], [], [], [])
 
     errors = {'u_usererrors': u_usererrors,
               'u_passerrors': u_passerrors,
@@ -248,18 +248,43 @@ def signup():
                 u_verifyerrors.append("Your passwords don't match.")
 
         # Vendor signup verification
-        if 'vendor_signup' in form:
+        elif 'vendor_signup' in form:
             print("Vendor Signup")
             register_type = 'vendor'
             name = form['name']
             business_name = form['business']
             vendor_type = form['vendortype']
             street_address = form['address']
-            # city = form['city']
+            city = form['city']
             state = form['state']
             zipcode = form['zipcode']
             price_min = form['pricemin']
             price_max = form['pricemax']
+
+            if not email:
+                v_usererrors.append('This field cannot be left blank.')
+            # Check if is valid email
+            elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+                v_usererrors.append('Must be a valid email.')
+
+            if not password:
+                v_passerrors.append('This field cannot be left blank.')
+            else:
+                # Check if password has a minimum length of 8 characters
+                if len(password) < 8:
+                    v_passerrors.append("Password must be at least 8 characters long.")
+                # Check if contains at least one digit
+                if not re.search(r'\d', password):
+                    v_passerrors.append("Password must contain at least one number.")
+                # Check if contains at least one uppercase letter
+                if not re.search(r'[A-Z]', password):
+                    v_passerrors.append("Password must contain at least one uppercase letter.")
+                # Check if contains at least one lowercase letter
+                if not re.search(r'[a-z]', password):
+                    v_passerrors.append("Password must contain at least one lowercase letter.")
+
+            if password != verify:
+                v_verifyerrors.append("Your passwords don't match.")
 
             if not name:
                 nameerrors.append("This field cannot be left blank.")
@@ -279,6 +304,9 @@ def signup():
                 zipcodeerrors.append("This field cannot be left blank.")
             elif zipcode.isalpha():
                 zipcodeerrors.append("That is not a valid zipcode.")
+
+            if not city:
+                cityerrors.append("This field cannot be left blank.")
 
             if not price_min:
                 priceminerrors.append("This field cannot be left blank.")
@@ -315,7 +343,7 @@ def signup():
                         business_name, 
                         name, 
                         street_address, 
-                        None, 
+                        city, 
                         zipcode, 
                         None, 
                         vendor_type, 
@@ -332,7 +360,21 @@ def signup():
                     v_usererrors.append("Email is already in use.")
 
         # If method == post
-        return render_template('signup.html', errors=errors, email=email, type=register_type)
+        return render_template(
+            'signup.html', 
+            errors=errors,
+            type=register_type,
+            name=name,
+            business=business_name,
+            vendortype=vendor_type,
+            email=email,
+            address=street_address,
+            city=city,
+            zipcode=zipcode,
+            state=state,
+            pricemin=price_min,
+            pricemax=price_max
+        )
     # method == get
     return render_template('signup.html', errors=errors, type="organizer")
 

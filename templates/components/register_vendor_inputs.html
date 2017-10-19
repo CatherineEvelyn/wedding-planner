@@ -4,7 +4,7 @@
     <div class="field">
       <div class="control has-icons-left">
         <input class="input {% if errors['nameerrors'] %}is-danger{% endif %}"
-          type="text" placeholder="Full Name" name="name">
+          type="text" placeholder="Full Name" name="name" value="{{ name }}">
         <span class="icon is-left">
           <i class="mdi mdi-account-circle"></i>
         </span>
@@ -24,7 +24,7 @@
     <div class="field">
       <div class="control has-icons-left">
         <input class="input {% if errors['businesserrors'] %}is-danger{% endif %}"
-          type="text" placeholder="Business Name" name="business">
+          type="text" placeholder="Business Name" name="business" value="{{ business }}">
         <span class="icon is-left">
           <i class="mdi mdi-account-card-details"></i>
         </span>
@@ -160,6 +160,26 @@
         </div>
       </div>
     </div>
+    <!-- Street Address Input -->
+    <div class="field">
+      <div class="control has-icons-left is-expanded">
+        <input class="input {% if errors['cityerrors'] %}is-danger{% endif %}" 
+          type="text" placeholder="City" name="city" value="{{ city }}">
+        <span class="icon is-left">
+          <i class="mdi mdi-google-maps"></i>
+        </span>
+        <div class="error-msgs-wrapper">
+          {% if errors["cityerrors"] %}
+            {% for error in errors["cityerrors"] %}
+              <p class="help is-danger">
+                <i class="mdi mdi-alert-circle"></i>
+                {{ error }}
+              </p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
     <!-- State Input -->
     <div class="field is-grouped state-zip-group">
       <div class="control has-icons-left">
@@ -225,7 +245,7 @@
       <!-- Zipcode Input -->
       <div class="control has-icons-left zip-input">
         <input class="input {% if errors['zipcodeerrors'] %}is-danger{% endif %}"
-          type="text" placeholder="Zipcode" name="zipcode" maxlength="5">
+          type="text" placeholder="Zipcode" name="zipcode" maxlength="5" value="{{ zipcode }}">
         <span class="icon is-left">
           <i class="mdi mdi-map-marker"></i>
         </span>
@@ -249,7 +269,7 @@
     <div class="field">
       <div class="control has-icons-left">
         <input class="input {% if errors['priceminerrors'] %}is-danger{% endif %}" 
-          type="text" placeholder="Minimum Price" name="pricemin">
+          type="text" placeholder="Minimum Price" name="pricemin", value="{{ pricemin }}">
         <span class="icon is-left">
           <i class="mdi mdi-currency-usd"></i>
         </span>
@@ -268,7 +288,7 @@
     <div class="field">
       <div class="control has-icons-left">
         <input class="input {% if errors['pricemaxerrors'] %}is-danger{% endif %}" 
-          type="text" placeholder="Maximum Price" name="pricemax">
+          type="text" placeholder="Maximum Price" name="pricemax" value="{{ pricemax }}">
         <span class="icon is-left">
           <i class="mdi mdi-currency-usd"></i>
         </span>
