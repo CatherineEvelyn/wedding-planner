@@ -136,18 +136,19 @@ def index():
 
 @app.route('/profile')
 def profile():
-    thevendor=Vendor.query.filter_by(email="vendorTesting1@email.com").first() #get vendor in session
-    vendId = 1
+    thevendor=Vendor.query.filter_by(email="kendrakelley@flowers-trujillo.com").first() #get vendor in session
+    vendId = str(thevendor.id)
     #int(vendor.id) #get vendor's id
     #connection = engine.connect()
 
-    result = db.engine.execute("SELECT * FROM user_vendor JOIN user ON user_vendor.user_id=user.id WHERE vendor_id = 1;")
+    result = db.engine.execute("SELECT * FROM user_vendor JOIN user ON user_vendor.user_id=user.id WHERE vendor_id = '"+vendId+"'")
     #q = session.query(UserVendor).filter(UserVendor).join(UserVendor.vendor_id).filter.all()
     #usersVendors = UserVendor.query.filter_by(user_id=users_id).first() 
     #vendorName = result.contactName
     #for item in result:
         #vendorName == item.contactName
-    vendorName = []
+    userInfo = []
+    '''vendorName = []
     vendorBusiness = []
     vendorEmail = []
     for row in result:
@@ -155,7 +156,17 @@ def profile():
         vendorBusiness.append(row['phoneNumber'])
         vendorEmail.append("Email: " + row['email'])
     
-    return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)
+    return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
+    for row in result:
+        userInfo.append("Name: " + row['name'])
+        userInfo.append("Phone Number: " + str(row['phoneNumber']))
+        userInfo.append("Email: " + row['email'])
+        userInfo.append("Number of Guests: " + str(row['numberOfGuests']))
+        userInfo.append("Event Date: " + str(row['eventDate']))
+        userInfo.append("Event Start Time: " + str(row['eventStartTime']))
+        userInfo.append("Event End Time: " + str(row['eventEndTime']))
+    
+    return render_template("testVendorsProfile.html", userInfo = userInfo)
     # return render_template("vendor-account.html")
 
 @app.route('/organizer')
