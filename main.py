@@ -135,7 +135,7 @@ def index():
 
 @app.route('/profile')
 def profile():
-    
+
     return render_template("vendor-account.html")
 
 @app.route('/organizer')
@@ -189,7 +189,6 @@ def vendor():
             "priceMax": vendor.priceMax
         })
     return jsonify(type=vendor_type, vendors=vendors)
-    # return jsonify({"type": vendor_type, "vendors": vendors})
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():

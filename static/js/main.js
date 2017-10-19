@@ -55,6 +55,7 @@ function getVendorByType(type){
     url: '/getvendors?type=' + type
   })
   .done(json => {
+    appendVendors(json);
     console.log(json);
     displayVendors(json);
     api_call_made = false;
