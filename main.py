@@ -20,8 +20,9 @@ app.secret_key = "246Pass"
 
 class UserVendor(db.Model):
     __tablename__ = 'user_vendor'
-    vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id'), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id')) #primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))# primary_key=True)
     eventDate = db.Column(db.Date)
     eventStartTime = db.Column(db.Time)
     eventEndTime = db.Column(db.Time)
@@ -135,19 +136,56 @@ def index():
 
 @app.route('/profile')
 def profile():
+    thevendor=Vendor.query.filter_by(email="vendorTesting1@email.com").first() #get vendor in session
+    vendId = 1
+    #int(vendor.id) #get vendor's id
+    #connection = engine.connect()
+
+    result = db.engine.execute("SELECT * FROM user_vendor JOIN user ON user_vendor.user_id=user.id WHERE vendor_id = 1;")
+    #q = session.query(UserVendor).filter(UserVendor).join(UserVendor.vendor_id).filter.all()
+    #usersVendors = UserVendor.query.filter_by(user_id=users_id).first() 
+    #vendorName = result.contactName
+    #for item in result:
+        #vendorName == item.contactName
+    vendorName = []
+    vendorBusiness = []
+    vendorEmail = []
+    for row in result:
+        vendorName.append("Name: " + row['name'])
+        vendorBusiness.append(row['phoneNumber'])
+        vendorEmail.append("Email: " + row['email'])
     
-    return render_template("vendor-account.html")
+    return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)
+    # return render_template("vendor-account.html")
 
 @app.route('/organizer')
 def organizer():
-    return render_template("user-account.html")
+    users_info=User.query.filter_by(email="jacqueline92@yahoo.com").first() #get user in session
+    users_id = str(users_info.id) #get user's id
+    #connection = engine.connect()
+    result = db.engine.execute("SELECT * FROM user_vendor JOIN vendor ON user_vendor.vendor_id=vendor.id WHERE user_id=  '"+users_id+"'")
+    #q = session.query(UserVendor).filter(UserVendor).join(UserVendor.vendor_id).filter.all()
+    #usersVendors = UserVendor.query.filter_by(user_id=users_id).first() 
+    #vendorName = result.contactName
+    #for item in result:
+        #vendorName == item.contactName
+    vendorName = []
+    vendorBusiness = []
+    vendorEmail = []
+    for row in result:
+        vendorName.append("Name: " + row['contactName'])
+        vendorBusiness.append("Business name: " + row['businessName'])
+        vendorEmail.append("Email: " + row['email'])
+    #connection.close()
+    return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)
+    #return render_template("user-account.html")
 
 @app.route('/book', methods=['POST', 'GET'])
 def book():
     if request.method == "GET":
         return render_template("book.html")
     if request.method == "POST":
-        vendor =Vendor.query.filter_by(email="TestVendor@email.com").first()
+        vendor =Vendor.query.filter_by(businessName="Vendor #2").first()
         users=User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
         vendor_id=1
         users_id=1
