@@ -2,9 +2,14 @@ from flask import Flask, request, redirect, render_template, url_for, session, f
 from flask_sqlalchemy import SQLAlchemy
 from hashutils import *
 import re
-from faker import Faker
+#from faker import Faker
 import random
+from sqlalchemy import create_engine
+engine = create_engine('sqlite:///association_tables.sqlite')
 
+from sqlalchemy.orm import sessionmaker
+#session = sessionmaker()
+#session.configure(bind=engine)
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -13,20 +18,19 @@ app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "246Pass"
 
-class User_Vendor(db.Model):
-    __tablename__ = "user_vendor"
-    id = db.Column(db.Integer, primary_key=True)
-    vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id', primary_key=True))
-    users_id = db.Column(db.Integer, db.ForeignKey('user.id', primary_key=True))
+class UserVendor(db.Model):
+    __tablename__ = 'user_vendor'
+    vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     eventDate = db.Column(db.Date)
     eventStartTime = db.Column(db.Time)
     eventEndTime = db.Column(db.Time)
-    user = db.relationship("User")
-    vendor = db.relationship("Vendor")
+    vendor = db.relationship('Vendor', backref="user_assoc")
+    user = db.relationship('User', backref="vendor_assoc")
 
-    def __init__(self, vendor_id, users_id, eventDate, eventStartTime, eventEndTime):
+    def __init__(self, vendor_id, user_id, eventDate, eventStartTime, eventEndTime):
         self.vendor_id = vendor_id
-        self.users_id = users_id
+        self.user_id = user_id
         self.eventDate = eventDate
         self.eventStartTime = eventStartTime
         self.eventEndTime = eventEndTime
@@ -34,7 +38,7 @@ class User_Vendor(db.Model):
 
 class Vendor(db.Model):
     __tablename__ = 'vendor'
-    id = db.Column(db.Integer, primary_key=True) #prim key to differentiate vendors
+    id = db.Column(db.Integer, primary_key=True)
     businessName = db.Column(db.String(100))
     contactName = db.Column(db.String(50))
     email = db.Column(db.String(50))
@@ -46,10 +50,14 @@ class Vendor(db.Model):
     priceMin = db.Column(db.Integer)
     priceMax = db.Column(db.Integer)
     password = db.Column(db.String(100))
-    users = db.relationship("User_Vendor")#, backrefs="vendor")
+    state = db.Column(db.String(2))
+    users = db.relationship(
+        'User',
+        secondary='user_vendor'
+    )
 
 
-    def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, priceMin, priceMax, password):
+    def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, priceMin, priceMax, password, state):
         self.businessName = businessName
         self.contactName = contactName
         self.email = email
@@ -61,16 +69,21 @@ class Vendor(db.Model):
         self.priceMin = priceMin
         self.priceMax = priceMax
         self.password = password
+        self.state = state
 
 class User(db.Model):
     __tablename__ = 'user'
-    id = db.Column(db.Integer, primary_key=True) #prim key to differentiate users
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(30))
     phoneNumber = db.Column(db.Integer)
     password = db.Column(db.String(100))
     numberOfGuests = db.Column(db.Integer)
-    vendor = db.relationship("User_Vendor")#, backrefs="user")
+    eventDate = db.Column(db.Date)
+    vendors = db.relationship(
+        'Vendor',
+        secondary='user_vendor'
+    )
 
     def __init__(self, email, password):
         self.email = email
@@ -122,25 +135,26 @@ def index():
 
 @app.route('/profile')
 def profile():
-    return render_template("profile.html")
+    
+    return render_template("vendor-account.html")
 
 @app.route('/organizer')
 def organizer():
-    return render_template("organizer.html")
+    return render_template("user-account.html")
 
 @app.route('/book', methods=['POST', 'GET'])
 def book():
     if request.method == "GET":
         return render_template("book.html")
     if request.method == "POST":
-        vendor = Vendor.query.filter_by(email="kim@email.com").first()
+        vendor =Vendor.query.filter_by(email="TestVendor@email.com").first()
         users = User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
-        vendor_id = vendor.id
-        users_id = users.id
+        vendor_id = 1
+        users_id = 1
         eventDate = request.form["eventDate"]
         eventStartTime = request.form["eventStartTime"]
         eventEndTime = request.form["eventEndTime"]
-        new_Booking = User_Vendor(vendor_id, users_id,eventDate, eventStartTime, eventEndTime)
+        new_Booking = UserVendor(users_id, vendor_id, eventDate, eventStartTime, eventEndTime)
         db.session.add(new_Booking)
         db.session.commit()
         return redirect("/")
@@ -179,53 +193,137 @@ def vendor():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    usererrors, passerrors, verifyerrors = [], [], []
-    errors = {'usererrors': usererrors,
-              'passerrors': passerrors,
-              'verifyerrors': verifyerrors} # initializing errors object
+    (u_usererrors, u_passerrors, u_verifyerrors, 
+    v_usererrors, v_passerrors, v_verifyerrors,
+    nameerrors, businesserrors, vendortypeerrors, 
+    addresserrors, cityerrors, zipcodeerrors, 
+    priceminerrors, pricemaxerrors)  = ([], [], [], [], [], [], [], [], [], [], [], [], [], [])
+
+    errors = {'u_usererrors': u_usererrors,
+              'u_passerrors': u_passerrors,
+              'u_verifyerrors': u_verifyerrors,
+              'v_usererrors': v_usererrors,
+              'v_passerrors': v_passerrors,
+              'v_verifyerrors': v_verifyerrors,
+              'nameerrors': nameerrors,
+              'businesserrors': businesserrors,
+              'vendortypeerrors': vendortypeerrors,
+              'addresserrors': addresserrors,
+              'zipcodeerrors': zipcodeerrors,
+              'priceminerrors': priceminerrors,
+              'pricemaxerrors': pricemaxerrors} # initializing errors object
 
     if request.method == 'POST': #is user signing up
         form = request.form
-        email=form['email']
-        password=form['password']
-        verify=form['verify']
-        register_type = 'organizer'
+        email = form['email']
+        password = form['password']
+        verify = form['verify']
 
-        if 'vendor_signup' in form:
-            print("Vendor Signup")
-            register_type = 'vendor'
+        register_type = 'organizer'
 
         # XXX Not sure if we need this
         # name=request.form['name']
         # phoneNumber=request.form['phoneNumber']
         # current_users = User.query.filter_by(email=email).first()
 
-        if not email:
-            usererrors.append('This field cannot be left blank.')
-        # Check if is valid email
-        elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
-            usererrors.append('Must be a valid email.')
+        if 'organizer_signup' in form:
+            if not email:
+                u_usererrors.append('This field cannot be left blank.')
+            # Check if is valid email
+            elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+                u_usererrors.append('Must be a valid email.')
 
-        if not password:
-            passerrors.append('This field cannot be left blank.')
-        else:
-            # Check if password has a minimum length of 8 characters
-            if len(password) < 8:
-                passerrors.append("Password must be at least 8 characters long.")
-            # Check if contains at least one digit
-            if not re.search(r'\d', password):
-                passerrors.append("Password must contain at least one number.")
-            # Check if contains at least one uppercase letter
-            if not re.search(r'[A-Z]', password):
-                passerrors.append("Password must contain at least one uppercase letter.")
-            # Check if contains at least one lowercase letter
-            if not re.search(r'[a-z]', password):
-                passerrors.append("Password must contain at least one lowercase letter.")
+            if not password:
+                u_passerrors.append('This field cannot be left blank.')
+            else:
+                # Check if password has a minimum length of 8 characters
+                if len(password) < 8:
+                    u_passerrors.append("Password must be at least 8 characters long.")
+                # Check if contains at least one digit
+                if not re.search(r'\d', password):
+                    u_passerrors.append("Password must contain at least one number.")
+                # Check if contains at least one uppercase letter
+                if not re.search(r'[A-Z]', password):
+                    u_passerrors.append("Password must contain at least one uppercase letter.")
+                # Check if contains at least one lowercase letter
+                if not re.search(r'[a-z]', password):
+                    u_passerrors.append("Password must contain at least one lowercase letter.")
 
-        if password != verify:
-            verifyerrors.append("Your passwords don't match.")
+            if password != verify:
+                u_verifyerrors.append("Your passwords don't match.")
 
-        if not usererrors and not passerrors and not verifyerrors:
+        # Vendor signup verification
+        elif 'vendor_signup' in form:
+            print("Vendor Signup")
+            register_type = 'vendor'
+            name = form['name']
+            business_name = form['business']
+            vendor_type = form['vendortype']
+            street_address = form['address']
+            city = form['city']
+            state = form['state']
+            zipcode = form['zipcode']
+            price_min = form['pricemin']
+            price_max = form['pricemax']
+
+            if not email:
+                v_usererrors.append('This field cannot be left blank.')
+            # Check if is valid email
+            elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+                v_usererrors.append('Must be a valid email.')
+
+            if not password:
+                v_passerrors.append('This field cannot be left blank.')
+            else:
+                # Check if password has a minimum length of 8 characters
+                if len(password) < 8:
+                    v_passerrors.append("Password must be at least 8 characters long.")
+                # Check if contains at least one digit
+                if not re.search(r'\d', password):
+                    v_passerrors.append("Password must contain at least one number.")
+                # Check if contains at least one uppercase letter
+                if not re.search(r'[A-Z]', password):
+                    v_passerrors.append("Password must contain at least one uppercase letter.")
+                # Check if contains at least one lowercase letter
+                if not re.search(r'[a-z]', password):
+                    v_passerrors.append("Password must contain at least one lowercase letter.")
+
+            if password != verify:
+                v_verifyerrors.append("Your passwords don't match.")
+
+            if not name:
+                nameerrors.append("This field cannot be left blank.")
+            elif name.isdigit():
+                nameerrors.append("Your name cannot contain numbers.")
+
+            if not business_name:
+                businesserrors.append("This field cannot be left blank.")
+
+            if not vendor_type:
+                vendortypeerrors.append("Please select a vendor type.")
+            
+            if not street_address:
+                addresserrors.append("This field cannot be left blank.")
+
+            if not zipcode:
+                zipcodeerrors.append("This field cannot be left blank.")
+            elif zipcode.isalpha():
+                zipcodeerrors.append("That is not a valid zipcode.")
+
+            if not city:
+                cityerrors.append("This field cannot be left blank.")
+
+            if not price_min:
+                priceminerrors.append("This field cannot be left blank.")
+            elif price_min.isalpha():
+                priceminerrors.append("Minimum price must be a number.")
+
+            if not price_max:
+                pricemaxerrors.append("This field cannot be left blank.")
+            elif price_min.isalpha():
+                pricemaxerrors.append("Maximum price must be a number.")
+
+        if not any([u_usererrors, u_passerrors, u_verifyerrors, v_usererrors, v_passerrors, v_verifyerrors]):
             # Register new organizer, or vendor
             if register_type == 'organizer':
                 user = User.query.filter_by(email=email).first()
@@ -238,29 +336,56 @@ def signup():
                     session['email'] = email
                     return render_template('confirmation-page.html')
                 else:
-                    usererrors.append("Email is already in use.")
+                    u_usererrors.append("Email is already in use.")
             else:
                 vendor = Vendor.query.filter_by(email=email).first()
                 # Check if email already exists
                 if not vendor:
-                    # Hash the password before sending to DB
+                    # Hash the password before sending to DB#
                     # TODO add the rest of the vendor fields
-                    new_vendor = Vendor(email, None, None, None, None, None, None, None, None, None, make_pw_hash(password))
+                    new_vendor = Vendor(
+                        email, 
+                        business_name, 
+                        name, 
+                        street_address, 
+                        city, 
+                        zipcode, 
+                        None, 
+                        vendor_type, 
+                        price_min, 
+                        price_max, 
+                        make_pw_hash(password), 
+                        state
+                    )
                     db.session.add(new_vendor)
                     db.session.commit()
                     session['email'] = email
                     return render_template('confirmation-page.html')
                 else:
-                    usererrors.append("Email is already in use.")
+                    v_usererrors.append("Email is already in use.")
 
         # If method == post
-        return render_template('signup.html', errors=errors, email=email)
+        return render_template(
+            'signup.html', 
+            errors=errors,
+            type=register_type,
+            name=name,
+            business=business_name,
+            vendortype=vendor_type,
+            email=email,
+            address=street_address,
+            city=city,
+            zipcode=zipcode,
+            state=state,
+            pricemin=price_min,
+            pricemax=price_max
+        )
     # method == get
-    return render_template('signup.html', errors=errors)
+    return render_template('signup.html', errors=errors, type="organizer")
 
 
 # FOR TESTING PURPOSES ONLY
-@app.route('/gendata')
+'''@app.route('/gendata')
 def genData():
   vendorTypes = ['venue', 'photographer', 'videographer', 'caterer', 'music', 'cosmetics', 'tailor']
   fake = Faker()
@@ -287,6 +412,6 @@ def genData():
     db.session.commit()
   return redirect('/')
 # END TESTING #
-
+'''
 if __name__ == '__main__': #run app
     app.run()

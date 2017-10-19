@@ -1,39 +1,45 @@
 {% extends 'layout.html' %}
 {% block head %}
-    <link type="text/css" href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
+  <link type="text/css" href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-    <!-- TODO: Flexify this page -->
-    <div class="wrapper">
-        <div class="signup-container">
-            <div class="form-container-signup">
-                <h1 class="title is-2 is-marginless">Sign up</h1>
-                <div class="signup-tabs">
-                    <a href="#" class="toggle-form active-form"> Organizer </a>
-                    <span> | </span>
-                    <a href="#" class="toggle-form show-vendor"> Vendor </a>
-                </div>
-                <hr>
-                <div class="organizer-signup">
-                    <form method='POST'>
-                        <!-- Grabs the inputs from components/register_inputs.html -->
-                        {% include 'components/register_inputs.html' %}
-                        <input name="organizer_signup" class="submit-button" type='submit' value="Sign up"/>
-                    </form>
-                </div>
-
-                <!-- Sign up for vendor users -->
-                <div class="vendor-signup">
-                    <form method='POST'>
-                    <!-- Grabs the inputs from components/register_inputs.html -->
-                    {% include 'components/register_inputs.html' %}
-                    <label> I wish to sign up as a Vendor
-                        <input name="is_vendor" type="checkbox" required>
-                    </label>
-                    <input name="vendor_signup" class="submit-button" type='submit' value="Sign up"/>
-                    </form>
-                </div>
-            </div>
+  <div class="wrapper">
+    <div class="signup-container {% if type == 'vendor' %}expanded-form{% endif %}">
+      <div class="form-container-signup">
+        <h1 class="title is-2 is-marginless">Sign up</h1>
+        <div class="signup-tabs tabs is-toggle">
+          <ul>
+            <li class="{% if type == 'organizer' %}is-active{% endif %}">
+              <a class="toggle-form"> Organizer </a>
+            </li>
+            <li class="{% if type == 'vendor' %}is-active{% endif %}">
+              <a class="toggle-form show-vendor"> Vendor </a>
+            </li>
+          </ul>
         </div>
+        <hr>
+        <div class="organizer-signup" {% if type == 'vendor' %}style="display: none;"{% endif %}>
+          <form method='POST'>
+            <!-- Grabs the inputs from components/register_inputs.html -->
+            {% include 'components/register_inputs.html' %}
+            <input name="organizer_signup" class="submit-button" type='submit' value="Sign up"/>
+          </form>
+        </div>
+      
+        <!-- Sign up for vendor users -->
+        <div class="vendor-signup" style="{% if type == 'vendor' %}display: block;{% endif %}">
+          <form method='POST'>
+            <!-- Grabs the inputs from components/register_inputs.html -->
+            {% include 'components/register_vendor_inputs.html' %}
+            <label class="checkbox">
+              <input class="checkbox" name="is_vendor" type="checkbox" required>
+              I wish to sign up as a Vendor
+            </label>
+            <input name="vendor_signup" class="submit-button large-form-submit" 
+              type='submit' value="Sign up"/>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 {% endblock %}
