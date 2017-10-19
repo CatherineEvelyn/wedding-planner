@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <h1>Test</h1>
-        {% for name in vendorName %}
-        <li>{{name}}</li>
-    {% endfor %}
-    {% for business in vendorBusiness %}
-    <li>{{business}}</li>
-{% endfor %}
-{% for email in vendorEmail %}
-<li>{{email}}</li>
-{% endfor %}
-
-        <!--<h1>{{vendorName}}</h1>
-         <h1>  {{vendorBusiness}}</h1>
-         <h1>{{vendorEmail}}</h1> -->
+        <h1>My Vendors</h1>
+            {% for info in vendorInfo %}
+            <ul style="list-style: none;">
+                {%if "Name" in info %}
+                
+                <h2>Vendor:</h2>
+                <li>{{info}}</li>
+                {%elif "Business" in info %}
+                <li>{{info}}</li>
+                {%elif "Type" in info %}
+                <li>{{info}}</li>
+                {%elif "Street" in info %}
+                <li>{{info}}</li>
+                {%elif "City" in info %}
+                <li>{{info}}</li>
+                {%elif "Zipcode" in info %}
+                <li>{{info}}</li>
+                {%elif "State" in info %}
+                <li>{{info}}</li>
+                {% endif %}
+                </ul>
+                
+            {% endfor %}
+       
     </body>
 </html>

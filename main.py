@@ -160,8 +160,8 @@ def profile():
 
 @app.route('/organizer')
 def organizer():
-    users_info=User.query.filter_by(email="jacqueline92@yahoo.com").first() #get user in session
-    users_id = str(users_info.id) #get user's id
+    users_info=User.query.filter_by(email="jacqueline92@yahoo.com").first() #TODO: get user in session
+    users_id = str(users_info.id) #get user's id - turn to string for query 
     #connection = engine.connect()
     result = db.engine.execute("SELECT * FROM user_vendor JOIN vendor ON user_vendor.vendor_id=vendor.id WHERE user_id=  '"+users_id+"'")
     #q = session.query(UserVendor).filter(UserVendor).join(UserVendor.vendor_id).filter.all()
@@ -169,7 +169,8 @@ def organizer():
     #vendorName = result.contactName
     #for item in result:
         #vendorName == item.contactName
-    vendorName = []
+    vendorInfo = []
+    '''vendorName = []
     vendorBusiness = []
     vendorEmail = []
     for row in result:
@@ -177,7 +178,16 @@ def organizer():
         vendorBusiness.append("Business name: " + row['businessName'])
         vendorEmail.append("Email: " + row['email'])
     #connection.close()
-    return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)
+    return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
+    for row in result:
+        vendorInfo.append("Name: " + row['contactName'])
+        vendorInfo.append("Business name: " + row['businessName'])
+        vendorInfo.append("Vendor Type: " + row['vendorType'])
+        vendorInfo.append("Street Address: " + row['streetAddress'])
+        vendorInfo.append("City: " + row['city'])
+        vendorInfo.append("Zipcode: " + str(row['zipcode']))
+        vendorInfo.append("State: " + row['state'])
+    return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
     #return render_template("user-account.html")
 
 @app.route('/book', methods=['POST', 'GET'])
