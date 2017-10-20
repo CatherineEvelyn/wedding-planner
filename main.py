@@ -137,7 +137,7 @@ def index():
 @app.route('/profile')
 def profile():
 
-    thevendor=Vendor.query.filter_by(email="vendorTesting1@email.com").first() #get vendor in session
+    thevendor=Vendor.query.filter_by(email=session["email"]).first() #get vendor in session
     vendId = str(thevendor.id)
     #int(vendor.id) #get vendor's id
     #connection = engine.connect()
@@ -173,7 +173,7 @@ def profile():
 
 @app.route('/organizer')
 def organizer():
-    users_info=User.query.filter_by(email="jacqueline92@yahoo.com").first() #TODO: get user in session
+    users_info=User.query.filter_by(email=session["email"]).first() #TODO: get user in session
     users_id = str(users_info.id) #get user's id - turn to string for query 
     #connection = engine.connect()
     result = db.engine.execute("SELECT * FROM user_vendor JOIN vendor ON user_vendor.vendor_id=vendor.id WHERE user_id=  '"+users_id+"'")
