@@ -166,10 +166,10 @@ def vendorList():
 @app.route('/getvendors')
 def vendor():
     vendor_type = request.args.get("type")
-    if vendor_type:
-        query = Vendor.query.filter_by(vendorType=vendor_type)
+    if vendor_type == "all":
+        query = Vendor.query.all()        
     else:
-        query = Vendor.query.all()
+        query = Vendor.query.filter_by(vendorType=vendor_type)
     vendors = []
     for vendor in query:
         vendors.append({
@@ -190,10 +190,10 @@ def vendor():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    (u_usererrors, u_passerrors, u_verifyerrors, 
+    (u_usererrors, u_passerrors, u_verifyerrors,
     v_usererrors, v_passerrors, v_verifyerrors,
-    nameerrors, businesserrors, vendortypeerrors, 
-    addresserrors, cityerrors, zipcodeerrors, 
+    nameerrors, businesserrors, vendortypeerrors,
+    addresserrors, cityerrors, zipcodeerrors,
     priceminerrors, pricemaxerrors)  = ([], [], [], [], [], [], [], [], [], [], [], [], [], [])
 
     errors = {'u_usererrors': u_usererrors,
@@ -298,7 +298,7 @@ def signup():
 
             if not vendor_type:
                 vendortypeerrors.append("Please select a vendor type.")
-            
+
             if not street_address:
                 addresserrors.append("This field cannot be left blank.")
 
@@ -341,17 +341,17 @@ def signup():
                     # Hash the password before sending to DB#
                     # TODO add the rest of the vendor fields
                     new_vendor = Vendor(
-                        email, 
-                        business_name, 
-                        name, 
-                        street_address, 
-                        city, 
-                        zipcode, 
-                        None, 
-                        vendor_type, 
-                        price_min, 
-                        price_max, 
-                        make_pw_hash(password), 
+                        email,
+                        business_name,
+                        name,
+                        street_address,
+                        city,
+                        zipcode,
+                        None,
+                        vendor_type,
+                        price_min,
+                        price_max,
+                        make_pw_hash(password),
                         state
                     )
                     db.session.add(new_vendor)
@@ -363,7 +363,7 @@ def signup():
 
         # If method == post
         return render_template(
-            'signup.html', 
+            'signup.html',
             errors=errors,
             type=register_type,
             name=name,

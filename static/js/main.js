@@ -1,8 +1,13 @@
+// Adding DatePicker and calendar styling
+var datePicker = new DatePicker(document.getElementById('bookDatePicker'), {dataFormat: "yyyy-mm-dd"});
+
 var api_call_made = false;
 $(function () {
+  addMobileMenuListener();
   addSignupListener();
   addBlur();
   addAjaxListeners();
+  addCloseModalListeners();
 });
 
 function addSignupListener() {
@@ -64,18 +69,6 @@ function getVendorByType(type){
   })
 }
 
-function getAllVendors(){
-  $.ajax({
-    method: 'GET',
-    url: '/getvendors',
-  })
-  .done(json => {
-    displayVendors(json);
-    console.log(json);
-    api_call_made = false;
-  })
-}
-
 function displayVendors(json) {
   let $wrapper = $(".vendor-list-card-wrapper")
 
@@ -86,17 +79,58 @@ function displayVendors(json) {
     let $card = $("<article />", {"class": "tile is-child notification is-info"});
 
     $card.append(
-      $("<p />", {"class": "title", "html": value.contactName}), 
+      $("<button />", {"class": "delete is-medium book-button"}),
+      $("<p />", {"class": "title", "html": value.contactName}),
       $("<p />", {"class": "subtitle", "html": value.vendorType}),
       $("<p />", {"html": value.businessName}),
       $("<p />").append(
         $("<small />", {"html": value.streetAddress})
-      ), 
+      ),
       $("<p />").append(
         $("<small />", {"html": value.city + ", " + value.state})
       )
     );
     $vendorCardWrapper.append($card);
     $wrapper.append($vendorCardWrapper);
+  });
+
+  // Add listeners for newly-created booking buttons
+  addBookingListeners();
+}
+
+function addMobileMenuListener() {
+  // Get all "navbar-burger" elements
+  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+  // Check if there are any navbar burgers
+  if ($navbarBurgers.length > 0) {
+
+    // Add a click event on each of them
+    $navbarBurgers.forEach(function ($el) {
+      $el.addEventListener('click', function () {
+
+        // Get the target from the "data-target" attribute
+        var target = $el.dataset.target;
+        var $target = document.getElementById(target);
+
+        // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+        $el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+
+      });
+    });
+  }
+}
+
+function addBookingListeners() {
+  $('.book-button').on('click', e => {
+    $('#bookingModal').addClass('is-active');
+  });
+}
+
+function addCloseModalListeners() {
+  $('#modalCloseButton, #modalCloseLayer').on('click', e => {
+    $('#bookingModal').removeClass('is-active');
+    datePicker.hide();
   });
 }
