@@ -52,10 +52,51 @@ function addAjaxListeners(){
 function getVendorByType(type){
   $.ajax({
     method: 'GET',
-    url: '/vendor?type=' + type
+    url: '/getvendors',
+    data: {
+      "type": type
+    }
   })
   .done(json => {
+    displayVendors(json);
     console.log(json);
     api_call_made = false;
   })
+}
+
+function getAllVendors(){
+  $.ajax({
+    method: 'GET',
+    url: '/getvendors',
+  })
+  .done(json => {
+    displayVendors(json);
+    console.log(json);
+    api_call_made = false;
+  })
+}
+
+function displayVendors(json) {
+  let $wrapper = $(".vendor-list-card-wrapper")
+
+  $wrapper.empty();
+
+  $.each(json.vendors, function(index, value) {
+    let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
+    let $card = $("<article />", {"class": "tile is-child notification is-info"});
+
+    $card.append(
+      $("<p />", {"class": "title", "html": value.contactName}), 
+      $("<p />", {"class": "subtitle", "html": value.vendorType}),
+      $("<p />", {"html": value.businessName}),
+      $("<p />").append(
+        $("<small />", {"html": value.streetAddress})
+      ), 
+      $("<p />").append(
+        $("<small />", {"html": value.city + ", " + value.state})
+      )
+    );
+    $vendorCardWrapper.append($card);
+    $wrapper.append($vendorCardWrapper);
+  });
 }

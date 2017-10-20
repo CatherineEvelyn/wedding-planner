@@ -10,17 +10,113 @@
 -->
 
  <!-- TODO: Use bulma to design this page -->
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vendor-list.css') }}">
+{% endblock %}
 {% extends 'layout.html' %}
 {% block body %}
-<ul>
-  <li> <a href="#venues" class="getVendorByType" data-type="venues">Venues</a></li>
-  <li> <a href="#photographers" class="getVendorByType" data-type="photographers">Photographers</a></li>
-  <li> <a href="#videographers" class="getVendorByType" data-type="videographers">Videographers</a></li>
-  <li> <a href="#caterers" class="getVendorByType" data-type="caterers">Caterers</a></li>
-  <li> <a href="#bands" class="getVendorByType" data-type="band">Band/DJ</a></li>
-  <li> <a href="#hair" class="getVendorByType" data-type="hair">Hairstyle &amp; Make Up Artists</a></li>
-  <li> <a href="#tailors" class="getVendorByType" data-type="tailors">Tailors</a></li>
-</ul>
+<div class="container is-fluid">
+  <div class="section">
+    <div class="columns">
+      <div class="column is-2">
+        <aside class="menu vendor-search-menu sticky">
+          <p class="menu-label">
+            Vendor Search
+          </p>
+          <div class="field">
+            <div class="control has-icons-left">
+              <input class="input is-small" type="text" placeholder="Name, type, location...">
+              <span class="icon is-left">
+                <i class="mdi mdi-magnify"></i>
+              </span>
+            </div>
+          </div>
+          <p class="menu-label">
+            Vendor Types
+          </p>
+          <ul class="menu-list">
+            <li>
+              <a href="#venue" class="getVendorByType" data-type="venue">
+                Venues
+              </a>
+            </li>
+            <li>
+              <a href="#photographer" class="getVendorByType" data-type="photographer">
+                Photographers
+              </a>
+            </li>
+            <li>
+              <a href="#videographer" class="getVendorByType" data-type="videographer">
+                Videographers
+              </a>
+            </li>
+            <li>
+              <a href="#caterer" class="getVendorByType" data-type="caterer">
+                Caterers
+              </a>
+            </li>
+            <li>
+              <a href="#music" class="getVendorByType" data-type="music">
+                Band/DJ
+              </a>
+            </li>
+            <li>
+              <a href="#cosmetics" class="getVendorByType" data-type="cosmetics">
+                Hairstyle &amp; Make Up Artists
+              </a>
+            </li>
+            <li>
+              <a href="#tailor" class="getVendorByType" data-type="tailor">
+                Tailors
+              </a>
+            </li>
+          </ul>
+          <p class="menu-label">
+            Sort By
+          </p>
+          <ul class="menu-list">
+            <li>
+              <a class="getVendorByType" data-type="venue">
+                Price (High to Low)
+              </a>
+            </li>
+            <li>
+              <a class="getVendorByType" data-type="photographer">
+                Price (Low to High)
+              </a>
+            </li>
+            <li>
+              <a class="getVendorByType" data-type="videographer">
+                Location
+              </a>
+            </li>
+            <li>
+              <a class="getVendorByType" data-type="caterer">
+                Rating
+              </a>
+            </li>
+          </ul>
+        </aside>
+      </div>
+      <div class="column is-narrow"></div>
+      <div class="column">
+        <div class="tile is-ancestor vendor-list-card-wrapper">
+          {% for vendor in vendors %}
+            <div class="tile is-parent vendor-list-card">
+              <article class="tile is-child notification is-info">
+                <p class="title">{{ vendor.contactName }}</p>
+                <p class="subtitle">{{ vendor.vendorType }}</p>
+                <p>{{ vendor.businessName }}</p>
+                <p><small>{{ vendor.streetAddress }}</small></p>
+                <p><small>{{ vendor.city }}, {{ vendor.state }}</small></p>
+              </article>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 {% block scripts %}
 <script defer>
@@ -32,9 +128,14 @@
   function update_tag(){
     loc = window.location.href.split('#');
     tag = loc.length > 1 ? loc[1] : '';
-    if(tag != '' && !api_call_made){
+    if (tag != '' && !api_call_made) {
       getVendorByType(tag);
+    } else if (!tag) {
+      getAllVendors();
     }
   }
+  
+  var elements = $('.sticky');
+  Stickyfill.add(elements);
 </script>
 {% endblock %}
