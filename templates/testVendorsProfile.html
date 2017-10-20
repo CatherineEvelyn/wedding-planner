@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>My Events</h1>
+            {% for info in userInfo %}
+            <ul style="list-style: none;">
+                {%if "Name" in info %}
+                
+                <h2>Event:</h2>
+                <li>{{info}}</li>
+                {%elif "Name" in info %}
+                <li>{{info}}</li>
+                {%elif "Phone" in info %}
+                <li>{{info}}</li>
+                {%elif "Email" in info %}
+                <li>{{info}}</li>
+                {%elif "Guests" in info %}
+                <li>{{info}}</li>
+                {%elif "Booked" in info %}
+                <li>{{info}}</li>
+                {%elif "Start" in info %}
+                <li>{{info}}</li>
+                {%elif "End" in info %}
+                <li>{{info}}</li>
+                {% endif %}
+                </ul>
+                
+            {% endfor %}
+       
+    </body>
+</html>
