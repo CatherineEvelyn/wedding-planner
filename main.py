@@ -171,7 +171,7 @@ def profile():
 
 @app.route('/organizer')
 def organizer():
-    users_info=User.query.filter_by(email="jacqueline92@yahoo.com").first() #TODO: get user in session
+    users_info=User.query.filter_by(email="kristen.l.sharkey@gmail.com").first() #TODO: get user in session
     users_id = str(users_info.id) #get user's id - turn to string for query 
     #connection = engine.connect()
     result = db.engine.execute("SELECT * FROM user_vendor JOIN vendor ON user_vendor.vendor_id=vendor.id WHERE user_id=  '"+users_id+"'")
@@ -191,14 +191,17 @@ def organizer():
     #connection.close()
     return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
     for row in result:
+        '''
         vendorInfo.append("Name: " + row['contactName'])
         vendorInfo.append("Business name: " + row['businessName'])
         vendorInfo.append("Vendor Type: " + row['vendorType'])
         vendorInfo.append("Street Address: " + row['streetAddress'])
         vendorInfo.append("City: " + row['city'])
         vendorInfo.append("Zipcode: " + str(row['zipcode']))
-        vendorInfo.append("State: " + row['state'])
-    return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
+        vendorInfo.append("State: " + row['state'])'''
+        vendorInfo.append(row)
+    return render_template("testObjProfile.html", vendorInfo = vendorInfo)
+    #return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
     #return render_template("user-account.html")
 
 @app.route('/book', methods=['POST', 'GET'])
