@@ -23,16 +23,16 @@ class UserVendor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id')) #primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))# primary_key=True)
-    eventDate = db.Column(db.Date)
+    bookedDate = db.Column(db.Date)
     eventStartTime = db.Column(db.Time)
     eventEndTime = db.Column(db.Time)
     vendor = db.relationship('Vendor', backref="user_assoc")
     user = db.relationship('User', backref="vendor_assoc")
 
-    def __init__(self, vendor_id, user_id, eventDate, eventStartTime, eventEndTime):
+    def __init__(self, vendor_id, user_id, bookedDate, eventStartTime, eventEndTime):
         self.vendor_id = vendor_id
         self.user_id = user_id
-        self.eventDate = eventDate
+        self.bookedDate = bookedDate
         self.eventStartTime = eventStartTime
         self.eventEndTime = eventEndTime
 
@@ -77,7 +77,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(30))
-    phoneNumber = db.Column(db.Integer)
+    phoneNumber = db.Column(db.BIGINT)
     password = db.Column(db.String(100))
     numberOfGuests = db.Column(db.Integer)
     eventDate = db.Column(db.Date)
@@ -136,7 +136,7 @@ def index():
 
 @app.route('/profile')
 def profile():
-    thevendor=Vendor.query.filter_by(email="kendrakelley@flowers-trujillo.com").first() #get vendor in session
+    thevendor=Vendor.query.filter_by(email="vendorTesting1@email.com").first() #get vendor in session
     vendId = str(thevendor.id)
     #int(vendor.id) #get vendor's id
     #connection = engine.connect()
@@ -162,7 +162,7 @@ def profile():
         userInfo.append("Phone Number: " + str(row['phoneNumber']))
         userInfo.append("Email: " + row['email'])
         userInfo.append("Number of Guests: " + str(row['numberOfGuests']))
-        userInfo.append("Event Date: " + str(row['eventDate']))
+        userInfo.append("Booked Date: " + str(row['bookedDate']))
         userInfo.append("Event Start Time: " + str(row['eventStartTime']))
         userInfo.append("Event End Time: " + str(row['eventEndTime']))
     
@@ -206,11 +206,11 @@ def book():
     if request.method == "GET":
         return render_template("book.html")
     if request.method == "POST":
-        vendor =Vendor.query.filter_by(businessName="Vendor #2").first()
+        vendor =Vendor.query.filter_by(email="vendorTesting1@email.com").first()
         users=User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
         vendor_id=1
         users_id=1
-        eventDate = request.form["eventDate"]
+        eventDate = request.form["bookedDate"]
         eventStartTime = request.form["eventStartTime"]
         eventEndTime = request.form["eventEndTime"]
         new_Booking = UserVendor(users_id, vendor_id, eventDate, eventStartTime, eventEndTime)
