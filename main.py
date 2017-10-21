@@ -226,17 +226,17 @@ def organizer():
 def book():
     form = request.form
     print(form['date'])
-    vendor = Vendor.query.filter_by(email="vendorTesting1@email.com").first()
+    vendor = Vendor.query.filter_by(id=form['vendorID']).first()
     user = User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
-    vendor_id = 1
+    vendor_id = vendor.id
     user_id = 1
     eventDate = form['date']
     eventStartTime = "12:00:00"
     eventEndTime = "12:00:00"
 
     bookingInfo = {}
-    bookingInfo['user_name'] = form['name']
-    bookingInfo['user_email'] = form['email']
+    bookingInfo['vendor_name'] = vendor.contactName
+    bookingInfo['vendor_email'] = vendor.email
 
     dateInput = datetime.strptime(form['date'], '%Y-%m-%d')
     formattedDate = dateInput.strftime('%B %d, %Y')

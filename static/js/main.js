@@ -1,4 +1,6 @@
 var api_call_made = false;
+var vendorID = null;
+
 $(function () {
   addMobileMenuListener();
   addSignupListener();
@@ -75,7 +77,7 @@ function displayVendors(json) {
 
   $.each(json.vendors, function(index, value) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
-    let $card = $("<article />", {"class": "tile is-child notification is-info"});
+    let $card = $("<article />", {"class": "tile is-child notification is-info"}).attr("data-vendor-id", value.id);
 
     $card.append(
       $("<button />", {"class": "delete is-medium book-button"}),
@@ -121,6 +123,7 @@ function addMobileMenuListener() {
 function addBookingListeners() {
   $(document).on('click', '.book-button', e => {
     $('#bookingModal').addClass('is-active');
+    vendorID = $(e.currentTarget).parent().attr('data-vendor-id');
     // Adding DatePicker each time a booking modal is active
     var datePicker = new DatePicker(document.getElementById('bookRequestDate'), {dataFormat: "yyyy-mm-dd"});
   });
@@ -137,9 +140,8 @@ function addCloseModalListeners() {
 
 function addBookFulfillmentListener() {
   $('#bookVendor').on('click', e => {
-    name = "Test" //$('#bookRequestName').val();
-    email = "Test" //$('#bookRequestEmail').val();
-    date = $('#bookRequestDate').val();
+    let vendorId = vendorID;
+    let date = $('#bookRequestDate').val();
 
     // Adding loading indicators for booking call
     $(document).on("ajaxStart.bookingCall", () => {
@@ -151,17 +153,16 @@ function addBookFulfillmentListener() {
       $('#bookVendor').removeClass('is-loading');
       console.log('complete!');
     });
-    postBookRequest(name, email, date);
+    postBookRequest(vendorId, date);
   });
 }
 
-function postBookRequest(name, email, date) {
+function postBookRequest(id, date) {
   $.ajax({
     method: "POST",
     url: "/book",
     data: {
-      "name": name,
-      "email": email,
+      "vendorID": id,
       "date": date
     }
   }).done(json => {
@@ -171,21 +172,20 @@ function postBookRequest(name, email, date) {
 }
 
 function displayBookingConfirmation(json) {
-  info = json.bookingInfo;
-  console.log(info.book_date);
+  const info = json.bookingInfo;
 
   $('.bookingInputBox, #bookingFooter').hide();
 
-  $('#bookingInfoBox').append('<p class="detail subtitle">' + info.book_date + '</p>');
-  $('#vendorNameBox').append('<p class="detail subtitle">' + info.user_name + '</p>');
-  $('#vendorEmailBox').append('<p class="detail subtitle">' + info.user_email + '</p>');
+  $('#bookingInfoBox').append('<p class="subtitle detail">' + info.book_date + '</p>');
+  $('#vendorNameBox').append('<p class="subtitle detail">' + info.vendor_name + '</p>');
+  $('#vendorEmailBox').append('<p class="subtitle detail">' + info.vendor_email + '</p>');
 
   $('.confirmationMessage, #confirmFooter').show();
 }
 
 function resetModalView() {
-  $inputView = $('.bookingInputBox, #bookingFooter');
-  $confirmView = $('.confirmationMessage, #confirmFooter');
+  const $inputView = $('.bookingInputBox, #bookingFooter');
+  const $confirmView = $('.confirmationMessage, #confirmFooter');
 
   $inputView.show();
   $confirmView.hide();
