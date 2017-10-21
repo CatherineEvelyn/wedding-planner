@@ -131,6 +131,7 @@ function addCloseModalListeners() {
     $('#bookingModal').removeClass('is-active');
     $('.datepicker').remove();
     $('#bookRequestDate').val("");
+    resetModalView();
   });
 }
 
@@ -139,8 +140,19 @@ function addBookFulfillmentListener() {
     name = "Test" //$('#bookRequestName').val();
     email = "Test" //$('#bookRequestEmail').val();
     date = $('#bookRequestDate').val();
+
+    // Adding loading indicators for booking call
+    $(document).on("ajaxStart.bookingCall", () => {
+      $('.modal-card-body .overlay').fadeTo("fast", 0.75);
+      $('#bookVendor').addClass('is-loading');
+    });
+    $(document).on("ajaxStop.bookingCall", () => {
+      $('.modal-card-body .overlay').fadeOut("fast");
+      $('#bookVendor').removeClass('is-loading');
+      console.log('complete!');
+    });
     postBookRequest(name, email, date);
-  })
+  });
 }
 
 function postBookRequest(name, email, date) {
@@ -156,4 +168,26 @@ function postBookRequest(name, email, date) {
     displayBookingConfirmation(json);
     console.log(json);
   });
+}
+
+function displayBookingConfirmation(json) {
+  info = json.bookingInfo;
+  console.log(info.book_date);
+
+  $('.bookingInputBox, #bookingFooter').hide();
+
+  $('#bookingInfoBox').append('<p class="detail subtitle">' + info.book_date + '</p>');
+  $('#vendorNameBox').append('<p class="detail subtitle">' + info.user_name + '</p>');
+  $('#vendorEmailBox').append('<p class="detail subtitle">' + info.user_email + '</p>');
+
+  $('.confirmationMessage, #confirmFooter').show();
+}
+
+function resetModalView() {
+  $inputView = $('.bookingInputBox, #bookingFooter');
+  $confirmView = $('.confirmationMessage, #confirmFooter');
+
+  $inputView.show();
+  $confirmView.hide();
+  $('.detail').remove();
 }

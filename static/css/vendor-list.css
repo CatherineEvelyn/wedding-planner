@@ -37,9 +37,29 @@
   font-size: 0.8rem;
 }
 
+.modal-card {
+  align-self: flex-start;
+  top: 10vh;
+}
+
+.modal-card-body {
+  position: relative;
+}
+
 .modal-card,
 .modal-card-body {
   overflow: initial;
+}
+
+.modal-card-body .overlay {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  z-index: 101;
 }
 
 .datepicker .calendar .calendar-header .calendar-date, 
@@ -67,4 +87,22 @@
   position: absolute;
   top: -16px;
   left: 14px;
+}
+
+.hidden {
+  display: none;
+}
+
+.shown {
+  display: block;
+}
+
+#bookingInfoBox,
+#vendorNameBox,
+#vendorEmailBox {
+  text-align: center;
+}
+
+.confirmationMessage .level {
+  padding: 0 2rem;
 }

@@ -4,6 +4,7 @@ from hashutils import *
 import re
 from faker import Faker
 import random
+from datetime import datetime
 from sqlalchemy import create_engine
 engine = create_engine('sqlite:///association_tables.sqlite')
 
@@ -236,7 +237,10 @@ def book():
     bookingInfo = {}
     bookingInfo['user_name'] = form['name']
     bookingInfo['user_email'] = form['email']
-    bookingInfo['book_date'] = form['date']
+
+    dateInput = datetime.strptime(form['date'], '%Y-%m-%d')
+    formattedDate = dateInput.strftime('%B %d, %Y')
+    bookingInfo['book_date'] = formattedDate
 
     new_Booking = UserVendor(user_id, vendor_id, eventDate, eventStartTime, eventEndTime)
     db.session.add(new_Booking)
