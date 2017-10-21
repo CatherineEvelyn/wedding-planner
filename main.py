@@ -89,6 +89,24 @@ class User(db.Model):
         self.email = email
         self.password = password
 
+def getUserSessionDetails():
+    if session.get('email', False):
+        details = {}
+        user_email = session['email']
+
+        # Check if person in session is a normal user
+        user_name = User.query.filter_by(email=user_email).first()
+
+        if not user_name:
+            # Check if they're a vendor
+            user_name = Vendor.query.filter_by(email=user_email).first()
+
+        details['user_email'] = user_email
+        details['user_name'] = user_name
+        return details
+
+    return False   
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     usererrors, passerrors, verifyerrors = [], [], []
@@ -141,26 +159,33 @@ def profile():
 def organizer():
     return render_template("user-account.html")
 
-@app.route('/book', methods=['POST', 'GET'])
+@app.route('/book', methods=['POST'])
 def book():
-    if request.method == "GET":
-        return render_template("book.html")
-    if request.method == "POST":
-        vendor =Vendor.query.filter_by(email="TestVendor@email.com").first()
-        users = User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
-        vendor_id = 1
-        users_id = 1
-        eventDate = request.form["eventDate"]
-        eventStartTime = request.form["eventStartTime"]
-        eventEndTime = request.form["eventEndTime"]
-        new_Booking = UserVendor(users_id, vendor_id, eventDate, eventStartTime, eventEndTime)
-        db.session.add(new_Booking)
-        db.session.commit()
-        return redirect("/")
+    form = request.form
+    print(form['date'])
+    vendor = Vendor.query.filter_by(email="vendorTesting1@email.com").first()
+    user = User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
+    vendor_id = 1
+    user_id = 1
+    eventDate = form['date']
+    eventStartTime = "12:00:00"
+    eventEndTime = "12:00:00"
+
+    bookingInfo = {}
+    bookingInfo['user_name'] = form['name']
+    bookingInfo['user_email'] = form['email']
+    bookingInfo['book_date'] = form['date']
+
+    new_Booking = UserVendor(user_id, vendor_id, eventDate, eventStartTime, eventEndTime)
+    db.session.add(new_Booking)
+    db.session.commit()
+
+    return jsonify(bookingInfo=bookingInfo)
 
 @app.route('/vendor-list', methods=['GET', 'POST'])
 def vendorList():
-    return render_template('vendor-list.html')
+    user_details = getUserSessionDetails();
+    return render_template('vendor-list.html', user_details=user_details)
 
 # AJAX call to return data from the DB as a json array
 @app.route('/getvendors')

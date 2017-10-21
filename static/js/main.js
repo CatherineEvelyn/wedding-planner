@@ -1,6 +1,3 @@
-// Adding DatePicker and calendar styling
-var datePicker = new DatePicker(document.getElementById('bookDatePicker'), {dataFormat: "yyyy-mm-dd"});
-
 var api_call_made = false;
 $(function () {
   addMobileMenuListener();
@@ -8,6 +5,8 @@ $(function () {
   addBlur();
   addAjaxListeners();
   addCloseModalListeners();
+  addBookingListeners();
+  addBookFulfillmentListener();
 });
 
 function addSignupListener() {
@@ -93,9 +92,6 @@ function displayVendors(json) {
     $vendorCardWrapper.append($card);
     $wrapper.append($vendorCardWrapper);
   });
-
-  // Add listeners for newly-created booking buttons
-  addBookingListeners();
 }
 
 function addMobileMenuListener() {
@@ -123,14 +119,41 @@ function addMobileMenuListener() {
 }
 
 function addBookingListeners() {
-  $('.book-button').on('click', e => {
+  $(document).on('click', '.book-button', e => {
     $('#bookingModal').addClass('is-active');
+    // Adding DatePicker each time a booking modal is active
+    var datePicker = new DatePicker(document.getElementById('bookRequestDate'), {dataFormat: "yyyy-mm-dd"});
   });
 }
 
 function addCloseModalListeners() {
-  $('#modalCloseButton, #modalCloseLayer').on('click', e => {
+  $(document).on('click', '#modalCloseButton, #modalCloseLayer, #cancelButton', e => {
     $('#bookingModal').removeClass('is-active');
-    datePicker.hide();
+    $('.datepicker').remove();
+    $('#bookRequestDate').val("");
+  });
+}
+
+function addBookFulfillmentListener() {
+  $('#bookVendor').on('click', e => {
+    name = "Test" //$('#bookRequestName').val();
+    email = "Test" //$('#bookRequestEmail').val();
+    date = $('#bookRequestDate').val();
+    postBookRequest(name, email, date);
+  })
+}
+
+function postBookRequest(name, email, date) {
+  $.ajax({
+    method: "POST",
+    url: "/book",
+    data: {
+      "name": name,
+      "email": email,
+      "date": date
+    }
+  }).done(json => {
+    displayBookingConfirmation(json);
+    console.log(json);
   });
 }

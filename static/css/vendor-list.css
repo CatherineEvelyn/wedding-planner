@@ -37,6 +37,34 @@
   font-size: 0.8rem;
 }
 
-.modal-card {
+.modal-card,
+.modal-card-body {
   overflow: initial;
+}
+
+.datepicker .calendar .calendar-header .calendar-date, 
+.datepicker .calendar .calendar-body .calendar-date {
+  padding-top: .1rem;
+  padding-bottom: .1rem;
+}
+
+.datepicker .calendar .calendar-body {
+  padding: 0 .2rem .3rem;
+}
+
+.datepicker .calendar .calendar-date {
+  padding: 0.3rem;
+}
+
+.calendar::before {
+  content: '';
+  height: 0;
+  width: 0;
+  border: 8px solid #00d1b2;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  position: absolute;
+  top: -16px;
+  left: 14px;
 }

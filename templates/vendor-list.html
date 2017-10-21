@@ -21,17 +21,45 @@
       <div id="modalCloseLayer" class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Book vendor</p>
+          <p class="modal-card-title">Book Vendor</p>
           <button id="modalCloseButton" class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
-          <div id="dateInput">
-            <input type="text" id="bookDatePicker" class="input is-large">
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field">
+                <div class="control has-icons-left">
+                  <input type="text" id="bookRequestName" class="input is-medium" 
+                    value="{{ user_details['user_name'] }}" readonly>
+                  <span class="icon is-left">
+                    <i class="mdi mdi-account-circle"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <div class="control has-icons-left">
+                  <input type="text" id="bookRequestEmail" class="input is-medium" 
+                    value="{{ user_details['user_email'] }}" readonly>
+                  <span class="icon is-left">
+                    <i class="mdi mdi-email-outline"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <div id="dateInput" class="control has-icons-left">
+              <input id="bookRequestDate" type="text" class="input is-medium" 
+                placeholder="Pick a date" autocomplete="off">
+              <span class="icon is-left">
+                <i class="mdi mdi-calendar"></i>
+              </span>
+            </div>
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success">Save changes</button>
-          <button class="button">Cancel</button>
+          <button id="bookVendor" class="button is-success">Book Vendor</button>
+          <button id="cancelButton" class="button">Cancel</button>
         </footer>
       </div>
     </div>

@@ -70,7 +70,7 @@ class DatePicker {
     var _this = this;
 
     this.datePickerContainer = document.createElement('div');
-    this.datePickerContainer.id = 'datePicker' + ( new Date ).getTime();
+    this.datePickerContainer.id = 'datePicker';
     this.datePickerContainer.classList.add('datepicker');
 
     this.calendarContainer = document.createElement('div');
@@ -91,7 +91,7 @@ class DatePicker {
       e.preventDefault();
 
       if (_this.open) {
-        _this.hide();
+        _this.forcehide();
         _this.open = false;
       } else {
         _this.show();
@@ -128,7 +128,7 @@ class DatePicker {
       }
       _this.element.value = _this.getFormatedDate(( new Date(year, month, day) ), _this.options.dataFormat);
       if (_this.options.closeOnSelect) {
-        _this.hide();
+        _this.forcehide();
       }
     });
 
@@ -358,7 +358,7 @@ class DatePicker {
     this.open = true;
   }
 
-  hide() {
+  forcehide() {
     this.open = false;
     if (typeof this.options.onClose != 'undefined' &&
       this.options.onClose != null &&
