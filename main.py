@@ -94,8 +94,8 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    whitelist = ['login', 'signup', 'vendorList', 'index', 'getUserSessionDetails']
-    if all([request.endpoint not in whitelist, 'email' not in session, '/static/' not in request.path]):
+    blacklist = ['organizer', 'profile' ]
+    if all([request.endpoint in blacklist, 'email' not in session, '/static/' not in request.path]):
         flash("You must to be logged in to access this page.", "error")
         print(request.endpoint)
         return redirect(url_for('login', next=request.endpoint))
