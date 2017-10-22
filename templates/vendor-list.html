@@ -32,7 +32,7 @@
                 <div class="field">
                   <div class="control has-icons-left">
                     <input type="text" id="bookRequestName" class="input is-medium" 
-                      value="{{ user_details['user_name'] }}" readonly>
+                      readonly>
                     <span class="icon is-left">
                       <i class="mdi mdi-account-circle"></i>
                     </span>
@@ -40,10 +40,10 @@
                 </div>
                 <div class="field">
                   <div class="control has-icons-left">
-                    <input type="text" id="bookRequestEmail" class="input is-medium" 
-                      value="{{ user_details['user_email'] }}" readonly>
+                    <input type="text" id="bookRequestBusiness" class="input is-medium" 
+                      readonly>
                     <span class="icon is-left">
-                      <i class="mdi mdi-email-outline"></i>
+                      <i class="mdi mdi-account-card-details"></i>
                     </span>
                   </div>
                 </div>
@@ -76,20 +76,20 @@
                   Booking Date
                 </span>
               </div>
+              <div id="vendorBusinessBox">
+                <span class="is-uppercase has-text-grey is-size-7">
+                  <span class="icon">
+                    <i class="mdi mdi-account-card-details"></i>
+                  </span>
+                  Business Name
+                </span>
+              </div>
               <div id="vendorNameBox">
                 <span class="is-uppercase has-text-grey is-size-7">
                   <span class="icon">
                     <i class="mdi mdi-account-circle"></i>
                   </span>
-                  Vendor Name
-                </span>
-              </div>
-              <div id="vendorEmailBox">
-                <span class="is-uppercase has-text-grey is-size-7">
-                  <span class="icon">
-                    <i class="mdi mdi-email-outline"></i>
-                  </span>
-                  Vendor Email
+                  Contact Name
                 </span>
               </div>
             </div>

@@ -124,6 +124,8 @@ function addBookingListeners() {
   $(document).on('click', '.book-button', e => {
     $('#bookingModal').addClass('is-active');
     vendorID = $(e.currentTarget).parent().attr('data-vendor-id');
+    $('#bookRequestName').val($(e.currentTarget).siblings().eq(0).text());
+    $('#bookRequestBusiness').val($(e.currentTarget).siblings().eq(2).text());
     // Adding DatePicker each time a booking modal is active
     var datePicker = new DatePicker(document.getElementById('bookRequestDate'), {dataFormat: "yyyy-mm-dd"});
   });
@@ -177,8 +179,8 @@ function displayBookingConfirmation(json) {
   $('.bookingInputBox, #bookingFooter').hide();
 
   $('#bookingInfoBox').append('<p class="subtitle detail">' + info.book_date + '</p>');
+  $('#vendorBusinessBox').append('<p class="subtitle detail">' + info.vendor_business + '</p>');
   $('#vendorNameBox').append('<p class="subtitle detail">' + info.vendor_name + '</p>');
-  $('#vendorEmailBox').append('<p class="subtitle detail">' + info.vendor_email + '</p>');
 
   $('.confirmationMessage, #confirmFooter').show();
 }

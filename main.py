@@ -236,7 +236,7 @@ def book():
 
     bookingInfo = {}
     bookingInfo['vendor_name'] = vendor.contactName
-    bookingInfo['vendor_email'] = vendor.email
+    bookingInfo['vendor_business'] = vendor.businessName
 
     dateInput = datetime.strptime(form['date'], '%Y-%m-%d')
     formattedDate = dateInput.strftime('%B %d, %Y')
