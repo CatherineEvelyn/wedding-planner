@@ -92,6 +92,14 @@ class User(db.Model):
         self.email = email
         self.password = password
 
+@app.before_request
+def require_login():
+    whitelist = ['login', 'signup', 'vendorList', 'index', 'getUserSessionDetails']
+    if all([request.endpoint not in whitelist, 'email' not in session, '/static/' not in request.path]):
+        flash("You must to be logged in to access this page.", "error")
+        print(request.endpoint)
+        return redirect(url_for('login', next=request.endpoint))
+
 @app.route('/session')
 def getUserSessionDetails():
     if session.get('email', False):
@@ -122,7 +130,16 @@ def getUserSessionDetails():
     if request.args.get("source") == "ajax":
       return jsonify(session=False)
     
-    return False   
+    return False 
+
+def redirect_dest(fallback):
+    dest = request.args.get('next')
+    try:
+        dest_url = url_for(dest)
+    except:
+        return redirect(fallback)
+    print(dest_url)
+    return redirect(dest_url)  
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -147,14 +164,14 @@ def login():
             else:
                 session['email'] = email #starts session
                 session['userType'] = "user"
-                return redirect('/organizer')
+                return redirect_dest(fallback=url_for('index'))
         elif vendor:
             if not check_pw_hash(password, vendor.password):
                 passerrors.append("That password is incorrect.")
             else:
                 session['email'] = email #starts session
                 session['userType'] = "vendor"
-                return redirect('/profile')
+                return redirect_dest(fallback=url_for('index'))
         else:
             usererrors.append("That user doesn't exist.")
 
@@ -204,7 +221,7 @@ def profile():
         userInfo.append("Event Start Time: " + str(row['eventStartTime']))
         userInfo.append("Event End Time: " + str(row['eventEndTime']))
     
-    return render_template("testVendorsProfile.html", userInfo = userInfo)
+    return render_template("testVendorsProfile.html", userInfo=userInfo)
     # return render_template("vendor-account.html")
 
 
