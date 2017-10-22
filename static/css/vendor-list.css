@@ -1,5 +1,6 @@
 .vendor-list-card {
   flex-basis: auto;
+  position: relative;
 }
 
 .vendor-list-card-wrapper {
@@ -51,7 +52,8 @@
   overflow: initial;
 }
 
-.modal-card-body .overlay {
+.modal-card-body .overlay,
+.tile .overlay {
   position: absolute;
   display: none;
   top: 0;
@@ -60,6 +62,10 @@
   bottom: 0;
   background-color: white;
   z-index: 101;
+}
+
+.tile .overlay {
+  opacity: 0.6;
 }
 
 .datepicker .calendar .calendar-header .calendar-date, 
@@ -110,4 +116,62 @@
 
 .detail {
   font-size: 1rem;
+}
+
+.loading-container {
+  position: relative;
+}
+
+.overlay-container {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.ajax-loader {
+  position: relative;
+  top: 20vh;
+}
+
+.circular {
+  animation: rotate 2s linear infinite;
+  height: 100px;
+  width: 100px;
+  position: relative;
+}
+
+.path {
+  stroke-dasharray: 1, 400;
+  stroke: #209cee;
+  stroke-dashoffset: 0;
+  animation:
+    fluid 2s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+@keyframes rotate {
+  100% {
+   transform: rotate(360deg);
+  }
+}
+
+@keyframes fluid {
+  0%{
+    stroke-dasharray: 1, 400;
+    stroke-dashoffset: 0;
+  }
+  50%{
+    stroke-dasharray: 178, 400;
+    stroke-dashoffset: -70;
+  }
+  100%{
+    stroke-dasharray: 178, 400;
+    stroke-dashoffset: -248;
+  }
 }

@@ -1,6 +1,28 @@
 var api_call_made = false;
 var vendorID = null;
 
+// Adding loading indicators for loading vendors call
+$(document).on("ajaxStart.vendorCall", () => {
+  $('.overlay-container').show();
+  $('.vendor-list-card .overlay').show();
+});
+$(document).on("ajaxStop.vendorCall", () => {
+  $('.overlay-container').hide();
+  $('.vendor-list-card .overlay').hide();
+  console.log('complete!');
+});
+
+// Adding loading indicators for booking call
+$(document).on("ajaxStart.bookingCall", () => {
+  $('.modal-card-body .overlay').fadeTo("fast", 0.75);
+  $('#bookVendor').addClass('is-loading');
+});
+$(document).on("ajaxStop.bookingCall", () => {
+  $('.modal-card-body .overlay').fadeOut("fast");
+  $('#bookVendor').removeClass('is-loading');
+  console.log('complete!');
+});
+
 $(function () {
   addMobileMenuListener();
   addSignupListener();
@@ -47,7 +69,7 @@ function addBlur() {
   });
 }
 
-function addAjaxListeners(){
+function addAjaxListeners() {
   $('.getVendorByType').on('click', e => {
     let $self = $(e.currentTarget);
     api_call_made = true;
@@ -55,7 +77,7 @@ function addAjaxListeners(){
   })
 }
 
-function getVendorByType(type){
+function getVendorByType(type) {
   $.ajax({
     method: 'GET',
     url: '/getvendors',
@@ -78,6 +100,7 @@ function displayVendors(json) {
   $.each(json.vendors, function(index, value) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
     let $card = $("<article />", {"class": "tile is-child notification is-info"}).attr("data-vendor-id", value.id);
+    $card.append('<div class="overlay"></div>');
 
     $card.append(
       $("<button />", {"class": "delete is-medium book-button"}),
@@ -124,8 +147,8 @@ function addBookingListeners() {
   $(document).on('click', '.book-button', e => {
     $('#bookingModal').addClass('is-active');
     vendorID = $(e.currentTarget).parent().attr('data-vendor-id');
-    $('#bookRequestName').val($(e.currentTarget).siblings().eq(0).text());
-    $('#bookRequestBusiness').val($(e.currentTarget).siblings().eq(2).text());
+    $('#bookRequestName').val($(e.currentTarget).siblings().eq(1).text());
+    $('#bookRequestBusiness').val($(e.currentTarget).siblings().eq(3).text());
     // Adding DatePicker each time a booking modal is active
     var datePicker = new DatePicker(document.getElementById('bookRequestDate'), {dataFormat: "yyyy-mm-dd"});
   });
@@ -144,17 +167,6 @@ function addBookFulfillmentListener() {
   $('#bookVendor').on('click', e => {
     let vendorId = vendorID;
     let date = $('#bookRequestDate').val();
-
-    // Adding loading indicators for booking call
-    $(document).on("ajaxStart.bookingCall", () => {
-      $('.modal-card-body .overlay').fadeTo("fast", 0.75);
-      $('#bookVendor').addClass('is-loading');
-    });
-    $(document).on("ajaxStop.bookingCall", () => {
-      $('.modal-card-body .overlay').fadeOut("fast");
-      $('#bookVendor').removeClass('is-loading');
-      console.log('complete!');
-    });
     postBookRequest(vendorId, date);
   });
 }
