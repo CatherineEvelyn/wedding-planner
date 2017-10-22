@@ -4,6 +4,7 @@ from hashutils import *
 import re
 from faker import Faker
 import random
+from datetime import datetime
 from sqlalchemy import create_engine
 engine = create_engine('sqlite:///association_tables.sqlite')
 
@@ -89,6 +90,24 @@ class User(db.Model):
     def __init__(self, email, password):
         self.email = email
         self.password = password
+
+def getUserSessionDetails():
+    if session.get('email', False):
+        details = {}
+        user_email = session['email']
+
+        # Check if person in session is a normal user
+        user_name = User.query.filter_by(email=user_email).first()
+
+        if not user_name:
+            # Check if they're a vendor
+            user_name = Vendor.query.filter_by(email=user_email).first()
+
+        details['user_email'] = user_email
+        details['user_name'] = user_name
+        return details
+
+    return False   
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -203,39 +222,45 @@ def organizer():
     return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
     #return render_template("user-account.html")
 
-@app.route('/book', methods=['POST', 'GET'])
+@app.route('/book', methods=['POST'])
 def book():
-    if request.method == "GET":
-        return render_template("book.html")
-    if request.method == "POST":
+    form = request.form
+    print(form['date'])
+    vendor = Vendor.query.filter_by(id=form['vendorID']).first()
+    user = User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
+    vendor_id = vendor.id
+    user_id = 1
+    eventDate = form['date']
+    eventStartTime = "12:00:00"
+    eventEndTime = "12:00:00"
 
-        vendor =Vendor.query.filter_by(email="vendorTesting1@email.com").first()
-        users=User.query.filter_by(email="kristen.l.sharkey@gmail.com").first()
-        vendor_id=1
-        users_id=1
-        eventDate = request.form["bookedDate"]
+    bookingInfo = {}
+    bookingInfo['vendor_name'] = vendor.contactName
+    bookingInfo['vendor_business'] = vendor.businessName
 
+    dateInput = datetime.strptime(form['date'], '%Y-%m-%d')
+    formattedDate = dateInput.strftime('%B %d, %Y')
+    bookingInfo['book_date'] = formattedDate
 
-        eventDate = request.form["eventDate"]
-        eventStartTime = request.form["eventStartTime"]
-        eventEndTime = request.form["eventEndTime"]
-        new_Booking = UserVendor(users_id, vendor_id, eventDate, eventStartTime, eventEndTime)
-        db.session.add(new_Booking)
-        db.session.commit()
-        return redirect("/")
+    new_Booking = UserVendor(user_id, vendor_id, eventDate, eventStartTime, eventEndTime)
+    db.session.add(new_Booking)
+    db.session.commit()
+
+    return jsonify(bookingInfo=bookingInfo)
 
 @app.route('/vendor-list', methods=['GET', 'POST'])
 def vendorList():
-    return render_template('vendor-list.html')
+    user_details = getUserSessionDetails();
+    return render_template('vendor-list.html', user_details=user_details)
 
 # AJAX call to return data from the DB as a json array
 @app.route('/getvendors')
 def vendor():
     vendor_type = request.args.get("type")
-    if vendor_type:
-        query = Vendor.query.filter_by(vendorType=vendor_type)
+    if vendor_type == "all":
+        query = Vendor.query.all()        
     else:
-        query = Vendor.query.all()
+        query = Vendor.query.filter_by(vendorType=vendor_type)
     vendors = []
     for vendor in query:
         vendors.append({
@@ -256,10 +281,10 @@ def vendor():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    (u_usererrors, u_passerrors, u_verifyerrors, 
+    (u_usererrors, u_passerrors, u_verifyerrors,
     v_usererrors, v_passerrors, v_verifyerrors,
-    nameerrors, businesserrors, vendortypeerrors, 
-    addresserrors, cityerrors, zipcodeerrors, 
+    nameerrors, businesserrors, vendortypeerrors,
+    addresserrors, cityerrors, zipcodeerrors,
     priceminerrors, pricemaxerrors)  = ([], [], [], [], [], [], [], [], [], [], [], [], [], [])
 
     errors = {'u_usererrors': u_usererrors,
@@ -364,7 +389,7 @@ def signup():
 
             if not vendor_type:
                 vendortypeerrors.append("Please select a vendor type.")
-            
+
             if not street_address:
                 addresserrors.append("This field cannot be left blank.")
 
@@ -407,17 +432,17 @@ def signup():
                     # Hash the password before sending to DB#
                     # TODO add the rest of the vendor fields
                     new_vendor = Vendor(
-                        email, 
-                        business_name, 
-                        name, 
-                        street_address, 
-                        city, 
-                        zipcode, 
-                        None, 
-                        vendor_type, 
-                        price_min, 
-                        price_max, 
-                        make_pw_hash(password), 
+                        email,
+                        business_name,
+                        name,
+                        street_address,
+                        city,
+                        zipcode,
+                        None,
+                        vendor_type,
+                        price_min,
+                        price_max,
+                        make_pw_hash(password),
                         state
                     )
                     db.session.add(new_vendor)
@@ -429,7 +454,7 @@ def signup():
 
         # If method == post
         return render_template(
-            'signup.html', 
+            'signup.html',
             errors=errors,
             type=register_type,
             name=name,

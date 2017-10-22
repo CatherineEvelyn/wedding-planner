@@ -17,49 +17,55 @@
           <a href="/" class="navbar-item">
             <span>My Wedding Planner</span>
           </a>
-        </div>
-
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a href="/vendor-list" class="navbar-link">
-            Vendors
-          </a>
-          <div class="navbar-dropdown is-boxed">
-            <a class="navbar-item" href="/vendor-list#venue">
-              Venues
-            </a>
-            <a class="navbar-item" href="/vendor-list#photographer">
-              Photographers
-            </a>
-            <a class="navbar-item" href="/vendor-list#videographer">
-              Videographers
-            </a>
-            <a class="navbar-item" href="/vendor-list#caterer">
-              Caterers
-            </a>
-            <a class="navbar-item" href="/vendor-list#music">
-              Music
-            </a>
-            <a class="navbar-item" href="/vendor-list#cosmetic">
-              Cosmetics
-            </a>
-            <a class="navbar-item" href="/vendor-list#tailor">
-              Tailors
-            </a>
+          <div class="navbar-burger" data-target="vendorTypeMenu">
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
         </div>
-        <div class="navbar-item">
-          <a href="/gendata">
-            Generate Data
-          </a>
-        </div>
-        <div class="navbar-end">
+        <div id="vendorTypeMenu" class="navbar-menu">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a href="/vendor-list" class="navbar-link">
+              Vendors
+            </a>
+            <div class="navbar-dropdown is-boxed">
+              <a class="navbar-item" href="/vendor-list#venue">
+                Venues
+              </a>
+              <a class="navbar-item" href="/vendor-list#photographer">
+                Photographers
+              </a>
+              <a class="navbar-item" href="/vendor-list#videographer">
+                Videographers
+              </a>
+              <a class="navbar-item" href="/vendor-list#caterer">
+                Caterers
+              </a>
+              <a class="navbar-item" href="/vendor-list#music">
+                Music
+              </a>
+              <a class="navbar-item" href="/vendor-list#cosmetic">
+                Cosmetics
+              </a>
+              <a class="navbar-item" href="/vendor-list#tailor">
+                Tailors
+              </a>
+            </div>
+          </div>
           <div class="navbar-item">
-            <div class="field is-grouped">
-              <p class="control">
-                <a class="button is-info is-outlined" href="/login">
-                  <span><i class="mdi mdi-login-variant"></i> Login</span>
-                </a>
-              </p>
+            <a href="/gendata">
+              Generate Data
+            </a>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="field is-grouped">
+                <p class="control">
+                  <a class="button is-info is-outlined" href="/login">
+                    <span><i class="mdi mdi-login-variant"></i> Login</span>
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -91,6 +97,7 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='components/Stickyfill/dist/stickyfill.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datepicker.js') }}"></script>
     <!-- Optional JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {%block scripts%}{%endblock%}

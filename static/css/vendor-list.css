@@ -1,5 +1,6 @@
 .vendor-list-card {
   flex-basis: auto;
+  position: relative;
 }
 
 .vendor-list-card-wrapper {
@@ -16,4 +17,161 @@
 .sticky:after {
   content: '';
   display: table;
+}
+
+.book-button::after,
+.book-button::before {
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.notification > .delete {
+  top: 1rem;
+  right: 1rem;
+}
+
+.calendar-title-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-title-year {
+  font-size: 0.8rem;
+}
+
+.modal-card {
+  align-self: flex-start;
+  top: 10vh;
+}
+
+.modal-card-body {
+  position: relative;
+}
+
+.modal-card,
+.modal-card-body {
+  overflow: initial;
+}
+
+.modal-card-body .overlay,
+.tile .overlay {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  z-index: 101;
+}
+
+.tile .overlay {
+  opacity: 0.6;
+}
+
+.datepicker .calendar .calendar-header .calendar-date, 
+.datepicker .calendar .calendar-body .calendar-date {
+  padding-top: .1rem;
+  padding-bottom: .1rem;
+}
+
+.datepicker .calendar .calendar-body {
+  padding: 0 .2rem .3rem;
+}
+
+.datepicker .calendar .calendar-date {
+  padding: 0.3rem;
+}
+
+.calendar::before {
+  content: '';
+  height: 0;
+  width: 0;
+  border: 8px solid #00d1b2;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  position: absolute;
+  top: -16px;
+  left: 14px;
+}
+
+.hidden {
+  display: none;
+}
+
+.shown {
+  display: block;
+}
+
+#bookingInfoBox,
+#vendorNameBox,
+#vendorBusinessBox {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.confirmationMessage .level {
+  padding: 0 2rem;
+}
+
+.detail {
+  font-size: 1rem;
+}
+
+.loading-container {
+  position: relative;
+}
+
+.overlay-container {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.ajax-loader {
+  position: relative;
+  top: 20vh;
+}
+
+.circular {
+  animation: rotate 2s linear infinite;
+  height: 100px;
+  width: 100px;
+  position: relative;
+}
+
+.path {
+  stroke-dasharray: 1, 400;
+  stroke: #209cee;
+  stroke-dashoffset: 0;
+  animation:
+    fluid 2s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+@keyframes rotate {
+  100% {
+   transform: rotate(360deg);
+  }
+}
+
+@keyframes fluid {
+  0%{
+    stroke-dasharray: 1, 400;
+    stroke-dashoffset: 0;
+  }
+  50%{
+    stroke-dasharray: 178, 400;
+    stroke-dashoffset: -70;
+  }
+  100%{
+    stroke-dasharray: 178, 400;
+    stroke-dashoffset: -248;
+  }
 }
