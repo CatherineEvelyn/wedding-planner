@@ -3,14 +3,14 @@
     <!-- Name Input -->
     <div class="field">
       <div class="control has-icons-left">
-        <input class="input {% if errors['nameerrors'] %}is-danger{% endif %}"
-          type="text" placeholder="Full Name" name="name" value="{{ name }}">
+        <input class="input {% if v_errors['nameerrors'] %}is-danger{% endif %}"
+          type="text" placeholder="Full Name" name="name" value="{{ vendor_info['name'] }}">
         <span class="icon is-left">
           <i class="mdi mdi-account-circle"></i>
         </span>
         <div class="error-msgs-wrapper">
-          {% if errors["nameerrors"] %}
-            {% for error in errors["nameerrors"] %}
+          {% if v_errors["nameerrors"] %}
+            {% for error in v_errors["nameerrors"] %}
               <p class="help is-danger">
                 <i class="mdi mdi-alert-circle"></i>
                 {{ error }}
@@ -23,14 +23,14 @@
     <!-- Business Name Input -->
     <div class="field">
       <div class="control has-icons-left">
-        <input class="input {% if errors['businesserrors'] %}is-danger{% endif %}"
-          type="text" placeholder="Business Name" name="business" value="{{ business }}">
+        <input class="input {% if v_errors['businesserrors'] %}is-danger{% endif %}"
+          type="text" placeholder="Business Name" name="business" value="{{ vendor_info['business_name'] }}">
         <span class="icon is-left">
           <i class="mdi mdi-account-card-details"></i>
         </span>
         <div class="error-msgs-wrapper">
-          {% if errors["businesserrors"] %}
-            {% for error in errors["businesserrors"] %}
+          {% if v_errors["businesserrors"] %}
+            {% for error in v_errors["businesserrors"] %}
               <p class="help is-danger">
                 <i class="mdi mdi-alert-circle"></i>
                 {{ error }}
@@ -43,7 +43,7 @@
     <!-- Vendor Type Input -->
     <div class="field">
       <div class="control has-icons-left">
-        <div class="select {% if errors['vendortypeerrors'] %}is-danger{% endif %}">
+        <div class="select {% if v_errors['vendortypeerrors'] %}is-danger{% endif %}">
           <select name="vendortype">
             <option value="" selected hidden>Vendor Type</option>
             <option value="venue">Venue</option>
@@ -59,8 +59,8 @@
           <i class="mdi mdi-camera"></i>
         </span>
         <div class="error-msgs-wrapper">
-          {% if errors["vendortypeerrors"] %}
-            {% for error in errors["vendortypeerrors"] %}
+          {% if v_errors["vendortypeerrors"] %}
+            {% for error in v_errors["vendortypeerrors"] %}
               <p class="help is-danger">
                 <i class="mdi mdi-alert-circle"></i>
                 {{ error }}
@@ -78,14 +78,14 @@
     <!-- Email Input -->
     <div class="field">
       <div class="control has-icons-left">
-        <input class="input {% if errors['v_usererrors'] %}is-danger{% endif %}" 
-          type="text" placeholder="Email" name="email" value="{{ email }}">
+        <input class="input {% if v_errors['usererrors'] %}is-danger{% endif %}" 
+          type="text" placeholder="Email" name="email" value="{{ vendor_info['email'] }}">
         <span class="icon is-left">
           <i class="mdi mdi-email-outline"></i>
         </span>
         <div class="error-msgs-wrapper">
-          {% if errors["v_usererrors"] %}
-            {% for error in errors["v_usererrors"] %}
+          {% if v_errors["usererrors"] %}
+            {% for error in v_errors["usererrors"] %}
               <p class="help is-danger">
                 <i class="mdi mdi-alert-circle"></i>
                 {{ error }}
@@ -98,14 +98,14 @@
     <!-- Password Input -->
     <div class="field">
       <div class="control has-icons-left">
-        <input class="input {% if errors['v_passerrors'] %}is-danger{% endif %}" 
+        <input class="input {% if v_errors['passerrors'] %}is-danger{% endif %}" 
           type="password" placeholder="Password" name="password">
         <span class="icon is-left">
           <i class="mdi mdi-lock-outline"></i>
         </span>
         <div class="error-msgs-wrapper">
-          {% if errors["v_passerrors"] %}
-            {% for error in errors["v_passerrors"] %}
+          {% if v_errors["passerrors"] %}
+            {% for error in v_errors["passerrors"] %}
               <p class="help is-danger">
                 <i class="mdi mdi-alert-circle"></i>
                 {{ error }}
@@ -118,14 +118,14 @@
     <!-- Verify Password Input -->
     <div class="field">
       <div class="control has-icons-left">
-        <input class="input {% if errors['v_verifyerrors'] %}is-danger{% endif %}"
+        <input class="input {% if v_errors['verifyerrors'] %}is-danger{% endif %}"
           type="password" placeholder="Verify Password" name="verify">
         <span class="icon is-left">
           <i class="mdi mdi-checkbox-marked-circle-outline"></i>
         </span>
         <div class="error-msgs-wrapper">
-          {% if errors["v_verifyerrors"] %}
-            {% for error in errors["v_verifyerrors"] %}
+          {% if v_errors["verifyerrors"] %}
+            {% for error in v_errors["verifyerrors"] %}
               <p class="help is-danger">
                 <i class="mdi mdi-alert-circle"></i>
                 {{ error }}
@@ -143,14 +143,14 @@
     <!-- Street Address Input -->
     <div class="field">
       <div class="control has-icons-left is-expanded">
-        <input class="input {% if errors['addresserrors'] %}is-danger{% endif %}" 
-          type="text" placeholder="Street Address" name="address" value="{{ address }}">
+        <input class="input {% if v_errors['addresserrors'] %}is-danger{% endif %}" 
+          type="text" placeholder="Street Address" name="address" value="{{ vendor_info['street_address'] }}">
         <span class="icon is-left">
           <i class="mdi mdi-home"></i>
         </span>
         <div class="error-msgs-wrapper">
-          {% if errors["addresserrors"] %}
-            {% for error in errors["addresserrors"] %}
+          {% if v_errors["addresserrors"] %}
+            {% for error in v_errors["addresserrors"] %}
               <p class="help is-danger">
                 <i class="mdi mdi-alert-circle"></i>
                 {{ error }}
@@ -163,14 +163,14 @@
     <!-- Street Address Input -->
     <div class="field">
       <div class="control has-icons-left is-expanded">
-        <input class="input {% if errors['cityerrors'] %}is-danger{% endif %}" 
-          type="text" placeholder="City" name="city" value="{{ city }}">
+        <input class="input {% if v_errors['cityerrors'] %}is-danger{% endif %}" 
+          type="text" placeholder="City" name="city" value="{{ vendor_info['city'] }}">
         <span class="icon is-left">
           <i class="mdi mdi-google-maps"></i>
         </span>
         <div class="error-msgs-wrapper">
-          {% if errors["cityerrors"] %}
-            {% for error in errors["cityerrors"] %}
+          {% if v_errors["cityerrors"] %}
+            {% for error in v_errors["cityerrors"] %}
               <p class="help is-danger">
                 <i class="mdi mdi-alert-circle"></i>
                 {{ error }}
@@ -244,14 +244,14 @@
       </div>
       <!-- Zipcode Input -->
       <div class="control has-icons-left zip-input">
-        <input class="input {% if errors['zipcodeerrors'] %}is-danger{% endif %}"
-          type="text" placeholder="Zipcode" name="zipcode" maxlength="5" value="{{ zipcode }}">
+        <input class="input {% if v_errors['zipcodeerrors'] %}is-danger{% endif %}"
+          type="text" placeholder="Zipcode" name="zipcode" maxlength="5" value="{{ vendor_info['zipcode'] }}">
         <span class="icon is-left">
           <i class="mdi mdi-map-marker"></i>
         </span>
         <div class="error-msgs-wrapper">
-          {% if errors["zipcodeerrors"] %}
-            {% for error in errors["zipcodeerrors"] %}
+          {% if v_errors["zipcodeerrors"] %}
+            {% for error in v_errors["zipcodeerrors"] %}
               <p class="help is-danger">
                 <i class="mdi mdi-alert-circle"></i>
                 {{ error }}
@@ -268,14 +268,14 @@
   <div class="field-body">
     <div class="field">
       <div class="control has-icons-left">
-        <input class="input {% if errors['priceminerrors'] %}is-danger{% endif %}" 
-          type="text" placeholder="Minimum Price" name="pricemin", value="{{ pricemin }}">
+        <input class="input {% if v_errors['priceminerrors'] %}is-danger{% endif %}" 
+          type="text" placeholder="Minimum Price" name="pricemin", value="{{ vendor_info['price_min'] }}">
         <span class="icon is-left">
           <i class="mdi mdi-currency-usd"></i>
         </span>
         <div class="error-msgs-wrapper">
-          {% if errors["priceminerrors"] %}
-            {% for error in errors["priceminerrors"] %}
+          {% if v_errors["priceminerrors"] %}
+            {% for error in v_errors["priceminerrors"] %}
               <p class="help is-danger">
                 <i class="mdi mdi-alert-circle"></i>
                 {{ error }}
@@ -287,14 +287,14 @@
     </div>
     <div class="field">
       <div class="control has-icons-left">
-        <input class="input {% if errors['pricemaxerrors'] %}is-danger{% endif %}" 
-          type="text" placeholder="Maximum Price" name="pricemax" value="{{ pricemax }}">
+        <input class="input {% if v_errors['pricemaxerrors'] %}is-danger{% endif %}" 
+          type="text" placeholder="Maximum Price" name="pricemax" value="{{ vendor_info['pricemax'] }}">
         <span class="icon is-left">
           <i class="mdi mdi-currency-usd"></i>
         </span>
         <div class="error-msgs-wrapper">
-          {% if errors["pricemaxerrors"] %}
-            {% for error in errors["pricemaxerrors"] %}
+          {% if v_errors["pricemaxerrors"] %}
+            {% for error in v_errors["pricemaxerrors"] %}
               <p class="help is-danger">
                 <i class="mdi mdi-alert-circle"></i>
                 {{ error }}

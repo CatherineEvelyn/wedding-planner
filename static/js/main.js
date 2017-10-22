@@ -1,7 +1,9 @@
 var api_call_made = false;
 var vendorID = null;
+var sessionDetails = null;
 
 $(function () {
+  getSessionDetails();
   addMobileMenuListener();
   addSignupListener();
   addBlur();
@@ -50,9 +52,11 @@ function addBlur() {
 function addAjaxListeners() {
   $('.getVendorByType').on('click', e => {
     let $self = $(e.currentTarget);
+    let type = $self.attr('data-type');
     api_call_made = true;
-    getVendorByType($self.attr('data-type'));
-  })
+    makeSidelinkActive(type);
+    getVendorByType(type);
+  });
 }
 
 function getVendorByType(type) {
@@ -66,6 +70,9 @@ function getVendorByType(type) {
     $('.vendor-list-card .overlay').hide();
     console.log('complete!');
   });
+
+  makeSidelinkActive(type);
+
   $.ajax({
     method: 'GET',
     url: '/getvendors',
@@ -78,6 +85,17 @@ function getVendorByType(type) {
     console.log(json);
     api_call_made = false;
   })
+}
+
+function makeSidelinkActive(type) {
+  // Remove all active classes from links
+  $('.getVendorByType').removeClass('is-active');
+  // Add active class to all vendors link (special case)
+  if (type === "all") {
+    $('.getVendorByType').eq(0).addClass('is-active');
+  }
+  // Add active class to link with href that corresponds to type passed in to AJAX call
+  $('a[href="#' + type + '"]').addClass('is-active');
 }
 
 function displayVendors(json) {
@@ -133,12 +151,16 @@ function addMobileMenuListener() {
 
 function addBookingListeners() {
   $(document).on('click', '.book-button', e => {
-    $('#bookingModal').addClass('is-active');
-    vendorID = $(e.currentTarget).parent().attr('data-vendor-id');
-    $('#bookRequestName').val($(e.currentTarget).siblings().eq(1).text());
-    $('#bookRequestBusiness').val($(e.currentTarget).siblings().eq(3).text());
-    // Adding DatePicker each time a booking modal is active
-    var datePicker = new DatePicker(document.getElementById('bookRequestDate'), {dataFormat: "yyyy-mm-dd"});
+    if (sessionDetails.session === false) {
+      alert("You must be logged in to book a vendor.");
+    } else {
+      $('#bookingModal').addClass('is-active');
+      vendorID = $(e.currentTarget).parent().attr('data-vendor-id');
+      $('#bookRequestName').val($(e.currentTarget).siblings().eq(1).text());
+      $('#bookRequestBusiness').val($(e.currentTarget).siblings().eq(3).text());
+      // Adding DatePicker each time a booking modal is active
+      var datePicker = new DatePicker(document.getElementById('bookRequestDate'), {dataFormat: "yyyy-mm-dd"});
+    }
   });
 }
 
@@ -204,4 +226,17 @@ function resetModalView() {
   $inputView.show();
   $confirmView.hide();
   $('.detail').remove();
+}
+
+function getSessionDetails() {
+  $.ajax({
+    method: "GET",
+    url: "/session",
+    data: {
+      "source": "ajax"
+    }
+  }).done(data => {
+    sessionDetails = data;
+    console.log(data);
+  });
 }

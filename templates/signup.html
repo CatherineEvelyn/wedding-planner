@@ -27,7 +27,7 @@
         </div>
       
         <!-- Sign up for vendor users -->
-        <div class="vendor-signup" style="{% if type == 'vendor' %}display: block;{% endif %}">
+        <div class="vendor-signup" {% if type == 'vendor' %}style="display: block;"{% endif %}>
           <form method='POST'>
             <!-- Grabs the inputs from components/register_inputs.html -->
             {% include 'components/register_vendor_inputs.html' %}
