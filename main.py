@@ -94,7 +94,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    blacklist = ['organizer', 'profile' ]
+    blacklist = ['organizer', 'profile', 'book' ]
     if all([request.endpoint in blacklist, 'email' not in session, '/static/' not in request.path]):
         flash("You must to be logged in to access this page.", "error")
         print(request.endpoint)
