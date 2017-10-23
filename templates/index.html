@@ -8,6 +8,7 @@
     <h1 class="title is-1 mainpage-title">My Wedding Planner</h1>
     <p class="subtitle">Your wedding plans, all in one place.</p>
     <div class="field is-grouped is-grouped-centered">
+    {% if not session['email'] %}
       <p class="control">
         <a class="button is-info" href="/login">
           <span><i class="mdi mdi-login-variant mdi-light"></i> Login</span>
@@ -18,6 +19,19 @@
           <span><i class="mdi mdi-account-plus mdi-light"></i> Sign up</span>
         </a>
       </p>
+    {% elif session['userType'] == "user" %}
+      <p class="control">
+        <a class="button is-info" href="/organizer">
+          <span><i class="mdi mdi-account-circle mdi-light"></i> My Organizer</span>
+        </a>
+      </p>
+    {% elif session['userType'] == "vendor" %}
+      <p class="control">
+        <a class="button is-info" href="/profile">
+          <span><i class="mdi mdi-account-circle mdi-light"></i> My Profile</span>
+        </a>
+      </p>
+    {% endif %}
     </div>
   </div>
 </section>
@@ -25,7 +39,7 @@
   <div class="container">
     <div class="columns">
         <div class="column">
-          <a href="/vendor-list#venues">
+          <a href="/vendor-list#venue">
             <div class="vendor-card">
               <div class="vendor-card-image" id="venue"></div>
               <div class="vendor-icon">
@@ -38,7 +52,7 @@
           </a>
         </div>
         <div class="column">
-          <a href="/vendor-list#photographers">
+          <a href="/vendor-list#photographer">
             <div class="vendor-card">
               <div class="vendor-card-image" id="photographer"></div>
               <div class="vendor-icon">
@@ -51,7 +65,7 @@
           </a>
         </div>
         <div class="column">
-          <a href="vendor-list#videographers">
+          <a href="vendor-list#videographer">
             <div class="vendor-card">
               <div class="vendor-card-image" id="video"></div>
               <div class="vendor-icon">
@@ -64,7 +78,7 @@
           </a>
         </div>
         <div class="column">
-          <a href="/vendor-list#caterers">
+          <a href="/vendor-list#caterer">
             <div class="vendor-card">
               <div class="vendor-card-image" id="caterer"></div>
               <div class="vendor-icon">
@@ -106,7 +120,7 @@
           </a>
         </div>
         <div class="column">
-          <a href="/vendor-list#tailors">
+          <a href="/vendor-list#tailor">
             <div class="vendor-card">
               <div class="vendor-card-image" id="tailor"></div>
               <div class="vendor-icon">

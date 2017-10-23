@@ -8,7 +8,7 @@
             <div class="form-container-signup">
                 <h1 class="title is-2 is-marginless">Login</h1>
                 <hr>
-                <form method='POST'>
+                <form action="{{ url_for('login', next=request.args.get('next')) }}" method='POST'>
                     {% include 'components/register_login_inputs.html' %}
                     <input class="submit-button" type='submit' value="Login">
                 </form>

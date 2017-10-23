@@ -44,7 +44,7 @@
               <a class="navbar-item" href="/vendor-list#music">
                 Music
               </a>
-              <a class="navbar-item" href="/vendor-list#cosmetic">
+              <a class="navbar-item" href="/vendor-list#cosmetics">
                 Cosmetics
               </a>
               <a class="navbar-item" href="/vendor-list#tailor">
@@ -61,9 +61,15 @@
             <div class="navbar-item">
               <div class="field is-grouped">
                 <p class="control">
+                {% if not session['email'] %}
                   <a class="button is-info is-outlined" href="/login">
                     <span><i class="mdi mdi-login-variant"></i> Login</span>
                   </a>
+                {% else %}
+                  <a class="button is-info is-outlined" href="/logout">
+                    <span><i class="mdi mdi-logout-variant"></i> Logout</span>
+                  </a>
+                {% endif %}
                 </p>
               </div>
             </div>
