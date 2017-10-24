@@ -1,26 +1,202 @@
-<!-- TODO: This page will show the list of available vendors. Initial display should be based on
-    which vendor category the user click on the index.html
-    There should be tabs to choose which category of vendors user want to see, each tabs will
-    select one vendor's category from database to display on the page (the tabs doesn't link to
-    different html page, it just display different list based on the category chosen)
--->
-
 <!-- TODO: Each vendor's card will show only name, min to max price, location(state or zip, not the entire address),
     rating(optional), a button for booking, and a button (or just a link when the card is clicked) to portfolio.html.
 -->
-
- <!-- TODO: Use bulma to design this page -->
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vendor-list.css') }}">
+{% endblock %}
 {% extends 'layout.html' %}
 {% block body %}
-<ul>
-  <li> <a href="#venues" class="getVendorByType" data-type="venues">Venues</a></li>
-  <li> <a href="#photographers" class="getVendorByType" data-type="photographers">Photographers</a></li>
-  <li> <a href="#videographers" class="getVendorByType" data-type="videographers">Videographers</a></li>
-  <li> <a href="#caterers" class="getVendorByType" data-type="caterers">Caterers</a></li>
-  <li> <a href="#bands" class="getVendorByType" data-type="band">Band/DJ</a></li>
-  <li> <a href="#hair" class="getVendorByType" data-type="hair">Hairstyle &amp; Make Up Artists</a></li>
-  <li> <a href="#tailors" class="getVendorByType" data-type="tailors">Tailors</a></li>
-</ul>
+<div class="container is-fluid">
+  <section class="section">
+    <div id="bookingModal" class="modal">
+      <div id="modalCloseLayer" class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Book Vendor</p>
+          <button id="modalCloseButton" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="overlay"></div>
+          <div class="bookingInputBox shown">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input type="text" id="bookRequestName" class="input is-medium" 
+                      readonly>
+                    <span class="icon is-left">
+                      <i class="mdi mdi-account-circle"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input type="text" id="bookRequestBusiness" class="input is-medium" 
+                      readonly>
+                    <span class="icon is-left">
+                      <i class="mdi mdi-account-card-details"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <div id="dateInput" class="control has-icons-left">
+                <input id="bookRequestDate" type="text" class="input is-medium" 
+                  placeholder="Pick a date" autocomplete="off">
+                <span class="icon is-left">
+                  <i class="mdi mdi-calendar"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="confirmationMessage hidden">
+            <h1 class="title has-text-success">
+                <span class="icon">
+                    <i class="mdi mdi-check-circle"></i>
+                  </span>
+              Vendor Booked!
+            </h1>
+            <p class="subtitle">Your booking details are below:</p>
+            <div class="level">
+              <div id="bookingInfoBox">
+                <span class="is-uppercase has-text-grey is-size-7">
+                  <span class="icon">
+                    <i class="mdi mdi-calendar"></i>
+                  </span>
+                  Booking Date
+                </span>
+              </div>
+              <div id="vendorBusinessBox">
+                <span class="is-uppercase has-text-grey is-size-7">
+                  <span class="icon">
+                    <i class="mdi mdi-account-card-details"></i>
+                  </span>
+                  Business Name
+                </span>
+              </div>
+              <div id="vendorNameBox">
+                <span class="is-uppercase has-text-grey is-size-7">
+                  <span class="icon">
+                    <i class="mdi mdi-account-circle"></i>
+                  </span>
+                  Contact Name
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer id="bookingFooter" class="modal-card-foot">
+          <button id="bookVendor" class="button is-success">Book Vendor</button>
+          <button id="cancelButton" class="button">Cancel</button>
+        </footer>
+        <footer id="confirmFooter" class="modal-card-foot hidden">
+          <button id="cancelButton" class="button">Close</button>
+        </footer>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-2">
+        <aside class="menu vendor-search-menu sticky">
+          <p class="menu-label">
+            Vendor Search
+          </p>
+          <div class="field">
+            <div class="control has-icons-left">
+              <input class="input is-small" type="text" placeholder="Name, type, location...">
+              <span class="icon is-left">
+                <i class="mdi mdi-magnify"></i>
+              </span>
+            </div>
+          </div>
+          <p class="menu-label">
+            Vendor Types
+          </p>
+          <ul class="menu-list">
+            <li>
+              <a class="getVendorByType" data-type="all">
+                All Vendors
+              </a>
+            </li>
+            <li>
+              <a href="#venue" class="getVendorByType" data-type="venue">
+                Venues
+              </a>
+            </li>
+            <li>
+              <a href="#photographer" class="getVendorByType" data-type="photographer">
+                Photographers
+              </a>
+            </li>
+            <li>
+              <a href="#videographer" class="getVendorByType" data-type="videographer">
+                Videographers
+              </a>
+            </li>
+            <li>
+              <a href="#caterer" class="getVendorByType" data-type="caterer">
+                Caterers
+              </a>
+            </li>
+            <li>
+              <a href="#music" class="getVendorByType" data-type="music">
+                Band/DJ
+              </a>
+            </li>
+            <li>
+              <a href="#cosmetics" class="getVendorByType" data-type="cosmetics">
+                Hairstyle &amp; Make Up Artists
+              </a>
+            </li>
+            <li>
+              <a href="#tailor" class="getVendorByType" data-type="tailor">
+                Tailors
+              </a>
+            </li>
+          </ul>
+          <p class="menu-label">
+            Sort By
+          </p>
+          <ul class="menu-list">
+            <li>
+              <a role="button" class="getVendorByType" data-type="venue">
+                Price (High to Low)
+              </a>
+            </li>
+            <li>
+              <a role="button" class="getVendorByType" data-type="photographer">
+                Price (Low to High)
+              </a>
+            </li>
+            <li>
+              <a role="button" class="getVendorByType" data-type="videographer">
+                Location
+              </a>
+            </li>
+            <li>
+              <a role="button" class="getVendorByType" data-type="caterer">
+                Rating
+              </a>
+            </li>
+          </ul>
+        </aside>
+      </div>
+      <div class="column is-narrow"></div>
+      <div class="column loading-container">
+        <div class="overlay-container">
+          <div class="ajax-loader">
+            <svg class="circular">
+              <circle class="path" cx="50" cy="50" r="40" fill="none" stroke-width="6" stroke-miterlimit="10"/>
+            </svg>
+          </div>
+        </div>
+        <div class="tile is-ancestor vendor-list-card-wrapper">
+          <!-- Populated with vendors through AJAX calls -->
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 {% endblock %}
 {% block scripts %}
 <script defer>
@@ -29,12 +205,18 @@
   $(window).on('popstate', e => {
     update_tag();
   })
-  function update_tag(){
+  function update_tag() {
     loc = window.location.href.split('#');
     tag = loc.length > 1 ? loc[1] : '';
-    if(tag != '' && !api_call_made){
+    if (tag != '' && !api_call_made) {
       getVendorByType(tag);
+    } else if (!tag) {
+      getVendorByType("all");
     }
   }
+
+  // Adding position:sticky polyfill for side menu to make sure it works in older browers
+  var elements = $('.sticky');
+  Stickyfill.add(elements);
 </script>
 {% endblock %}
