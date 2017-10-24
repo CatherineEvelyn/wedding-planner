@@ -158,15 +158,16 @@ def profile():
     
     return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
     for row in result:
-        userInfo.append("Name: " + row['name'])
-        userInfo.append("Phone Number: " + str(row['phoneNumber']))
-        userInfo.append("Email: " + row['email'])
-        userInfo.append("Number of Guests: " + str(row['numberOfGuests']))
-        userInfo.append("Booked Date: " + str(row['bookedDate']))
-        userInfo.append("Event Start Time: " + str(row['eventStartTime']))
-        userInfo.append("Event End Time: " + str(row['eventEndTime']))
-    
-    return render_template("testVendorsProfile.html", userInfo = userInfo)
+        #userInfo.append("Name: " + row['name'])
+        #userInfo.append("Phone Number: " + str(row['phoneNumber']))
+        #userInfo.append("Email: " + row['email'])
+        #userInfo.append("Number of Guests: " + str(row['numberOfGuests']))
+        #userInfo.append("Booked Date: " + str(row['bookedDate']))
+        #userInfo.append("Event Start Time: " + str(row['eventStartTime']))
+        #userInfo.append("Event End Time: " + str(row['eventEndTime']))
+        userInfo.append(row)
+    return render_template("testObjProfile.html", userInfo = userInfo)
+    #return render_template("testVendorsProfile.html", userInfo = userInfo)
     # return render_template("vendor-account.html")
 
 @app.route('/organizer')
