@@ -94,7 +94,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    blacklist = ['organizer', 'profile', 'book' ]
+    blacklist = ['user', 'profile', 'book' ]
     if all([request.endpoint in blacklist, 'email' not in session, '/static/' not in request.path]):
         flash("You must to be logged in to access this page.", "error")
         print(request.endpoint)
@@ -347,8 +347,8 @@ def signup():
         form = request.form
 
         # User signup validation
-        if 'organizer_signup' in form:
-            register_type = 'organizer'
+        if 'user_signup' in form:
+            register_type = 'user'
 
             user_info['email'] = email = form['email']
             user_info['name'] = name = form['name']
@@ -519,7 +519,7 @@ def signup():
         v_errors=v_errors, 
         user_info=user_info,
         vendor_info=vendor_info,
-        type="organizer"
+        type="user"
     )
 
 # FOR TESTING PURPOSES ONLY
