@@ -94,7 +94,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    blacklist = ['organizer', 'profile', 'book' ]
+    blacklist = ['user', 'profile', 'book' ]
     if all([request.endpoint in blacklist, 'email' not in session, '/static/' not in request.path]):
         flash("You must to be logged in to access this page.", "error")
         print(request.endpoint)
@@ -225,7 +225,7 @@ def profile():
     # return render_template("vendor-account.html")
 
 
-@app.route('/organizer')
+@app.route('/user-account')
 def organizer():
     user = User.query.filter_by(email=session["email"]).first() #TODO: get user in session
     user_id = str(user.id) #get user's id - turn to string for query 
@@ -254,7 +254,7 @@ def organizer():
         vendorInfo.append("City: " + row['city'])
         vendorInfo.append("Zipcode: " + str(row['zipcode']))
         vendorInfo.append("State: " + row['state'])
-    return render_template("testUserVendor.html", vendorInfo=vendorInfo)  
+    return render_template("user-account.html", vendorInfo=vendorInfo)  
     #return render_template("user-account.html")
 
 @app.route('/book', methods=['POST'])
@@ -344,8 +344,8 @@ def signup():
         form = request.form
 
         # User signup validation
-        if 'organizer_signup' in form:
-            register_type = 'organizer'
+        if 'user_signup' in form:
+            register_type = 'user'
 
             user_info['email'] = email = form['email']
             user_info['name'] = name = form['name']
@@ -516,7 +516,7 @@ def signup():
         v_errors=v_errors, 
         user_info=user_info,
         vendor_info=vendor_info,
-        type="organizer"
+        type="user"
     )
 
 # FOR TESTING PURPOSES ONLY
