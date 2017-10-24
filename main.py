@@ -213,22 +213,21 @@ def profile():
     
     return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
     for row in result:
-        userInfo.append("Name: " + row['name'])
-        userInfo.append("Phone Number: " + str(row['phoneNumber']))
-        userInfo.append("Email: " + row['email'])
-        userInfo.append("Number of Guests: " + str(row['numberOfGuests']))
-        userInfo.append("Booked Date: " + str(row['bookedDate']))
-        userInfo.append("Event Start Time: " + str(row['eventStartTime']))
-        userInfo.append("Event End Time: " + str(row['eventEndTime']))
-    
-    return render_template("testVendorsProfile.html", userInfo=userInfo)
+
+       
+        userInfo.append(row)
+    return render_template("testObjProfile.html", userInfo = userInfo)
+ 
+
     # return render_template("vendor-account.html")
 
 
 @app.route('/organizer')
 def organizer():
+
     user = User.query.filter_by(email=session["email"]).first() #TODO: get user in session
     user_id = str(user.id) #get user's id - turn to string for query 
+
     #connection = engine.connect()
     result = db.engine.execute("SELECT * FROM user_vendor JOIN vendor ON user_vendor.vendor_id=vendor.id WHERE user_id = '" + user_id + "'")
     #q = session.query(UserVendor).filter(UserVendor).join(UserVendor.vendor_id).filter.all()
@@ -247,15 +246,19 @@ def organizer():
     #connection.close()
     return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
     for row in result:
+        '''
         vendorInfo.append("Name: " + row['contactName'])
         vendorInfo.append("Business name: " + row['businessName'])
         vendorInfo.append("Vendor Type: " + row['vendorType'])
         vendorInfo.append("Street Address: " + row['streetAddress'])
         vendorInfo.append("City: " + row['city'])
         vendorInfo.append("Zipcode: " + str(row['zipcode']))
-        vendorInfo.append("State: " + row['state'])
-    return render_template("testUserVendor.html", vendorInfo=vendorInfo)  
-    #return render_template("user-account.html")
+<<<<<<< HEAD
+        vendorInfo.append("State: " + row['state'])'''
+        vendorInfo.append(row)
+    return render_template("testObjProfile.html", vendorInfo = vendorInfo)
+    #return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
+
 
 @app.route('/book', methods=['POST'])
 def book():
