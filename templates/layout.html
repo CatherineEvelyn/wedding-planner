@@ -7,6 +7,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='components/bulma/css/bulma.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='components/mdi/css/materialdesignicons.min.css') }}" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='components/progressively/dist/progressively.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     {% block head %} {% endblock %}
   </head>
@@ -77,18 +78,15 @@
         </div>
       </nav>
     </div>
-
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
-    <div id="fm-container" class="fm-container">
-      {% for category, message in messages %}
-      <ul id="flash-container" class="flash-container-{{ category }}">
-        <li class="flash">{{ message }}</li>
-        <img class="close-flash-btn" src="/static/images/close-btn.png">
-      </ul>
-      {% endfor %}
-    </div>
-    {% endif %} {% endwith %}
     <div class="container is-fluid is-marginless bg-image">
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+      {% for category, message in messages %}
+        <div class="notification {{ category }} is-radiusless flash-msg">
+          <button class="delete flash-dismiss"></button>
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %} {% endwith %}
       {% block body %} {% endblock %}
     </div>
     <footer class="footer">
@@ -103,6 +101,7 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='components/Stickyfill/dist/stickyfill.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='components/progressively/dist/progressively.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/datepicker.js') }}"></script>
     <!-- Optional JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>

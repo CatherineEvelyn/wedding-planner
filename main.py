@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, url_for, session, flash, jsonify
+from flask import Flask, request, redirect, render_template, url_for, session, flash, jsonify, Markup
 from flask_sqlalchemy import SQLAlchemy
 from hashutils import *
 import re
@@ -96,8 +96,8 @@ class User(db.Model):
 def require_login():
     blacklist = ['organizer', 'profile', 'book' ]
     if all([request.endpoint in blacklist, 'email' not in session, '/static/' not in request.path]):
-        flash("You must to be logged in to access this page.", "error")
-        print(request.endpoint)
+        message = Markup("You must to be <strong>logged in</strong> to access this page.")
+        flash(message, "is-danger")
         return redirect(url_for('login', next=request.endpoint))
 
 @app.route('/session')
@@ -143,6 +143,10 @@ def redirect_dest(fallback):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # Don't want users to be able to log in twice
+    if session.get('email', False):
+        return redirect('/')
+
     (usererrors, passerrors, verifyerrors) = ([], [], [])
     errors = {'usererrors': usererrors,
               'passerrors': passerrors} # initializing errors object
@@ -152,6 +156,8 @@ def login():
         password = request.form['password']
         user = User.query.filter_by(email=email).first() # check if email in use yet
         vendor = Vendor.query.filter_by(email=email).first()
+
+        print(user, vendor)
 
         if email == '':
             usererrors.append("This field cannot be left blank.")

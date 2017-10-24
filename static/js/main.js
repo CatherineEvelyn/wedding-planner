@@ -3,7 +3,13 @@ var vendorID = null;
 var sessionDetails = null;
 
 $(function () {
+  progressively.init({
+    onLoadComplete: () => {
+      console.log("done loading");
+    }
+  });
   getSessionDetails();
+  addDismissNotificationListeners();
   addMobileMenuListener();
   addSignupListener();
   addBlur();
@@ -155,6 +161,7 @@ function addBookingListeners() {
       alert("You must be logged in to book a vendor.");
     } else {
       $('#bookingModal').addClass('is-active');
+      $('.modal-card').addClass('slide-modal');
       vendorID = $(e.currentTarget).parent().attr('data-vendor-id');
       $('#bookRequestName').val($(e.currentTarget).siblings().eq(1).text());
       $('#bookRequestBusiness').val($(e.currentTarget).siblings().eq(3).text());
@@ -238,5 +245,11 @@ function getSessionDetails() {
   }).done(data => {
     sessionDetails = data;
     console.log(data);
+  });
+}
+
+function addDismissNotificationListeners() {
+  $('.flash-dismiss').on('click', e => {
+    $(e.currentTarget).parent().remove();
   });
 }
