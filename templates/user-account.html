@@ -20,7 +20,7 @@
     </div>
     <div class="tile is-vertical is-parent">
       <div class="tile is-child box">
-        <p>Welcome back to your organizer {{session['username']}}</p>
+        <p>Welcome back to your organizer {{userName}}</p>
       </div>
       <div class="tile is-child box">
         <p class="title">My Profile</p>
@@ -74,6 +74,8 @@
 
 
 {% for row in vendorInfo %}
+{{row.vendorType}}
+{{greenStatus}}
       <tr class="">
         <th>1</th>
         <td><a href="/portfolio?vendor-id=" title="My Venues">My {{row.vendorType}}</a></td>
@@ -89,20 +91,9 @@
       </tr>
 {% endfor %}
 
-    {% if not session['email'] %}
-      <p>1</p>
-    {% elif session['userType'] == "user" %}
-      <p>2 {{session['username']}} </p>
-    {% elif session['userType'] == "vendor" %}
-      <p>3</p>
-    {% endif %}
 
 
-
-
-
-
-      <tr class="is-selected">
+      <tr class="{{greenStatus}}">
         <th>1</th>
         <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
         <td>Mr Venue</td>

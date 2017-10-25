@@ -235,6 +235,11 @@ def organizer():
     #vendorName = result.contactName
     #for item in result:
         #vendorName == item.contactName
+
+    x = user.name
+
+
+
     vendorInfo = []
     '''vendorName = []
     vendorBusiness = []
@@ -256,7 +261,11 @@ def organizer():
 <<<<<<< HEAD
         vendorInfo.append("State: " + row['state'])'''
         vendorInfo.append(row)
-    return render_template("user-account.html", vendorInfo = vendorInfo)
+
+        if row.vendorType == 'cosmetics'
+            greenStatus = "is-selected" 
+
+    return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, greenStatus = greenStatus)
     #return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
 
 
