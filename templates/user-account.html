@@ -73,10 +73,9 @@
     <tbody>
 
 {{test}}
-
 {% for row in vendorInfo %}
-      <tr class="">
-        <th>1</th>
+      <tr class="{{greenStatus}}">
+        <th>loop</th>
         <td><a href="/portfolio?vendor-id=" title="My Venues">My {{row.vendorType}}</a></td>
         <td>{{row.contactName}}</td>
         <td>{{row.businessName}}</td>
@@ -95,88 +94,88 @@
       <tr class="{{greenStatus}}">
         <th>1</th>
         <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
-        <td>Mr Venue</td>
-        <td>Abc Venue</td>
+        <td>{{contactName}}</td>
+        <td>{{businessName}}</td>
         <td>206-123-5678</td>
-        <td>venue@gmail.com</td>
+        <td>{{email}}</td>
         <td>$5000</td>
         <td>$500</td>
         <td>Confirmed</td>
         <td><button>Cancel</button></td>
         <td>Clicking cancel will reset the status to "searching" and display like example #7 <a href="" style="color: blue;">edit</a></td>
       </tr>
-      <tr>
+      <tr class="{{greenStatus}}">
         <th>2</th>
         <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
-        <td>abc studio</td>
-        <td>mr guy</td>
+        <td>{{contactName}}</td>
+        <td>{{businessName}}</td>
         <td>206-111-2222</td>
-        <td>photo@gmail.com</td>
+        <td>{{email}}</td>
         <td>$<input style="width:60px;"></input></td>
         <td>$<input style="width:60px;"></input></td>
         <td>inquiring</td>
         <td><button>Confirm</button></td>
         <td>Find button (exampe #7) is the default, after user book a vendor, "Find" turn into "Confirm" button <a href="" style="color: blue;">edit</a></td>
       </tr>
-      <tr class="is-selected">
+      <tr class="{{greenStatus}}">
         <th>3</th>
         <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{contactName}}</td>
+        <td>{{businessName}}</td>
+        <td>206-123-5678</td>
+        <td>{{email}}</td>
         <td>$</td>
         <td>$</td>
         <td>Outside Vendor</td>
         <td><button>Cancel</button></td>
         <td>Clicking cancel will reset the status to "searching" and display like example #7 <a href="" style="color: blue;">edit</a></td>
       </tr>
-      <tr class="is-selected">
+      <tr class="{{greenStatus}}">
         <th>4</th>
         <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
-        <td>abc Catering</td>
-        <td>chef</td>
-        <td>206-888-9999</td>
-        <td>chef@yahoo.com</td>
+        <td>{{contactName}}</td>
+        <td>{{businessName}}</td>
+        <td>206-123-5678</td>
+        <td>{{email}}</td>
         <td>$6000</td>
         <td>$1200</td>
         <td>Confirmed</td>
         <td><button>Cancel</button></td>
         <td>$50 per person, 120 guests <a href="" style="color: blue;">edit</a></td>
       </tr>
-      <tr>
+      <tr class="{{greenStatus}}">
         <th>5</th>
         <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
-        <td>abc band</td>
-        <td>mr DJ</td>
-        <td>206-000-0000</td>
-        <td>dj@band.com</td>
+        <td>{{contactName}}</td>
+        <td>{{businessName}}</td>
+        <td>206-123-5678</td>
+        <td>{{email}}</td>
         <td>$<input style="width:60px;"></input></td>
         <td>$<input style="width:60px;"></input></td>
         <td>inquiring</td>
         <td><button>Confirm</button></td>
         <td>Some very long notes (what would be the max? how many characters?) <a href="" style="color: blue;">edit</a></td>
       </tr>
-      <tr>
+      <tr class="{{greenStatus}}">
         <th>6</th>
         <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
-        <td>abc Salon</td>
-        <td>miss girl</td>
-        <td>206-123-1234</td>
-        <td>salon@yahoo.com</td>
+        <td>{{contactName}}</td>
+        <td>{{businessName}}</td>
+        <td>206-123-5678</td>
+        <td>{{email}}</td>
         <td>$<input style="width:60px;"></input></td>
         <td>$<input style="width:60px;"></input></td>
         <td>inquiring</td>
         <td><button>Confirm</button></td>
         <td>Some notes (saved as string) <a href="" style="color: blue;">edit</a></td>
       </tr>
-      <tr>
+      <tr class="{{greenStatus}}">
         <th>7</th>
         <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{contactName}}</td>
+        <td>{{businessName}}</td>
+        <td>206-123-5678</td>
+        <td>{{email}}</td>
         <td>$<input style="width:60px;"></input></td>
         <td>$<input style="width:60px;"></input></td>
         <td>searching</td>

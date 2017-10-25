@@ -239,7 +239,10 @@ def organizer():
     x = user.name
 
     venue = []
-
+    #for row in result:
+    #    if row.vendorType == "venue":
+    #        venue.append(row)
+    #return render_template("testObjProfile.html", venue =venue)
     vendorInfo = []
     '''vendorName = []
     vendorBusiness = []
@@ -262,11 +265,15 @@ def organizer():
         vendorInfo.append("State: " + row['state'])'''
         vendorInfo.append(row)
 
-        test = "this is test " + row.vendorType
-        #if row.vendorType == 'cosmetics'
-         #   greenStatus = "is-selected" 
+        businessName = row.businessName
+        contactName = row.contactName
+        email = row.email
+        if row.vendorType == 'cosmetics':
+            greenStatus = "is-selected"
+        else:
+            greenStatus = ""
 
-    return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, test = test)
+    return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, greenStatus = greenStatus, businessName = businessName, contactName = contactName, email = email)
     #return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
 
 
