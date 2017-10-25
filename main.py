@@ -253,8 +253,8 @@ def organizer():
         vendorEmail.append("Email: " + row['email'])
     #connection.close()
     return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
-    for row in result:
-        '''
+    '''for row in result:
+        
         vendorInfo.append("Name: " + row['contactName'])
         vendorInfo.append("Business name: " + row['businessName'])
         vendorInfo.append("Vendor Type: " + row['vendorType'])
@@ -262,7 +262,7 @@ def organizer():
         vendorInfo.append("City: " + row['city'])
         vendorInfo.append("Zipcode: " + str(row['zipcode']))
 <<<<<<< HEAD
-        vendorInfo.append("State: " + row['state'])'''
+        vendorInfo.append("State: " + row['state'])
         vendorInfo.append(row)
 
         businessName = row.businessName
@@ -272,8 +272,17 @@ def organizer():
             greenStatus = "is-selected"
         else:
             greenStatus = ""
+            '''
+    venue = []
+    cosmetics = []
+    for row in result:
+        if row.vendorType == "venue":
+            venue.append(row)
+        elif row.vendorType == "cosmetics":
+            cosmetics.append(row)
+    return render_template("user-account.html", venue =venue, cosmetics= cosmetics)
 
-    return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, greenStatus = greenStatus, businessName = businessName, contactName = contactName, email = email)
+    #return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, greenStatus = greenStatus, businessName = businessName, contactName = contactName, email = email)
     #return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
 
 
