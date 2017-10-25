@@ -1,6 +1,7 @@
 var api_call_made = false;
 var vendorID = null;
 var sessionDetails = null;
+var vendors = [];
 
 $(function () {
   getSessionDetails();
@@ -57,6 +58,43 @@ function addAjaxListeners() {
     makeSidelinkActive(type);
     getVendorByType(type);
   });
+  $('.sortVendors').on('click', e => {
+    let $self = $(e.currentTarget);
+    let type = $self.attr('data-type');
+    let order = $self.attr('data-order');
+    if(order == 'asc'){
+      vendors = sortArray(vendors, type, 'asc')
+      $self.attr("data-order", 'desc');
+    }else{
+      vendors = sortArray(vendors, type, 'desc')
+      $self.attr("data-order", 'asc');
+    }
+    displayVendors();
+  })
+}
+
+function sortArray(arr, type, order){
+  arr.sort(function(a, b){
+      // a and b will here be two objects from the array
+      // thus a[1] and b[1] will equal the names
+      // if they are equal, return 0 (no sorting)
+      if (a[type] == b[type]) { return 0; }
+      if (a[type] > b[type]){
+          // if a should come after b, return 1
+          if(order == 'asc')
+            return 1;
+          else
+            return -1;
+      }else{
+          // if b should come after a, return -1
+          if(order == 'asc')
+            return -1;
+          else
+            return 1;
+      }
+  });
+
+  return arr;
 }
 
 function getVendorByType(type) {
@@ -78,11 +116,16 @@ function getVendorByType(type) {
     url: '/getvendors',
     data: {
       "type": type
+    },
+    success: function(data){
+      // Convert JSON into an array
+      for(let vendor in data.vendors){
+        vendors.push(data.vendors[vendor]);
+      }
     }
   })
   .done(json => {
-    displayVendors(json);
-    console.log(json);
+    displayVendors();
     api_call_made = false;
   })
 }
@@ -98,12 +141,12 @@ function makeSidelinkActive(type) {
   $('a[href="#' + type + '"]').addClass('is-active');
 }
 
-function displayVendors(json) {
+function displayVendors() {
   let $wrapper = $(".vendor-list-card-wrapper")
 
   $wrapper.empty();
-
-  $.each(json.vendors, function(index, value) {
+  // Use global vendors to allow local sorting
+  $.each(vendors, function(index, value) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
     let $card = $("<article />", {"class": "tile is-child notification is-info"}).attr("data-vendor-id", value.id);
     $card.append('<div class="overlay"></div>');
@@ -118,6 +161,12 @@ function displayVendors(json) {
       ),
       $("<p />").append(
         $("<small />", {"html": value.city + ", " + value.state})
+      ),
+      $("<p />").append(
+        $("<small />", {"html": 'Rating: ' + value.rating})
+      ),
+      $("<p />").append(
+        $("<small />", {"html": 'Max Price: ' + value.priceMax})
       )
     );
     $vendorCardWrapper.append($card);
