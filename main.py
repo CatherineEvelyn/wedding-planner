@@ -193,28 +193,11 @@ def profile():
 
     thevendor=Vendor.query.filter_by(email=session["email"]).first() #get vendor in session
     vendId = str(thevendor.id)
-    #int(vendor.id) #get vendor's id
-    #connection = engine.connect()
 
     result = db.engine.execute("SELECT * FROM user_vendor JOIN user ON user_vendor.user_id=user.id WHERE vendor_id = '"+vendId+"'")
-    #q = session.query(UserVendor).filter(UserVendor).join(UserVendor.vendor_id).filter.all()
-    #usersVendors = UserVendor.query.filter_by(user_id=users_id).first() 
-    #vendorName = result.contactName
-    #for item in result:
-        #vendorName == item.contactName
+   
     userInfo = []
-    '''vendorName = []
-    vendorBusiness = []
-    vendorEmail = []
     for row in result:
-        vendorName.append("Name: " + row['name'])
-        vendorBusiness.append(row['phoneNumber'])
-        vendorEmail.append("Email: " + row['email'])
-    
-    return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
-    for row in result:
-
-       
         userInfo.append(row)
     return render_template("testObjProfile.html", userInfo = userInfo)
  
@@ -228,36 +211,14 @@ def organizer():
     user = User.query.filter_by(email=session["email"]).first() #TODO: get user in session
     user_id = str(user.id) #get user's id - turn to string for query 
 
-    #connection = engine.connect()
     result = db.engine.execute("SELECT * FROM user_vendor JOIN vendor ON user_vendor.vendor_id=vendor.id WHERE user_id = '" + user_id + "'")
-    #q = session.query(UserVendor).filter(UserVendor).join(UserVendor.vendor_id).filter.all()
-    #usersVendors = UserVendor.query.filter_by(user_id=users_id).first() 
-    #vendorName = result.contactName
-    #for item in result:
-        #vendorName == item.contactName
+    
     vendorInfo = []
-    '''vendorName = []
-    vendorBusiness = []
-    vendorEmail = []
+    
     for row in result:
-        vendorName.append("Name: " + row['contactName'])
-        vendorBusiness.append("Business name: " + row['businessName'])
-        vendorEmail.append("Email: " + row['email'])
-    #connection.close()
-    return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
-    for row in result:
-        '''
-        vendorInfo.append("Name: " + row['contactName'])
-        vendorInfo.append("Business name: " + row['businessName'])
-        vendorInfo.append("Vendor Type: " + row['vendorType'])
-        vendorInfo.append("Street Address: " + row['streetAddress'])
-        vendorInfo.append("City: " + row['city'])
-        vendorInfo.append("Zipcode: " + str(row['zipcode']))
-<<<<<<< HEAD
-        vendorInfo.append("State: " + row['state'])'''
         vendorInfo.append(row)
     return render_template("testObjProfile.html", vendorInfo = vendorInfo)
-    #return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
+      
 
 
 @app.route('/book', methods=['POST'])
