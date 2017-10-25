@@ -2,12 +2,12 @@
 <html>
     <body>
         <h1>My Vendors</h1>
-            {% for row in vendorInfo %}
+            {% for row in userInfo %}
             <h1>Vendor</h1>
             <ul style="list-style: none;">
-                <li>{{row.contactName}}</li>
-                <li>{{row.businessName}}</li>
-                <li>{{row.email}}</li>
+                <li>{{ row.email }}</li>
+                <li>{{ row.name }}</li>
+                <li>{{ row.bookedDate }}</li>
             </ul>
                 
                 

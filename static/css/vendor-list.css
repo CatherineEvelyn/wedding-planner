@@ -19,16 +19,6 @@
   display: table;
 }
 
-.book-button::after,
-.book-button::before {
-  transform: translateX(-50%) translateY(-50%);
-}
-
-.notification > .delete {
-  top: 1rem;
-  right: 1rem;
-}
-
 .calendar-title-container {
   display: flex;
   flex-direction: column;
@@ -65,7 +55,7 @@
 }
 
 .tile .overlay {
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .datepicker .calendar .calendar-header .calendar-date, 

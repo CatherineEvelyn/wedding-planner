@@ -17,6 +17,7 @@ $(function () {
   addCloseModalListeners();
   addBookingListeners();
   addBookFulfillmentListener();
+  addSwitchViewListeners();
 });
 
 function addSignupListener() {
@@ -87,9 +88,12 @@ function getVendorByType(type) {
     }
   })
   .done(json => {
-    displayVendors(json);
     console.log(json);
+    displayVendors(json);
     api_call_made = false;
+  })
+  .fail((xhr, status, error) => {
+    console.log(xhr, status, error);
   })
 }
 
@@ -111,19 +115,33 @@ function displayVendors(json) {
 
   $.each(json.vendors, function(index, value) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
-    let $card = $("<article />", {"class": "tile is-child notification is-info"}).attr("data-vendor-id", value.id);
+    let $card = $("<article />", {"class": "tile is-child card"}).attr("data-vendor-id", value.id);
     $card.append('<div class="overlay"></div>');
 
     $card.append(
-      $("<button />", {"class": "delete is-medium book-button"}),
-      $("<p />", {"class": "title", "html": value.contactName}),
-      $("<p />", {"class": "subtitle", "html": value.vendorType}),
-      $("<p />", {"html": value.businessName}),
-      $("<p />").append(
-        $("<small />", {"html": value.streetAddress})
+      $('<div />', {"class": "card-content"}).append(
+        $('<div />', {"class": "media"}).append(
+          $('<div />', {"class": "media-content"}).append(
+            $('<p />', {"class": "title is-3 vendorName"}).text(value.contactName),
+            $('<p />', {"class": "subtitle is-5 vendorType"}).text(value.vendorType)
+          )
+        ),
+        $('<div />', {"class": "content"}).append(
+          $('<p />', {"class": "businessName"}).text(value.businessName),
+          $('<p />', {"class": "vendorLocation"}).text(value.city + ", " + value.state)
+        )
       ),
-      $("<p />").append(
-        $("<small />", {"html": value.city + ", " + value.state})
+      $('<footer />', {"class": "card-footer"}).append(
+        $('<a />', {"class": "card-footer-item book-button"}).append(
+          $('<span />', {"class": "icon"}).append(
+            $('<i />', {"class": "mdi mdi-plus-circle"})
+          )
+        ).append(" Book Now"),
+        $('<a />', {"class": "card-footer-item"}).attr("href", "/portfolio?id=" + value.id).append(
+          $('<span />', {"class": "icon"}).append(
+            $('<i />', {"class": "mdi mdi-treasure-chest"})
+          )
+        ).append(" View Portfolio")
       )
     );
     $vendorCardWrapper.append($card);
@@ -161,10 +179,9 @@ function addBookingListeners() {
       alert("You must be logged in to book a vendor.");
     } else {
       $('#bookingModal').addClass('is-active');
-      $('.modal-card').addClass('slide-modal');
-      vendorID = $(e.currentTarget).parent().attr('data-vendor-id');
-      $('#bookRequestName').val($(e.currentTarget).siblings().eq(1).text());
-      $('#bookRequestBusiness').val($(e.currentTarget).siblings().eq(3).text());
+      vendorID = $(e.currentTarget).parent().parent().attr('data-vendor-id');
+      $('#bookRequestName').val($(e.currentTarget).parent().siblings('.card-content').find('.vendorName').text());
+      $('#bookRequestBusiness').val($(e.currentTarget).parent().siblings('.card-content').find('.businessName').text());
       // Adding DatePicker each time a booking modal is active
       var datePicker = new DatePicker(document.getElementById('bookRequestDate'), {dataFormat: "yyyy-mm-dd"});
     }
@@ -208,9 +225,13 @@ function postBookRequest(id, date) {
       "vendorID": id,
       "date": date
     }
-  }).done(json => {
+  })
+  .done(json => {
     displayBookingConfirmation(json);
     console.log(json);
+  })
+  .fail((xhr) => {
+    displayErrorMessage(xhr.responseJSON.message);
   });
 }
 
@@ -224,6 +245,14 @@ function displayBookingConfirmation(json) {
   $('#vendorNameBox').append('<p class="subtitle detail">' + info.vendor_name + '</p>');
 
   $('.confirmationMessage, #confirmFooter').show();
+}
+
+function displayErrorMessage(err) {
+  $('.bookingInputBox, #bookingFooter').hide();
+  
+  $('.errorMessage').append('<p class="subtitle">' + err + '</p>');
+
+  $('.errorMessage, #confirmFooter').show();
 }
 
 function resetModalView() {
@@ -251,5 +280,12 @@ function getSessionDetails() {
 function addDismissNotificationListeners() {
   $('.flash-dismiss').on('click', e => {
     $(e.currentTarget).parent().remove();
+  });
+}
+
+function addSwitchViewListeners() {
+  $('.navbar-item.is-tab').on('click', e => {
+    $('.navbar-item.is-tab').removeClass('is-active');
+    $(e.currentTarget).addClass('is-active');
   });
 }

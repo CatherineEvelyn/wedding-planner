@@ -32,4 +32,7 @@ p {
   top: 0;
   right: 0;
   left: 0;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  z-index: 10;
 }
