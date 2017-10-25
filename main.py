@@ -518,6 +518,12 @@ def signup():
         vendor_info=vendor_info,
         type="organizer"
     )
+    #for testing front end of portfolio
+@app.route('/portfolio', methods=['GET', 'POST'])
+def portfolio():
+    return render_template("portfolio.html")
+
+
 
 # FOR TESTING PURPOSES ONLY
 @app.route('/gendata')
@@ -548,6 +554,9 @@ def genData():
     db.session.add(vendor)
     db.session.commit()
   return redirect('/')
+
+
+
 # END TESTING #
 
 if __name__ == '__main__': #run app
