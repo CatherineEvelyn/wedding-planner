@@ -15,7 +15,84 @@
 <div class="tile is-ancestor">
     <div class="tile is-vertical is-parent is-3">
       <div class="tile is-child box">
-        <p>Side Bar</p>
+            
+        <div class="columns">
+          <div>
+            <aside class="menu vendor-search-menu sticky">
+              <p class="menu-label">
+                Vendor Search
+              </p>
+              <div class="field">
+                <div class="control has-icons-left">
+                  <input class="input is-small" type="text" placeholder="Name, type, location...">
+                  <span class="icon is-left">
+                    <i class="mdi mdi-magnify"></i>
+                  </span>
+                </div>
+              </div>
+              <p class="menu-label">
+                Vendor Types
+              </p>
+              <ul class="menu-list">
+                <li>
+                  <a class="getVendorByType" data-type="all">
+                    All Vendors
+                  </a>
+                </li>
+                <li>
+                  <a href="#venue" class="getVendorByType" data-type="venue">
+                    Venues
+                  </a>
+                </li>
+                <li>
+                  <a href="#photographer" class="getVendorByType" data-type="photographer">
+                    Photographers
+                  </a>
+                </li>
+                <li>
+                  <a href="#videographer" class="getVendorByType" data-type="videographer">
+                    Videographers
+                  </a>
+                </li>
+                <li>
+                  <a href="#caterer" class="getVendorByType" data-type="caterer">
+                    Caterers
+                  </a>
+                </li>
+                <li>
+                  <a href="#music" class="getVendorByType" data-type="music">
+                    Band/DJ
+                  </a>
+                </li>
+                <li>
+                  <a href="#cosmetics" class="getVendorByType" data-type="cosmetics">
+                    Hairstyle &amp; Make Up Artists
+                  </a>
+                </li>
+                <li>
+                  <a href="#tailor" class="getVendorByType" data-type="tailor">
+                    Tailors
+                  </a>
+                </li>
+              </ul>
+            </aside>
+          </div>
+          <div class="column is-narrow"></div>
+          <div class="column loading-container">
+            <div class="overlay-container">
+              <div class="ajax-loader">
+                <svg class="circular">
+                  <circle class="path" cx="50" cy="50" r="40" fill="none" stroke-width="6" stroke-miterlimit="10"/>
+                </svg>
+              </div>
+            </div>
+            <div class="tile is-ancestor vendor-list-card-wrapper">
+              <!-- Populated with vendors through AJAX calls -->
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
     <div class="tile is-vertical is-parent">
@@ -76,21 +153,21 @@
 {% for row in vendorInfo %}
       <tr class="{{greenStatus}}">
         <th>loop</th>
-        <td><a href="/portfolio?vendor-id=" title="My Venues">My {{row.vendorType}}</a></td>
+        <td><a href="/portfolio?vendor-id=" title="My {{row.vendorType}}">My {{row.vendorType}}</a></td>
         <td>{{row.contactName}}</td>
         <td>{{row.businessName}}</td>
         <td>206-123-5678</td>
         <td>{{row.email}}</td>
         <td>$5000</td>
         <td>$500</td>
-        <td>Confirmed</td>
-        <td><button>Cancel</button></td>
-        <td>Clicking cancel will reset the status to "searching" and display like example #7 <a href="" style="color: blue;">edit</a></td>
+        <td>Inquiring</td>
+        <td><button>Confirm</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
       </tr>
 {% endfor %}
 
 
-
+<!--
       <tr class="{{greenStatus}}">
         <th>1</th>
         <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
@@ -182,6 +259,9 @@
         <td><button>Find</button></td>
         <td>Click "Find", get a pop up window to chose: "I want to look for a vendor" or "I have my own vendor", first choice will redirect user to vendor-list.html, second choice will change the row color to green <a href="" style="color: blue;">edit</a></td>
       </tr>
+
+-->
+
     </tbody>
   </table>
 </div>
