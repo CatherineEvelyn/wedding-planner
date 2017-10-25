@@ -222,7 +222,7 @@ def profile():
     # return render_template("vendor-account.html")
 
 
-@app.route('/organizer')
+@app.route('/user-account')
 def organizer():
 
     user = User.query.filter_by(email=session["email"]).first() #TODO: get user in session
@@ -256,7 +256,7 @@ def organizer():
 <<<<<<< HEAD
         vendorInfo.append("State: " + row['state'])'''
         vendorInfo.append(row)
-    return render_template("testObjProfile.html", vendorInfo = vendorInfo)
+    return render_template("user-account.html", vendorInfo = vendorInfo)
     #return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
 
 

@@ -11,6 +11,7 @@
 
 {% extends 'layout.html' %}
 {% block body %}
+
 <div class="tile is-ancestor">
     <div class="tile is-vertical is-parent is-3">
       <div class="tile is-child box">
@@ -22,7 +23,6 @@
         <p>Welcome back to your organizer {{session['username']}}</p>
       </div>
       <div class="tile is-child box">
-        <p>Welcome back to your organizer {{session['username']}}</p>
         <p class="title">My Profile</p>
         <p>Name: Abc <a href="">edit</a></p>
         <p>Wedding Date: 12/29/2018 <a href="">edit</a></p>
@@ -45,7 +45,7 @@
         <th>My Vendors</th>
         <th><abbr title="Company Name">Company Name</abbr></th>
         <th><abbr title="Contact Person">Contact Person</abbr></th>
-        <th><abbr title="Phone">Phone</abbr></th>
+        <th><abbr title="Booking Date">Booking Date</abbr></th>
         <th><abbr title="Email">Email</abbr></th>
         <th><abbr title="Confirmed Price">Confirmed Price</abbr></th>
         <th><abbr title="Down Payment">Down Payment</abbr></th>
@@ -71,11 +71,42 @@
       </tr>
     </tfoot>
     <tbody>
+
+
+{% for row in vendorInfo %}
+      <tr class="">
+        <th>1</th>
+        <td><a href="/portfolio?vendor-id=" title="My Venues">My {{row.vendorType}}</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>206-123-5678</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Confirmed</td>
+        <td><button>Cancel</button></td>
+        <td>Clicking cancel will reset the status to "searching" and display like example #7 <a href="" style="color: blue;">edit</a></td>
+      </tr>
+{% endfor %}
+
+    {% if not session['email'] %}
+      <p>1</p>
+    {% elif session['userType'] == "user" %}
+      <p>2 {{session['username']}} </p>
+    {% elif session['userType'] == "vendor" %}
+      <p>3</p>
+    {% endif %}
+
+
+
+
+
+
       <tr class="is-selected">
         <th>1</th>
         <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
-        <td>abc venue</td>
-        <td>mr contact person</td>
+        <td>Mr Venue</td>
+        <td>Abc Venue</td>
         <td>206-123-5678</td>
         <td>venue@gmail.com</td>
         <td>$5000</td>
@@ -165,27 +196,4 @@
     </tbody>
   </table>
 </div>
-
-
-{% for info in vendorInfo %}
-<ul style="list-style: none;">
-    {%if "Name" in info %}
-    <li>{{info}}</li>
-    {%elif "Business" in info %}
-    <li>{{info}}</li>
-    {%elif "Type" in info %}
-    <li>{{info}}</li>
-    {%elif "Street" in info %}
-    <li>{{info}}</li>
-    {%elif "City" in info %}
-    <li>{{info}}</li>
-    {%elif "Zipcode" in info %}
-    <li>{{info}}</li>
-    {%elif "State" in info %}
-    <li>{{info}}</li>
-    {% endif %}
-    </ul>
-{% endfor %}
-
-
 {% endblock %}
