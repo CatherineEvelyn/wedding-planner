@@ -125,16 +125,14 @@ class BookingViewer {
     newDayContainer.appendChild(newDayButton);
     newDayContainer.classList.add('calendar-date');
 
-    day < 10 && ( day = '0' + day );
-    ++month;
-    month < 10 && ( month = '0' + month );
-
-    newDayContainer.id = year + "-" + month + "-" + day;
-
-
-
     if (isDisabled) {
       newDayContainer.setAttribute('disabled', 'disabled');
+      if (day > 15) {
+        month = month - 1;
+      } else {
+        month = month + 1;
+      }
+      newDayContainer.id = year + "-" + month + "-" + day;
     }
     if (isToday) {
       newDayButton.classList.add('is-today');
@@ -152,6 +150,12 @@ class BookingViewer {
       newDayContainer.classList.add('range-end');
     }
 
+    month = month + 1;
+
+    day < 10 && ( day = '0' + day );
+    month < 10 && ( month = '0' + month );
+    newDayContainer.id = year + "-" + month + "-" + day;
+
     return newDayContainer;
   }
 
@@ -165,6 +169,7 @@ class BookingViewer {
     this.previousYearButton = document.createElement('div');
     this.previousYearButton.classList.add('button');
     this.previousYearButton.classList.add('is-primary');
+    this.previousYearButton.id = "prevYear";
     var previousButtonIcon = document.createElement('i');
     previousButtonIcon.classList.add('mdi');
     previousButtonIcon.classList.add('mdi-rewind');
@@ -179,6 +184,7 @@ class BookingViewer {
     this.previousMonthButton = document.createElement('div');
     this.previousMonthButton.classList.add('button');
     this.previousMonthButton.classList.add('is-primary');
+    this.previousMonthButton.id = "prevMonth";
     var previousMonthButtonIcon = document.createElement('i');
     previousMonthButtonIcon.classList.add('mdi');
     previousMonthButtonIcon.classList.add('mdi-arrow-left-thick');
@@ -200,6 +206,7 @@ class BookingViewer {
     this.nextMonthButton = document.createElement('div');
     this.nextMonthButton.classList.add('button');
     this.nextMonthButton.classList.add('is-primary');
+    this.nextMonthButton.id = "nextMonth";
     var nextMonthButtonIcon = document.createElement('i');
     nextMonthButtonIcon.classList.add('mdi');
     nextMonthButtonIcon.classList.add('mdi-arrow-right-thick');
@@ -213,6 +220,7 @@ class BookingViewer {
     this.nextYearButton = document.createElement('div');
     this.nextYearButton.classList.add('button');
     this.nextYearButton.classList.add('is-primary');
+    this.nextYearButton.id = "nextYear";
     var nextYearButtonIcon = document.createElement('i');
     nextYearButtonIcon.classList.add('mdi');
     nextYearButtonIcon.classList.add('mdi-fast-forward');

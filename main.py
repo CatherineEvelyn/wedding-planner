@@ -26,7 +26,7 @@ class UserVendor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id')) # primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # primary_key=True)
-    bookedDate = db.Column(db.Date)
+    bookedDate = db.Column(db.Date())
     eventStartTime = db.Column(db.Time)
     eventEndTime = db.Column(db.Time)
     vendor = db.relationship('Vendor', backref="user_assoc")
@@ -136,7 +136,7 @@ def getUserSessionDetails():
         return details
     if request.args.get("source") == "ajax":
       return jsonify(session=False)
-    
+
     return False
 
 def redirect_dest(fallback):
@@ -146,7 +146,7 @@ def redirect_dest(fallback):
     except:
         return redirect(fallback)
     print(dest_url)
-    return redirect(dest_url)  
+    return redirect(dest_url)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -220,7 +220,7 @@ def profile():
     result = UserVendor.query.join(User, UserVendor.user_id == User.id).add_columns(UserVendor.id, UserVendor.user_id, UserVendor.vendor_id, UserVendor.bookedDate, UserVendor.eventStartTime, UserVendor.eventEndTime, User.name, User.email).filter(UserVendor.vendor_id == vendor.id).order_by(UserVendor.bookedDate)
 
     userInfo = []
-    
+
     for row in result:
         userInfo.append({
             "id": row.id,
@@ -248,7 +248,7 @@ def organizer():
     session['url'] = request.path
 
     user = User.query.filter_by(email=session["email"]).first() #TODO: get user in session
-    user_id = str(user.id) #get user's id - turn to string for query 
+    user_id = str(user.id) #get user's id - turn to string for query
 
     result = db.engine.execute("SELECT * FROM user_vendor JOIN vendor ON user_vendor.vendor_id=vendor.id WHERE user_id = '" + user_id + "'")
     vendorInfo = []
@@ -296,7 +296,7 @@ def vendorList():
 def vendor():
     vendor_type = request.args.get("type")
     if vendor_type == "all":
-        query = Vendor.query.all()        
+        query = Vendor.query.all()
     else:
         query = Vendor.query.filter_by(vendorType=vendor_type)
     vendors = []
@@ -463,7 +463,7 @@ def signup():
             else:
                 if zipcode.isalpha() or len(zipcode) < 5:
                     v_errors["zipcodeerrors"].append("That is not a valid zipcode.")
-            
+
             if not city:
                 v_errors["cityerrors"].append("This field cannot be left blank.")
 
@@ -477,7 +477,7 @@ def signup():
             elif price_min.isalpha():
                 v_errors["pricemaxerrors"].append("Maximum price must be a number.")
 
-        
+
             if all(v_errors.get(item) == [] for item in v_errors):
                 vendor = Vendor.query.filter_by(email=email).first()
                 # Check if email already exists
@@ -518,9 +518,9 @@ def signup():
         )
     # method == get
     return render_template(
-        'signup.html', 
-        u_errors=u_errors, 
-        v_errors=v_errors, 
+        'signup.html',
+        u_errors=u_errors,
+        v_errors=v_errors,
         user_info=user_info,
         vendor_info=vendor_info,
         type="organizer"

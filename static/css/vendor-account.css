@@ -11,3 +11,8 @@
 .calendar-body {
   background: white;
 }
+
+.calendar-events,
+.calendar-event {
+  overflow: visible;
+}

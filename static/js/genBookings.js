@@ -1,5 +1,9 @@
+let bookings = {}
+
 $(function() {
   retrieveDates();
+  addRerenderCalendarListeners();
+  addBookingDetailsListeners();
 });
 
 function retrieveDates() {
@@ -11,7 +15,7 @@ function retrieveDates() {
     }
   })
   .done(json => {
-    console.log(json);
+    bookings = json;
     addBookingsToCalendar(json);
   })
   .fail(err => {
@@ -24,8 +28,9 @@ function addBookingsToCalendar(json) {
     let $dayItem = $('#' + value.bookedDate);
     if ($dayItem.children('.calendar-events').length) {
       $dayItem.children('.calendar-events').append(
-        $('<a />', {"class": "calendar-event is-primary"})
+        $('<a />', {"class": "calendar-event is-primary tooltip"})
           .text(value.userName)
+          .attr("data-tooltip", value.eventStartTime)
           .attr("data-user-name", value.userName)
           .attr("data-user-email", value.userEmail)
           .attr("data-booking-date", formatDate(value.bookedDate))
@@ -35,8 +40,9 @@ function addBookingsToCalendar(json) {
     } else {
       $('#' + value.bookedDate).append(
         $('<div />', {"class": "calendar-events"}).append(
-          $('<a />', {"class": "calendar-event is-primary"})
+          $('<a />', {"class": "calendar-event is-primary tooltip"})
             .text(value.userName)
+            .attr("data-tooltip", value.eventStartTime)
             .attr("data-user-name", value.userName)
             .attr("data-user-email", value.userEmail)
             .attr("data-booking-date", formatDate(value.bookedDate))
@@ -48,9 +54,16 @@ function addBookingsToCalendar(json) {
   });
 }
 
+function addRerenderCalendarListeners() {
+  $(document).on('click', '#prevYear, #prevMonth, #nextMonth, #nextYear', e => {
+    console.log(bookings);
+    addBookingsToCalendar(bookings);
+  });
+}
+
 function addBookingDetailsListeners() {
-  $('.calendar-event').on('click', e => {
-    console.log("hooray");
+  $(document).on('click', '.calendar-event', e => {
+    $('.modal').addClass('is-active');
   })
 }
 
@@ -65,9 +78,9 @@ function formatDate(date) {
   var time = Date.parse(date);
   var newdate = new Date(time);
 
-  var day = newdate.getDate();
-  var monthIndex = newdate.getMonth();
-  var year = newdate.getFullYear();
+  var day = newdate.getUTCDate();
+  var monthIndex = newdate.getUTCMonth();
+  var year = newdate.getUTCFullYear();
 
   return monthNames[monthIndex] + " " + day + ", " + year;
 }

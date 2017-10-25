@@ -14,6 +14,53 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vendor-account.css') }}">
 {% endblock %}
 {% block body %}
+  <div class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Modal title</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="detailsBody">
+          <h1 class="title is-2">
+            <span class="icon">
+              <i class="mdi mdi-book-open-variant"></i>
+            </span>
+            Booking Details
+          </h1>
+          <p class="subtitle">These details are subject to change upon client request</p>
+          <div class="level">
+            <div id="bookingInfoBox">
+              <span class="is-uppercase has-text-grey is-size-7">
+                <span class="icon"><i class="mdi mdi-calendar"></i></span> Booking Date
+              </span>
+            </div>
+            <div id="vendorBusinessBox">
+              <span class="is-uppercase has-text-grey is-size-7">
+                <span class="icon">
+                  <i class="mdi mdi-account-card-details"></i>
+                </span>
+                Business Name
+              </span>
+            </div>
+            <div id="vendorNameBox">
+              <span class="is-uppercase has-text-grey is-size-7">
+                <span class="icon">
+                  <i class="mdi mdi-account-circle"></i>
+                </span>
+                Contact Name
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success">Save changes</button>
+        <button class="button">Cancel</button>
+      </footer>
+    </div>
+  </div>
   <section class="hero is-info is-bold">
     <div class="hero-body">
       <div class="container">
@@ -73,7 +120,7 @@
 <script>
   var bookingViewer = new BookingViewer(
     document.getElementById('bookingViewer'), {
-      dataFormat: "yyyy-mm-dd", 
+      dataFormat: "yyyy-mm-dd",
       closeOnSelect: false
     }
   );

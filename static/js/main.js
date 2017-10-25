@@ -249,7 +249,7 @@ function displayBookingConfirmation(json) {
 
 function displayErrorMessage(err) {
   $('.bookingInputBox, #bookingFooter').hide();
-  
+
   $('.errorMessage').append('<p class="subtitle">' + err + '</p>');
 
   $('.errorMessage, #confirmFooter').show();
@@ -258,9 +258,11 @@ function displayErrorMessage(err) {
 function resetModalView() {
   const $inputView = $('.bookingInputBox, #bookingFooter');
   const $confirmView = $('.confirmationMessage, #confirmFooter');
+  const $errorView = $('.errorMessage');
 
   $inputView.show();
   $confirmView.hide();
+  $errorView.hide();
   $('.detail').remove();
 }
 
