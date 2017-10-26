@@ -603,6 +603,8 @@ def signup():
         type="user"
     )
 
+
+
 # FOR TESTING PURPOSES ONLY
 @app.route('/gendata')
 def genData():

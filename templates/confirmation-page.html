@@ -4,12 +4,41 @@
 -->
 
 <!-- I've copy pasted these lines of codes from verify_email.html and deleted that page -->
-<!DOCTYPE html>
-<html>
-  <body>
-    <h1>SUCCESS!</h1>
-    <p>Thank you for signing up. We sent an email to <b>{{session['email']}}</b> to verify your account</p>
-    <p>Once you have verified your email, use the link below to login to your account</p>
-    <a href="/login">Login</a>
-  </body>
-</html>
+{% extends 'layout.html' %}
+{% block head %}
+    <link type="text/css" href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+
+
+
+  <div class="column">
+    <div class="columns is-mobile">
+      <div class="column is-three-fifths is-offset-one-fifth">
+
+    
+
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">
+      Success!
+    </p>
+  </header>
+  <div class="card-content">
+    <div class="content">
+      <p>Thank you for signing up. We sent an email to <b>{{session['email']}}</b> to verify your account</p>
+      <p>Once you have verified your email, use the link below to login to your account</p>
+
+    </div>
+  </div>
+  <footer class="card-footer">
+    <a href="/login" class="card-footer-item">Login</a>
+  </footer>
+</div>
+</div>
+</div>
+</div>
+
+
+
+{% endblock %}
