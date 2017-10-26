@@ -96,7 +96,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    blacklist = ['organizer', 'profile', 'book']
+    blacklist = ['user', 'profile', 'book' ]
     if all([request.endpoint in blacklist, 'email' not in session, '/static/' not in request.path]):
         message = Markup("You must to be <strong>logged in</strong> to access this page.")
         flash(message, "is-danger")
@@ -239,7 +239,7 @@ def profile():
     return render_template("vendor-account.html", userInfo = userInfo, vendor_id=vendor.id)
 
 
-@app.route('/organizer')
+@app.route('/user-account')
 def organizer():
     if session['userType'] == "vendor":
         flash("You do not have permission to visit that page.", "is-danger")
@@ -251,11 +251,88 @@ def organizer():
     user_id = str(user.id) #get user's id - turn to string for query
 
     result = db.engine.execute("SELECT * FROM user_vendor JOIN vendor ON user_vendor.vendor_id=vendor.id WHERE user_id = '" + user_id + "'")
-    vendorInfo = []
+    #q = session.query(UserVendor).filter(UserVendor).join(UserVendor.vendor_id).filter.all()
+    #usersVendors = UserVendor.query.filter_by(user_id=users_id).first() 
+    #vendorName = result.contactName
+    #for item in result:
+        #vendorName == item.contactName
+
+
+    venue = []
+    photographer = []
+    videographer= []
+    caterer = []
+    music = []
+    cosmetics = []
+    tailor = []
 
     for row in result:
+        if row.vendorType == "venue":
+            venue.append(row)
+        elif row.vendorType == "photographer":
+            photographer.append(row)
+        elif row.vendorType == "videographer":
+            videographer.append(row)
+        elif row.vendorType == "caterer":
+            caterer.append(row)
+        elif row.vendorType == "music":
+            music.append(row)
+        elif row.vendorType == "cosmetics":
+            cosmetics.append(row)
+        elif row.vendorType == "tailor":
+            tailor.append(row)
+                
+    return render_template("user-account.html", venue=venue,
+                                                photographer=photographer,
+                                                videographer=videographer,
+                                                caterer=caterer,
+                                                music=music,
+                                                cosmetics=cosmetics,
+                                                tailor=tailor, 
+                                                user=user )
+
+
+"""    
+    vendorInfo = []
+    '''vendorName = []
+    vendorBusiness = []
+    vendorEmail = []
+    for row in result:
+        vendorName.append("Name: " + row['contactName'])
+        vendorBusiness.append("Business name: " + row['businessName'])
+        vendorEmail.append("Email: " + row['email'])
+    #connection.close()
+    return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
+    '''for row in result:
+        
+        vendorInfo.append("Name: " + row['contactName'])
+        vendorInfo.append("Business name: " + row['businessName'])
+        vendorInfo.append("Vendor Type: " + row['vendorType'])
+        vendorInfo.append("Street Address: " + row['streetAddress'])
+        vendorInfo.append("City: " + row['city'])
+        vendorInfo.append("Zipcode: " + str(row['zipcode']))
+
+        vendorInfo.append("State: " + row['state'])
+
         vendorInfo.append(row)
-    return render_template("testObjProfile.html", vendorInfo = vendorInfo)
+
+        if row.vendorType == 'cosmetics':
+            greenStatus = "is-selected"
+        else:
+            greenStatus = ""
+            '''
+    venue = []
+    cosmetics = []
+    for row in result:
+        if row.vendorType == "venue":
+            venue.append(row)
+        elif row.vendorType == "cosmetics":
+            cosmetics.append(row)
+    return render_template("user-account.html", venue =venue, cosmetics= cosmetics)
+
+    #return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, greenStatus = greenStatus, businessName = businessName, contactName = contactName, email = email)
+    #return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
+"""
 
 
 @app.route('/book', methods=['POST'])
@@ -349,8 +426,8 @@ def signup():
         form = request.form
 
         # User signup validation
-        if 'organizer_signup' in form:
-            register_type = 'organizer'
+        if 'user_signup' in form:
+            register_type = 'user'
 
             user_info['email'] = email = form['email']
             user_info['name'] = name = form['name']
@@ -523,7 +600,7 @@ def signup():
         v_errors=v_errors,
         user_info=user_info,
         vendor_info=vendor_info,
-        type="organizer"
+        type="user"
     )
 
 # FOR TESTING PURPOSES ONLY
