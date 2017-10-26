@@ -267,8 +267,9 @@ def organizer():
                                                 videographer=videographer,
                                                 caterer=caterer,
                                                 music=music,
-                                                cosmetics=consmetics,
-                                                tailor=tailor )
+                                                cosmetics=cosmetics,
+                                                tailor=tailor,
+                                                userName = x )
 
 
 """    

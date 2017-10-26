@@ -167,104 +167,117 @@
 {% endfor %}
 -->
 
-
+{% for row in venue %}
       <tr class="{{greenStatus}}">
         <th>1</th>
         <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
-        <td>{{venue.contactName}}</td>
-        <td>{{venue.BusinessName}}</td>
-        <td>206-123-5678</td>
-        <td>{{venue.email}}</td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
         <td>$5000</td>
         <td>$500</td>
-        <td>Confirmed</td>
+        <td>Inquiring</td>
         <td><button>Cancel</button></td>
-        <td>Clicking cancel will reset the status to "searching" and display like example #7 <a href="" style="color: blue;">edit</a></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
       </tr>
+{% endfor %}
 
+{% for row in photographer %}
       <tr class="{{greenStatus}}">
         <th>2</th>
         <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
-        <td>{{photographer.contactName}}</td>
-        <td>{{photographer.businessName}}</td>
-        <td>206-111-2222</td>
-        <td>{{photographer.email}}</td>
-        <td>$<input style="width:60px;"></input></td>
-        <td>$<input style="width:60px;"></input></td>
-        <td>inquiring</td>
-        <td><button>Confirm</button></td>
-        <td>Find button (exampe #7) is the default, after user book a vendor, "Find" turn into "Confirm" button <a href="" style="color: blue;">edit</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
+        <td><button>Cancel</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
       </tr>
+{% endfor %}
 
+{% for row in videographer %}
       <tr class="{{greenStatus}}">
         <th>3</th>
         <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
-        <td>{{videographer.contactName}}</td>
-        <td>{{videographer.businessName}}</td>
-        <td>206-123-5678</td>
-        <td>{{videographer.email}}</td>
-        <td>$</td>
-        <td>$</td>
-        <td>Outside Vendor</td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
         <td><button>Cancel</button></td>
-        <td>Clicking cancel will reset the status to "searching" and display like example #7 <a href="" style="color: blue;">edit</a></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
       </tr>
+{% endfor %}
 
+{% for row in caterer %}
       <tr class="{{greenStatus}}">
         <th>4</th>
         <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
-        <td>{{caterer.contactName}}</td>
-        <td>{{caterer.businessName}}</td>
-        <td>206-123-5678</td>
-        <td>{{caterer.email}}</td>
-        <td>$6000</td>
-        <td>$1200</td>
-        <td>Confirmed</td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
         <td><button>Cancel</button></td>
-        <td>$50 per person, 120 guests <a href="" style="color: blue;">edit</a></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
       </tr>
+{% endfor %}
 
+{% for row in music %}
       <tr class="{{greenStatus}}">
         <th>5</th>
         <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
-        <td>{{music.contactName}}</td>
-        <td>{{music.businessName}}</td>
-        <td>206-123-5678</td>
-        <td>{{music.email}}</td>
-        <td>$<input style="width:60px;"></input></td>
-        <td>$<input style="width:60px;"></input></td>
-        <td>inquiring</td>
-        <td><button>Confirm</button></td>
-        <td>Some very long notes (what would be the max? how many characters?) <a href="" style="color: blue;">edit</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
+        <td><button>Cancel</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
       </tr>
+{% endfor %}
 
+{% for row in cosmetics %}
       <tr class="{{greenStatus}}">
         <th>6</th>
         <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
-        <td>{{cosmetics.contactName}}</td>
-        <td>{{cosmetics.businessName}}</td>
-        <td>206-123-5678</td>
-        <td>{{cosmetics.email}}</td>
-        <td>$<input style="width:60px;"></input></td>
-        <td>$<input style="width:60px;"></input></td>
-        <td>inquiring</td>
-        <td><button>Confirm</button></td>
-        <td>Some notes (saved as string) <a href="" style="color: blue;">edit</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
+        <td><button>Cancel</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
       </tr>
+{% endfor %}
 
+{% for row in tailor %}
       <tr class="{{greenStatus}}">
         <th>7</th>
         <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
-        <td>{{tailor.contactName}}</td>
-        <td>{{tailor.businessName}}</td>
-        <td>206-123-5678</td>
-        <td>{{tailor.email}}</td>
-        <td>$<input style="width:60px;"></input></td>
-        <td>$<input style="width:60px;"></input></td>
-        <td>searching</td>
-        <td><button>Find</button></td>
-        <td>Click "Find", get a pop up window to chose: "I want to look for a vendor" or "I have my own vendor", first choice will redirect user to vendor-list.html, second choice will change the row color to green <a href="" style="color: blue;">edit</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
+        <td><button>Cancel</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
       </tr>
+{% endfor %}
 
 
 
