@@ -236,7 +236,6 @@ def organizer():
     #for item in result:
         #vendorName == item.contactName
 
-    x = user.name
 
     venue = []
     photographer = []
@@ -268,8 +267,8 @@ def organizer():
                                                 caterer=caterer,
                                                 music=music,
                                                 cosmetics=cosmetics,
-                                                tailor=tailor,
-                                                userName = x )
+                                                tailor=tailor, 
+                                                user=user )
 
 
 """    
