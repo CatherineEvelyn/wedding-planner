@@ -612,6 +612,8 @@ def portfolio():
 
 
 
+
+
 # FOR TESTING PURPOSES ONLY
 @app.route('/gendata')
 def genData():
