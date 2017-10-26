@@ -96,19 +96,19 @@
     </div>
     <div class="tile is-vertical is-parent">
       <div class="tile is-child box">
-        <p>Welcome back to your organizer {{userName}}</p>
+        <p>Welcome back to your organizer {{user.name}}</p>
       </div>
       <div class="tile is-child box">
         <p class="title">My Profile</p>
-        <p>Name: Abc <a href="">edit</a></p>
-        <p>Wedding Date: 12/29/2018 <a href="">edit</a></p>
-        <p>Number of Guests: 120 <a href="">edit</a></p>
+        <p>Name: {{user.name}} <a href="">edit</a></p>
+        <p>Wedding Date: {{user.eventDate}} <a href="">edit</a></p>
+        <p>Number of Guests: {{user.numberOfGuests}} <a href="">edit</a></p>
         <p>My Budget: $37,500 <a href="">edit</a></p>
       </div>
       <div class="tile is-child box">
         <p class="title">My Account</p>
-        <p>Username/Email: abc@gmail.com <a href="">edit</a></p>
-        <p>Password: ********* <a href="">edit</a></p>
+        <p>Username/Email: {{user.email}} <a href="">edit</a></p>
+        <p>Password: ******** <a href="">edit</a></p>
       </div>
     </div>
 </div>
