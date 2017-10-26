@@ -187,7 +187,7 @@ function displayVendors() {
             $('<i />', {"class": "mdi mdi-plus-circle"})
           )
         ).append(" Book Now"),
-        $('<a />', {"class": "card-footer-item"}).attr("href", "/portfolio?id=" + value.id).append(
+        $('<a />', {"class": "card-footer-item"}).attr("href", "/portfolio").append(
           $('<span />', {"class": "icon"}).append(
             $('<i />', {"class": "mdi mdi-treasure-chest"})
           )

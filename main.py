@@ -96,7 +96,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    blacklist = ['user', 'profile', 'book' ]
+    blacklist = ['user', 'profile', 'book']
     if all([request.endpoint in blacklist, 'email' not in session, '/static/' not in request.path]):
         message = Markup("You must to be <strong>logged in</strong> to access this page.")
         flash(message, "is-danger")
@@ -396,7 +396,6 @@ def vendor():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    session['url'] = request.path
     u_errors = {
       'usererrors': [],
       'passerrors': [],
@@ -425,14 +424,18 @@ def signup():
     if request.method == 'POST': #is user signing up
         form = request.form
 
+        register_type = "user"
+
+        print(register_type)
+
         # User signup validation
-        if 'user_signup' in form:
-            register_type = 'user'
+        if 'organizer_signup' in form:
 
             user_info['email'] = email = form['email']
             user_info['name'] = name = form['name']
             password = form['password']
             verify = form['verify']
+            
 
             if not name:
                 u_errors["nameerrors"].append("This field cannot be left blank.")
@@ -474,7 +477,7 @@ def signup():
                     db.session.commit()
                     session['email'] = email
                     session['userType'] = "user"
-                    session['name'] = user.name
+                    session['name'] = new_user.name
                     return render_template('confirmation-page.html')
                 else:
                     u_errors["usererrors"].append("Email is already in use.")
@@ -579,7 +582,7 @@ def signup():
                     db.session.commit()
                     session['email'] = email
                     session['userType'] = "vendor"
-                    session['name'] = vendor.contactName
+                    session['name'] = new_vendor.contactName
                     return render_template('confirmation-page.html')
                 else:
                     v_errors["usererrors"].append("Email is already in use.")
