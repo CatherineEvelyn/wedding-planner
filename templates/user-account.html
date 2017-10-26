@@ -9,10 +9,398 @@
 
 <!-- TODO: This page will have a button linked to vendor-list.html page and a log out button -->
 
-<!-- TODO: Use bulma to design this page -->
-
-<!-- I've copy pasted these lines of codes from organizer.html and deleted that page -->
 {% extends 'layout.html' %}
 {% block body %}
-  <h2> Welcome back to your organizer {{session['username']}} </h2>
+
+
+<div class="tile is-ancestor">
+    <div class="tile is-vertical is-parent is-3">
+      <div class="tile is-child box">
+        <div class="columns">
+          <div>
+            <aside class="menu vendor-search-menu sticky">
+              <p class="menu-label">
+                Vendor Search
+              </p>
+              <div class="field">
+                <div class="control has-icons-left">
+                  <input class="input is-small" type="text" placeholder="Name, type, location...">
+                  <span class="icon is-left">
+                    <i class="mdi mdi-magnify"></i>
+                  </span>
+                </div>
+              </div>
+              <p class="menu-label">
+                Vendor Types
+              </p>
+              <ul class="menu-list">
+                <li>
+                  <a class="getVendorByType" data-type="all">
+                    All Vendors
+                  </a>
+                </li>
+                <li>
+                  <a href="#venue" class="getVendorByType" data-type="venue">
+                    Venues
+                  </a>
+                </li>
+                <li>
+                  <a href="#photographer" class="getVendorByType" data-type="photographer">
+                    Photographers
+                  </a>
+                </li>
+                <li>
+                  <a href="#videographer" class="getVendorByType" data-type="videographer">
+                    Videographers
+                  </a>
+                </li>
+                <li>
+                  <a href="#caterer" class="getVendorByType" data-type="caterer">
+                    Caterers
+                  </a>
+                </li>
+                <li>
+                  <a href="#music" class="getVendorByType" data-type="music">
+                    Band/DJ
+                  </a>
+                </li>
+                <li>
+                  <a href="#cosmetics" class="getVendorByType" data-type="cosmetics">
+                    Hairstyle &amp; Make Up Artists
+                  </a>
+                </li>
+                <li>
+                  <a href="#tailor" class="getVendorByType" data-type="tailor">
+                    Tailors
+                  </a>
+                </li>
+              </ul>
+            </aside>
+          </div>
+          <div class="column is-narrow"></div>
+          <div class="column loading-container">
+            <div class="overlay-container">
+              <div class="ajax-loader">
+                <svg class="circular">
+                  <circle class="path" cx="50" cy="50" r="40" fill="none" stroke-width="6" stroke-miterlimit="10"/>
+                </svg>
+              </div>
+            </div>
+            <div class="tile is-ancestor vendor-list-card-wrapper">
+              <!-- Populated with vendors through AJAX calls -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="tile is-vertical is-parent">
+      <div class="tile is-child box">
+        <p>Welcome back to your organizer {{userName}}</p>
+      </div>
+      <div class="tile is-child box">
+        <p class="title">My Profile</p>
+        <p>Name: Abc <a href="">edit</a></p>
+        <p>Wedding Date: 12/29/2018 <a href="">edit</a></p>
+        <p>Number of Guests: 120 <a href="">edit</a></p>
+        <p>My Budget: $37,500 <a href="">edit</a></p>
+      </div>
+      <div class="tile is-child box">
+        <p class="title">My Account</p>
+        <p>Username/Email: abc@gmail.com <a href="">edit</a></p>
+        <p>Password: ********* <a href="">edit</a></p>
+      </div>
+    </div>
+</div>
+
+<div class="tile is-child box">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><abbr title="xx">xx</abbr></th>
+        <th>My Vendors</th>
+        <th><abbr title="Company Name">Company Name</abbr></th>
+        <th><abbr title="Contact Person">Contact Person</abbr></th>
+        <th><abbr title="Booking Date">Booking Date</abbr></th>
+        <th><abbr title="Email">Email</abbr></th>
+        <th><abbr title="Confirmed Price">Confirmed Price</abbr></th>
+        <th><abbr title="Down Payment">Down Payment</abbr></th>
+        <th><abbr title="Status">Status</abbr></th>
+        <th><abbr title=""></abbr></th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th><abbr title="xx">xx</abbr></th>
+        <th>My Budget</th>
+        <th><abbr title=""></abbr></th>
+        <th><abbr title=""></abbr></th>
+        <th><abbr title=""></abbr></th>
+        <th><abbr title=""></abbr></th>
+        <th><abbr title="Total Price">$Calculate total price</abbr></th>
+        <th><abbr title="Total DP">$Calculate total DP</abbr></th>
+        <th><abbr title=""></abbr></th>
+        <th><abbr title=""></abbr></th>
+        <th><abbr title="">Some notes (saved as string) <a href="">edit</a></abbr></th>
+        <th></th>
+      </tr>
+    </tfoot>
+    <tbody>
+
+
+<!--{{test}}
+{% for row in vendorInfo %}
+      <tr class="{{greenStatus}}">
+        <th>loop</th>
+        <td><a href="/portfolio?vendor-id=" title="My {{row.vendorType}}">My {{row.vendorType}}</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>206-123-5678</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
+        <td><button>Confirm</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+      </tr>
+{% endfor %}
+-->
+
+{% if venue %}
+{% for row in venue %}
+      <tr class="{{greenStatus}}">
+        <th>1</th>
+        <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
+        <td><button>Cancel</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+      </tr>
+  {% endfor %}
+  {% else %}
+    <tr class="{{greenStatus}}">
+      <th>1</th>
+      <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>$</td>
+      <td>$</td>
+      <td>Searching</td>
+      <td><button>Find</button></td>
+      <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+    </tr>
+{% endif %}
+
+{% if photographer %}
+{% for row in photographer %}
+      <tr class="{{greenStatus}}">
+        <th>2</th>
+        <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
+        <td><button>Cancel</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+      </tr>
+  {% endfor %}
+  {% else %}
+    <tr class="{{greenStatus}}">
+      <th>2</th>
+      <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>$</td>
+      <td>$</td>
+      <td>Searching</td>
+      <td><button>Find</button></td>
+      <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+    </tr>
+{% endif %}
+
+{% if videographer %}
+{% for row in videographer %}
+      <tr class="{{greenStatus}}">
+        <th>3</th>
+        <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
+        <td><button>Cancel</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+      </tr>
+  {% endfor %}
+  {% else %}
+    <tr class="{{greenStatus}}">
+      <th>3</th>
+      <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>$</td>
+      <td>$</td>
+      <td>Searching</td>
+      <td><button>Find</button></td>
+      <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+    </tr>
+{% endif %}
+
+{% if caterer %}
+{% for row in caterer %}
+      <tr class="{{greenStatus}}">
+        <th>4</th>
+        <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
+        <td><button>Cancel</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+      </tr>
+  {% endfor %}
+  {% else %}
+    <tr class="{{greenStatus}}">
+      <th>4</th>
+      <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>$</td>
+      <td>$</td>
+      <td>Searching</td>
+      <td><button>Find</button></td>
+      <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+    </tr>
+{% endif %}
+
+{% if music %}
+{% for row in music %}
+      <tr class="{{greenStatus}}">
+        <th>5</th>
+        <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
+        <td><button>Cancel</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+      </tr>
+  {% endfor %}
+  {% else %}
+    <tr class="{{greenStatus}}">
+      <th>5</th>
+      <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>$</td>
+      <td>$</td>
+      <td>Searching</td>
+      <td><button>Find</button></td>
+      <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+    </tr>
+{% endif %}
+
+{% if cosmetics %}
+{% for row in cosmetics %}
+      <tr class="{{greenStatus}}">
+        <th>6</th>
+        <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
+        <td><button>Cancel</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+      </tr>
+  {% endfor %}
+  {% else %}
+    <tr class="{{greenStatus}}">
+      <th>6</th>
+      <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>$</td>
+      <td>$</td>
+      <td>Searching</td>
+      <td><button>Find</button></td>
+      <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+    </tr>
+{% endif %}
+
+{% if tailor %}
+{% for row in tailor %}
+      <tr class="{{greenStatus}}">
+        <th>7</th>
+        <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
+        <td>{{row.contactName}}</td>
+        <td>{{row.businessName}}</td>
+        <td>{{row.bookedDate}}</td>
+        <td>{{row.email}}</td>
+        <td>$5000</td>
+        <td>$500</td>
+        <td>Inquiring</td>
+        <td><button>Cancel</button></td>
+        <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+      </tr>
+  {% endfor %}
+  {% else %}
+    <tr class="{{greenStatus}}">
+      <th>7</th>
+      <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>$</td>
+      <td>$</td>
+      <td>Searching</td>
+      <td><button>Find</button></td>
+      <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+    </tr>
+{% endif %}
+
+
+
+
+    </tbody>
+  </table>
+</div>
+
+    </tbody>
+  </table>
+</div>
+
+
 {% endblock %}
