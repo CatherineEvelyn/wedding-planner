@@ -532,9 +532,6 @@ def signup():
         type="user"
     )
 
-@app.route("/confirmation-page")
-def confirmationpage():
-    return render_template("confirmation-page.html")
 
 
 # FOR TESTING PURPOSES ONLY
