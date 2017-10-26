@@ -10,6 +10,119 @@
 
 <!-- I've copy pasted these lines of codes from profile.html and deleted that page -->
 {% extends 'layout.html' %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vendor-account.css') }}">
+{% endblock %}
 {% block body %}
-  <h2> Welcome back to your profile {{session['username']}} </h2>
+  <div class="modal">
+    <div class="modal-background closeModal"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Modal title</p>
+        <button class="delete closeModal" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="detailsBody">
+          <h1 class="title is-2">
+            Booking Details
+          </h1>
+          <p class="subtitle">These details are subject to change upon client request</p>
+          <div class="level">
+            <div id="bookingDateBox">
+              <span class="is-uppercase has-text-grey is-size-7">
+                <span class="icon">
+                  <i class="mdi mdi-calendar"></i>
+                </span>
+                Booking Date
+              </span>
+            </div>
+            <div id="startTimeBox">
+              <span class="is-uppercase has-text-grey is-size-7">
+                <span class="icon">
+                  <i class="mdi mdi-account-card-details"></i>
+                </span>
+                Event Start Time
+              </span>
+            </div>
+            <div id="endTimeBox">
+              <span class="is-uppercase has-text-grey is-size-7">
+                <span class="icon">
+                  <i class="mdi mdi-account-circle"></i>
+                </span>
+                Event End Time
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button closeModal">Close</button>
+      </footer>
+    </div>
+  </div>
+  <section class="hero is-info is-bold">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Your Profile
+        </h1>
+        <h2 class="subtitle">
+          View bookings, edit your information, change settings...
+        </h2>
+      </div>
+    </div>
+  </section>
+  <nav class="navbar has-shadow">
+    <div class="container">
+      <div class="navbar-tabs">
+        <a class="navbar-item is-tab is-active" href="#bookings">
+          <span class="icon">
+            <i class="mdi mdi-book-open-variant"></i>
+          </span>
+          Bookings
+        </a>
+        <a class="navbar-item is-tab" href="#account">
+          <span class="icon">
+            <i class="mdi mdi-account"></i>
+          </span>
+          Account
+        </a>
+        <a class="navbar-item is-tab" href="#settings">
+          <span class="icon">
+            <i class="mdi mdi-settings"></i>
+          </span>
+          Settings
+        </a>
+        <a class="navbar-item is-tab" href="/portfolio?id={{ vendor_id }}">
+          <span class="icon">
+            <i class="mdi mdi-treasure-chest"></i>
+          </span>
+          Portfolio
+        </a>
+      </div>
+    </div>
+  </nav>
+  <section class="section">
+    <div class="container">
+      <h1 class="title is-2">
+        Your Bookings
+      </h1>
+      <h1 class="subtitle">Manage your bookings, contact clients</h1>
+      <hr>
+      <div id="bookingViewer">
+        <!-- The booking calendar is appended here at runtime -->
+      </div>
+    </div>
+  </section>
+{% endblock %}
+{% block scripts %}
+<script>
+  var bookingViewer = new BookingViewer(
+    document.getElementById('bookingViewer'), {
+      dataFormat: "yyyy-mm-dd",
+      closeOnSelect: false
+    }
+  );
+</script>
+<script src="{{ url_for('static', filename='js/genBookings.js') }}"></script>
 {% endblock %}

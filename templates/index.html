@@ -3,10 +3,14 @@
   <link type="text/css" href="{{ url_for('static', filename='css/mainpage.css') }}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-<section id="bgImage" class="section">
+<section class="section bg-container">
+  <div id="bgImage" class="progressive__bg progressive--not-loaded" 
+  data-progressive="{{ url_for('static', filename='images/wedding-celebration.jpg') }}" 
+  style="background-image: url('{{ url_for('static', filename='images/wedding-celebration-lowly.jpg') }}');">
+  </div>
   <div class="container has-text-centered">
-    <h1 class="title is-1 mainpage-title">My Wedding Planner</h1>
-    <p class="subtitle">Your wedding plans, all in one place.</p>
+    <h1 class="title is-1 mainpage-title has-text-white">My Wedding Planner</h1>
+    <p class="subtitle has-text-light">Your wedding plans, all in one place.</p>
     <div class="field is-grouped is-grouped-centered">
     {% if not session['email'] %}
       <p class="control">
@@ -27,7 +31,7 @@
       </p>
     {% elif session['userType'] == "vendor" %}
       <p class="control">
-        <a class="button is-info" href="/profile">
+        <a class="button is-info" href="/profile#bookings">
           <span><i class="mdi mdi-account-circle mdi-light"></i> My Profile</span>
         </a>
       </p>
