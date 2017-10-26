@@ -51,8 +51,7 @@ class Vendor(db.Model):
     zipcode = db.Column(db.Integer)
     rating = db.Column(db.Float)
     vendorType = db.Column(db.String(50))
-    priceMin = db.Column(db.Integer)
-    priceMax = db.Column(db.Integer)
+    price = db.Column(db.BIGINT)
     password = db.Column(db.String(100))
     state = db.Column(db.String(2))
     users = db.relationship(
@@ -61,7 +60,7 @@ class Vendor(db.Model):
     )
 
 
-    def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, priceMin, priceMax, password, state):
+    def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, price, password, state):
         self.businessName = businessName
         self.contactName = contactName
         self.email = email
@@ -70,8 +69,7 @@ class Vendor(db.Model):
         self.zipcode = zipcode
         self.rating = rating
         self.vendorType = vendorType
-        self.priceMin = priceMin
-        self.priceMax = priceMax
+        self.price = price
         self.password = password
         self.state = state
 
@@ -84,6 +82,7 @@ class User(db.Model):
     password = db.Column(db.String(100))
     numberOfGuests = db.Column(db.Integer)
     eventDate = db.Column(db.Date)
+    budget = db.Column(db.BIGINT)
     vendors = db.relationship(
         'Vendor',
         secondary='user_vendor'
@@ -335,7 +334,6 @@ def organizer():
     #return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, greenStatus = greenStatus, businessName = businessName, contactName = contactName, email = email)
     #return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
 """
->>>>>>> 1978f0ef8c88a146cf3838a69759b64583f2f82d
 
 
 @app.route('/book', methods=['POST'])
