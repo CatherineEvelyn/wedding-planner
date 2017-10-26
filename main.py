@@ -239,10 +239,39 @@ def organizer():
     x = user.name
 
     venue = []
-    #for row in result:
-    #    if row.vendorType == "venue":
-    #        venue.append(row)
-    #return render_template("testObjProfile.html", venue =venue)
+    photographer = []
+    videographer= []
+    caterer = []
+    music = []
+    cosmetics = []
+    tailor = []
+
+    for row in result:
+        if row.vendorType == "venue":
+            venue.append(row)
+        elif row.vendorType == "photographer":
+            photographer.append(row)
+        elif row.vendorType == "videographer":
+            videographer.append(row)
+        elif row.vendorType == "caterer":
+            caterer.append(row)
+        elif row.vendorType == "music":
+            music.append(row)
+        elif row.vendorType == "cosmetics":
+            cosmetics.append(row)
+        elif row.vendorType == "tailor":
+            tailor.append(row)
+                
+    return render_template("user-account.html", venue=venue,
+                                                photographer=photographer,
+                                                videographer=videographer,
+                                                caterer=caterer,
+                                                music=music,
+                                                cosmetics=consmetics,
+                                                tailor=tailor )
+
+
+"""    
     vendorInfo = []
     '''vendorName = []
     vendorBusiness = []
@@ -266,9 +295,6 @@ def organizer():
         vendorInfo.append("State: " + row['state'])'''
         vendorInfo.append(row)
 
-        businessName = row.businessName
-        contactName = row.contactName
-        email = row.email
         if row.vendorType == 'cosmetics':
             greenStatus = "is-selected"
         else:
@@ -276,12 +302,9 @@ def organizer():
 
     return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, greenStatus = greenStatus, businessName = businessName, contactName = contactName, email = email)
     #return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
+"""
 
-=======
-        vendorInfo.append("State: " + row['state'])
-    return render_template("user-account.html", vendorInfo=vendorInfo)  
-    #return render_template("user-account.html")
->>>>>>> 4b52e0d6a3574a343d31df7d643e91db5d6f9b6b
+
 
 @app.route('/book', methods=['POST'])
 def book():
