@@ -15,49 +15,48 @@
 {% endblock %}
 {% block body %}
   <div class="modal">
-    <div class="modal-background"></div>
+    <div class="modal-background closeModal"></div>
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">Modal title</p>
-        <button class="delete" aria-label="close"></button>
+        <button class="delete closeModal" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
         <div class="detailsBody">
           <h1 class="title is-2">
-            <span class="icon">
-              <i class="mdi mdi-book-open-variant"></i>
-            </span>
             Booking Details
           </h1>
           <p class="subtitle">These details are subject to change upon client request</p>
           <div class="level">
-            <div id="bookingInfoBox">
+            <div id="bookingDateBox">
               <span class="is-uppercase has-text-grey is-size-7">
-                <span class="icon"><i class="mdi mdi-calendar"></i></span> Booking Date
+                <span class="icon">
+                  <i class="mdi mdi-calendar"></i>
+                </span>
+                Booking Date
               </span>
             </div>
-            <div id="vendorBusinessBox">
+            <div id="startTimeBox">
               <span class="is-uppercase has-text-grey is-size-7">
                 <span class="icon">
                   <i class="mdi mdi-account-card-details"></i>
                 </span>
-                Business Name
+                Event Start Time
               </span>
             </div>
-            <div id="vendorNameBox">
+            <div id="endTimeBox">
               <span class="is-uppercase has-text-grey is-size-7">
                 <span class="icon">
                   <i class="mdi mdi-account-circle"></i>
                 </span>
-                Contact Name
+                Event End Time
               </span>
             </div>
           </div>
         </div>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-success">Save changes</button>
-        <button class="button">Cancel</button>
+        <button class="button closeModal">Close</button>
       </footer>
     </div>
   </div>

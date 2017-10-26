@@ -169,6 +169,8 @@ class BookingViewer {
     this.previousYearButton = document.createElement('div');
     this.previousYearButton.classList.add('button');
     this.previousYearButton.classList.add('is-primary');
+    this.previousYearButton.classList.add('tooltip');
+    this.previousYearButton.setAttribute("data-tooltip", "Previous Year");
     this.previousYearButton.id = "prevYear";
     var previousButtonIcon = document.createElement('i');
     previousButtonIcon.classList.add('mdi');
@@ -184,6 +186,8 @@ class BookingViewer {
     this.previousMonthButton = document.createElement('div');
     this.previousMonthButton.classList.add('button');
     this.previousMonthButton.classList.add('is-primary');
+    this.previousMonthButton.classList.add('tooltip');
+    this.previousMonthButton.setAttribute("data-tooltip", "Previous Month");
     this.previousMonthButton.id = "prevMonth";
     var previousMonthButtonIcon = document.createElement('i');
     previousMonthButtonIcon.classList.add('mdi');
@@ -206,6 +210,8 @@ class BookingViewer {
     this.nextMonthButton = document.createElement('div');
     this.nextMonthButton.classList.add('button');
     this.nextMonthButton.classList.add('is-primary');
+    this.nextMonthButton.classList.add('tooltip');
+    this.nextMonthButton.setAttribute("data-tooltip", "Next Month");
     this.nextMonthButton.id = "nextMonth";
     var nextMonthButtonIcon = document.createElement('i');
     nextMonthButtonIcon.classList.add('mdi');
@@ -220,6 +226,8 @@ class BookingViewer {
     this.nextYearButton = document.createElement('div');
     this.nextYearButton.classList.add('button');
     this.nextYearButton.classList.add('is-primary');
+    this.nextYearButton.classList.add('tooltip');
+    this.nextYearButton.setAttribute("data-tooltip", "Next Year");
     this.nextYearButton.id = "nextYear";
     var nextYearButtonIcon = document.createElement('i');
     nextYearButtonIcon.classList.add('mdi');

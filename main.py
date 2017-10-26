@@ -26,7 +26,7 @@ class UserVendor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id')) # primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # primary_key=True)
-    bookedDate = db.Column(db.Date())
+    bookedDate = db.Column(db.Date)
     eventStartTime = db.Column(db.Time)
     eventEndTime = db.Column(db.Time)
     vendor = db.relationship('Vendor', backref="user_assoc")

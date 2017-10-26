@@ -290,9 +290,9 @@ function displayBookingConfirmation(json) {
 
   $('.bookingInputBox, #bookingFooter').hide();
 
-  $('#bookingInfoBox').append('<p class="subtitle detail">' + info.book_date + '</p>');
-  $('#vendorBusinessBox').append('<p class="subtitle detail">' + info.vendor_business + '</p>');
-  $('#vendorNameBox').append('<p class="subtitle detail">' + info.vendor_name + '</p>');
+  $('#bookingInfoBox').append($('<p class="subtitle detail">').text(info.book_date));
+  $('#vendorBusinessBox').append($('<p class="subtitle detail">').text(info.vendor_business));
+  $('#vendorNameBox').append($('<p class="subtitle detail">').text(info.vendor_name));
 
   $('.confirmationMessage, #confirmFooter').show();
 }
