@@ -20,3 +20,169 @@
 -->
 
 <!-- TODO: Use bulma to design this page -->
+
+{% extends 'layout.html' %}
+{% block head %}
+    <link type="text/css" href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+
+<section class="hero is-light">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">
+              Vendor Portfolio
+            </h1>
+
+          </div>
+        </div>
+      </section>
+<div clss="columns is-mobile">
+<div class="column is-10 is-offset-1">
+
+        <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                        <div class="tile is-child box">
+                                <figure class="image is-4by3">
+                                        <img src="/static/images/portfolio-main.jpg" alt="Placeholder image">
+                                      </figure>
+                        </div>
+                      </div>
+                <div class="tile is-5 is-vertical is-parent">
+                  <div class="tile is-child box">
+
+                    <div class="tile is-ancestor">
+                            <div class="tile is-parent">
+                              <article class="tile is-child box">
+                                    <figure class="image">
+                                            <img src="/static/images/jtemp3.jpg">
+                                        </figure>
+                              </article>
+                            </div>
+                            <div class="tile is-parent">
+                              <article class="tile is-child box">
+                                    <figure class="image">
+                                            <img src="/static/images/jtemp4.jpg">
+                                        </figure>
+                              </article>
+                            </div>
+                            <div class="tile is-parent">
+                              <article class="tile is-child box">
+                                    <figure class="image">
+                                            <img src="/static/images/jtemp5.jpg">
+                                        </figure>
+                              </article>
+                            </div>
+                          </div>
+                          <div class="tile is-ancestor">
+                                <div class="tile is-parent">
+                                  <article class="tile is-child box">
+                                    <figure class="image">
+                                        <img src="/static/images/jtemp6.jpg">
+                                    </figure>
+                                  </article>
+                                </div>
+                                <div class="tile is-parent">
+                                  <article class="tile is-child box">
+                                        <figure class="image">
+                                                <img src="/static/images/jtemp7.jpg">
+                                            </figure>
+                                  </article>
+                                </div>
+                                <div class="tile is-parent">
+                                  <article class="tile is-child box">
+                                        <figure class="image">
+                                                <img src="/static/images/jtemp8.jpg">
+                                            </figure>
+                                  </article>
+                                </div>
+                              </div>
+                              <div class="tile is-ancestor">
+                                    <div class="tile is-parent">
+                                      <article class="tile is-child box">
+                                            <figure class="image">
+                                                    <img src="/static/images/jtemp9.jpg">
+                                                </figure>
+                                      </article>
+                                    </div>
+                                    <div class="tile is-parent">
+                                      <article class="tile is-child box">
+                                            <figure class="image">
+                                                    <img src="/static/images/jtemp10.jpeg">
+                                                </figure>
+                                      </article>
+                                    </div>
+                                    <div class="tile is-parent">
+                                      <article class="tile is-child box">
+                                            <figure class="image">
+                                                    <img src="/static/images/portfolio-temp.jpg">
+                                                </figure>
+                                      </article>
+                                    </div>
+                                  </div>
+                                  <div class="tile is-ancestor">
+                                        <div class="tile is-parent">
+                                          <article class="tile is-child box">
+                                                <figure class="image">
+                                                        <img src="/static/images/jtemp11.jpeg">
+                                                    </figure>
+                                          </article>
+                                        </div>
+                                        <div class="tile is-parent">
+                                          <article class="tile is-child box">
+                                                <figure class="image">
+                                                        <img src="/static/images/jtemp12.jpeg">
+                                                    </figure>
+                                          </article>
+                                        </div>
+                                        <div class="tile is-parent">
+                                          <article class="tile is-child box">
+                                                <figure class="image">
+                                                        <img src="/static/images/jtemp13.jpeg">
+                                                    </figure>
+                                          </article>
+                                        </div>
+                                      </div>
+                                 
+                            
+                   
+           
+                  </div>
+                  
+                </div>
+                
+              </div>
+              <div class="tile is-ancestor">
+                    <div class="tile is-parent">
+                      <div class="tile is-child box">
+                        <p class="title">About This Vendor</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus diam, consequat gravida libero rhoncus ut. Morbi maximus, leo sit amet vehicula eleifend, nunc dui porta orci, quis semper odio felis ut quam.</p>
+                        <p>Suspendisse varius ligula in molestie lacinia. Maecenas varius eget ligula a sagittis. Pellentesque interdum, nisl nec interdum maximus, augue diam porttitor lorem, et sollicitudin felis neque sit amet erat. Maecenas imperdiet felis nisi, fringilla luctus felis hendrerit sit amet. Aenean vitae gravida diam, finibus dignissim turpis. Sed eget varius ligula, at volutpat tortor.</p>
+                        <p>Integer sollicitudin, tortor a mattis commodo, velit urna rhoncus erat, vitae congue lectus dolor consequat libero. Donec leo ligula, maximus et pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta. Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tile is-ancestor">
+                        <div class="tile is-4 is-vertical is-parent">
+                          <div class="tile is-child box">
+                            <p class="title">Details</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                          </div>
+                          <div class="tile is-child box">
+                            <p class="title">Contact Info</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                          </div>
+                        </div>
+                        <div class="tile is-parent">
+                          <div class="tile is-child box">
+                            <p class="title">Reviews</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus diam, consequat gravida libero rhoncus ut. Morbi maximus, leo sit amet vehicula eleifend, nunc dui porta orci, quis semper odio felis ut quam.</p>
+                            <p>Suspendisse varius ligula in molestie lacinia. Maecenas varius eget ligula a sagittis. Pellentesque interdum, nisl nec interdum maximus, augue diam porttitor lorem, et sollicitudin felis neque sit amet erat. Maecenas imperdiet felis nisi, fringilla luctus felis hendrerit sit amet. Aenean vitae gravida diam, finibus dignissim turpis. Sed eget varius ligula, at volutpat tortor.</p>
+                            <p>Integer sollicitudin, tortor a mattis commodo, velit urna rhoncus erat, vitae congue lectus dolor consequat libero. Donec leo ligula, maximus et pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta. Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.</p>
+                          </div>
+                        </div>
+                      </div>
+</div>
+</div>
+
+{% endblock %}
