@@ -1,5 +1,5 @@
 .vendor-list-card {
-  flex-basis: auto;
+  flex-basis: 33.33%;
   position: relative;
 }
 
@@ -58,7 +58,7 @@
   opacity: 0.7;
 }
 
-.datepicker .calendar .calendar-header .calendar-date, 
+.datepicker .calendar .calendar-header .calendar-date,
 .datepicker .calendar .calendar-body .calendar-date {
   padding-top: .1rem;
   padding-bottom: .1rem;

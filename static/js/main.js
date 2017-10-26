@@ -125,6 +125,7 @@ function getVendorByType(type) {
       "type": type
     },
     success: function(data){
+      vendors = [];
       // Convert JSON into an array
       for(let vendor in data.vendors){
         vendors.push(data.vendors[vendor]);
