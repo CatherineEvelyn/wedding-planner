@@ -22,7 +22,7 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control has-icons-left">
-                    <input type="text" id="bookRequestName" class="input is-medium" 
+                    <input type="text" id="bookRequestName" class="input is-medium"
                       readonly>
                     <span class="icon is-left">
                       <i class="mdi mdi-account-circle"></i>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="field">
                   <div class="control has-icons-left">
-                    <input type="text" id="bookRequestBusiness" class="input is-medium" 
+                    <input type="text" id="bookRequestBusiness" class="input is-medium"
                       readonly>
                     <span class="icon is-left">
                       <i class="mdi mdi-account-card-details"></i>
@@ -42,7 +42,7 @@
             </div>
             <div class="field">
               <div id="dateInput" class="control has-icons-left">
-                <input id="bookRequestDate" type="text" class="input is-medium" 
+                <input id="bookRequestDate" type="text" class="input is-medium"
                   placeholder="Pick a date" autocomplete="off">
                 <span class="icon is-left">
                   <i class="mdi mdi-calendar"></i>
@@ -167,22 +167,17 @@
           </p>
           <ul class="menu-list">
             <li>
-              <a role="button" class="getVendorByType" data-type="venue">
-                Price (High to Low)
+              <a role="button" class="sortVendors" data-type="priceMax" data-order="asc">
+                Price
               </a>
             </li>
             <li>
-              <a role="button" class="getVendorByType" data-type="photographer">
-                Price (Low to High)
-              </a>
-            </li>
-            <li>
-              <a role="button" class="getVendorByType" data-type="videographer">
+              <a role="button" class="sortVendors" data-type="state" data-order="asc">
                 Location
               </a>
             </li>
             <li>
-              <a role="button" class="getVendorByType" data-type="caterer">
+              <a role="button" class="sortVendors" data-type="rating" data-order="desc">
                 Rating
               </a>
             </li>
