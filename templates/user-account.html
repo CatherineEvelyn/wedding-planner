@@ -79,306 +79,301 @@
       </div>
       <div class="tile is-vertical is-parent">
         <div class="tile is-child box">
-          <p>Welcome back to your organizer {{userName}}</p>
+          <p>Welcome back to your organizer {{user.name}}</p>
         </div>
         <div class="tile is-child box">
           <p class="title">My Profile</p>
-          <p>Name: Abc <a href="">edit</a></p>
-          <p>Wedding Date: 12/29/2018 <a href="">edit</a></p>
-          <p>Number of Guests: 120 <a href="">edit</a></p>
+          <p>Name: {{user.name}} <a href="">edit</a></p>
+          <p>Wedding Date: {{user.eventDate}} <a href="">edit</a></p>
+          <p>Number of Guests: {{user.numberOfGuests}} <a href="">edit</a></p>
           <p>My Budget: $37,500 <a href="">edit</a></p>
         </div>
         <div class="tile is-child box">
           <p class="title">My Account</p>
-          <p>Username/Email: abc@gmail.com <a href="">edit</a></p>
-          <p>Password: ********* <a href="">edit</a></p>
+          <p>Username/Email: {{user.email}} <a href="">edit</a></p>
+          <p>Password: ******** <a href="">edit</a></p>
         </div>
       </div>
     </div>
-    
     <div class="tile is-child box">
-      <div>
-          <table class="table is-narrow">
-              <thead>
-                <tr>
-                  <th><abbr title="xx">xx</abbr></th>
-                  <th>My Vendors</th>
-                  <th><abbr title="Company Name">Company Name</abbr></th>
-                  <th><abbr title="Contact Person">Contact Person</abbr></th>
-                  <th><abbr title="Booking Date">Booking Date</abbr></th>
-                  <th><abbr title="Email">Email</abbr></th>
-                  <th><abbr title="Confirmed Price">Confirmed Price</abbr></th>
-                  <th><abbr title="Down Payment">Down Payment</abbr></th>
-                  <th><abbr title="Status">Status</abbr></th>
-                  <th><abbr title=""></abbr></th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th><abbr title="xx">xx</abbr></th>
-                  <th>My Budget</th>
-                  <th><abbr title=""></abbr></th>
-                  <th><abbr title=""></abbr></th>
-                  <th><abbr title=""></abbr></th>
-                  <th><abbr title=""></abbr></th>
-                  <th><abbr title="Total Price">$Calculate total price</abbr></th>
-                  <th><abbr title="Total DP">$Calculate total DP</abbr></th>
-                  <th><abbr title=""></abbr></th>
-                  <th><abbr title=""></abbr></th>
-                  <th><abbr title="">Some notes (saved as string) <a href="">edit</a></abbr></th>
-                  <th></th>
-                </tr>
-              </tfoot>
-              <tbody>
-          
-          
-          <!--{{test}}
-          {% for row in vendorInfo %}
-                <tr class="{{greenStatus}}">
-                  <th>loop</th>
-                  <td><a href="/portfolio?vendor-id=" title="My {{row.vendorType}}">My {{row.vendorType}}</a></td>
-                  <td>{{row.contactName}}</td>
-                  <td>{{row.businessName}}</td>
-                  <td>206-123-5678</td>
-                  <td>{{row.email}}</td>
-                  <td>$5000</td>
-                  <td>$500</td>
-                  <td>Inquiring</td>
-                  <td><button>Confirm</button></td>
-                  <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-                </tr>
-          {% endfor %}
-          -->
-          
-          {% if venue %}
-          {% for row in venue %}
-                <tr class="{{greenStatus}}">
-                  <th>1</th>
-                  <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
-                  <td>{{row.contactName}}</td>
-                  <td>{{row.businessName}}</td>
-                  <td>{{row.bookedDate}}</td>
-                  <td>{{row.email}}</td>
-                  <td>$5000</td>
-                  <td>$500</td>
-                  <td>Inquiring</td>
-                  <td><button>Cancel</button></td>
-                  <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-                </tr>
-            {% endfor %}
-            {% else %}
-              <tr class="{{greenStatus}}">
-                <th>1</th>
-                <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>$</td>
-                <td>$</td>
-                <td>Searching</td>
-                <td><button>Find</button></td>
-                <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-              </tr>
-          {% endif %}
-          
-          {% if photographer %}
-          {% for row in photographer %}
-                <tr class="{{greenStatus}}">
-                  <th>2</th>
-                  <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
-                  <td>{{row.contactName}}</td>
-                  <td>{{row.businessName}}</td>
-                  <td>{{row.bookedDate}}</td>
-                  <td>{{row.email}}</td>
-                  <td>$5000</td>
-                  <td>$500</td>
-                  <td>Inquiring</td>
-                  <td><button>Cancel</button></td>
-                  <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-                </tr>
-            {% endfor %}
-            {% else %}
-              <tr class="{{greenStatus}}">
-                <th>2</th>
-                <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>$</td>
-                <td>$</td>
-                <td>Searching</td>
-                <td><button>Find</button></td>
-                <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-              </tr>
-          {% endif %}
-          
-          {% if videographer %}
-          {% for row in videographer %}
-                <tr class="{{greenStatus}}">
-                  <th>3</th>
-                  <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
-                  <td>{{row.contactName}}</td>
-                  <td>{{row.businessName}}</td>
-                  <td>{{row.bookedDate}}</td>
-                  <td>{{row.email}}</td>
-                  <td>$5000</td>
-                  <td>$500</td>
-                  <td>Inquiring</td>
-                  <td><button>Cancel</button></td>
-                  <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-                </tr>
-            {% endfor %}
-            {% else %}
-              <tr class="{{greenStatus}}">
-                <th>3</th>
-                <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>$</td>
-                <td>$</td>
-                <td>Searching</td>
-                <td><button>Find</button></td>
-                <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-              </tr>
-          {% endif %}
-          
-          {% if caterer %}
-          {% for row in caterer %}
-                <tr class="{{greenStatus}}">
-                  <th>4</th>
-                  <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
-                  <td>{{row.contactName}}</td>
-                  <td>{{row.businessName}}</td>
-                  <td>{{row.bookedDate}}</td>
-                  <td>{{row.email}}</td>
-                  <td>$5000</td>
-                  <td>$500</td>
-                  <td>Inquiring</td>
-                  <td><button>Cancel</button></td>
-                  <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-                </tr>
-            {% endfor %}
-            {% else %}
-              <tr class="{{greenStatus}}">
-                <th>4</th>
-                <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>$</td>
-                <td>$</td>
-                <td>Searching</td>
-                <td><button>Find</button></td>
-                <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-              </tr>
-          {% endif %}
-          
-          {% if music %}
-          {% for row in music %}
-                <tr class="{{greenStatus}}">
-                  <th>5</th>
-                  <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
-                  <td>{{row.contactName}}</td>
-                  <td>{{row.businessName}}</td>
-                  <td>{{row.bookedDate}}</td>
-                  <td>{{row.email}}</td>
-                  <td>$5000</td>
-                  <td>$500</td>
-                  <td>Inquiring</td>
-                  <td><button>Cancel</button></td>
-                  <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-                </tr>
-            {% endfor %}
-            {% else %}
-              <tr class="{{greenStatus}}">
-                <th>5</th>
-                <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>$</td>
-                <td>$</td>
-                <td>Searching</td>
-                <td><button>Find</button></td>
-                <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-              </tr>
-          {% endif %}
-          
-          {% if cosmetics %}
-          {% for row in cosmetics %}
-                <tr class="{{greenStatus}}">
-                  <th>6</th>
-                  <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
-                  <td>{{row.contactName}}</td>
-                  <td>{{row.businessName}}</td>
-                  <td>{{row.bookedDate}}</td>
-                  <td>{{row.email}}</td>
-                  <td>$5000</td>
-                  <td>$500</td>
-                  <td>Inquiring</td>
-                  <td><button>Cancel</button></td>
-                  <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-                </tr>
-            {% endfor %}
-            {% else %}
-              <tr class="{{greenStatus}}">
-                <th>6</th>
-                <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>$</td>
-                <td>$</td>
-                <td>Searching</td>
-                <td><button>Find</button></td>
-                <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-              </tr>
-          {% endif %}
-          
-          {% if tailor %}
-          {% for row in tailor %}
-                <tr class="{{greenStatus}}">
-                  <th>7</th>
-                  <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
-                  <td>{{row.contactName}}</td>
-                  <td>{{row.businessName}}</td>
-                  <td>{{row.bookedDate}}</td>
-                  <td>{{row.email}}</td>
-                  <td>$5000</td>
-                  <td>$500</td>
-                  <td>Inquiring</td>
-                  <td><button>Cancel</button></td>
-                  <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-                </tr>
-            {% endfor %}
-            {% else %}
-              <tr class="{{greenStatus}}">
-                <th>7</th>
-                <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>$</td>
-                <td>$</td>
-                <td>Searching</td>
-                <td><button>Find</button></td>
-                <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-              </tr>
-          {% endif %}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th><abbr title="xx">xx</abbr></th>
+            <th>My Vendors</th>
+            <th><abbr title="Company Name">Company Name</abbr></th>
+            <th><abbr title="Contact Person">Contact Person</abbr></th>
+            <th><abbr title="Booking Date">Booking Date</abbr></th>
+            <th><abbr title="Email">Email</abbr></th>
+            <th><abbr title="Confirmed Price">Confirmed Price</abbr></th>
+            <th><abbr title="Down Payment">Down Payment</abbr></th>
+            <th><abbr title="Status">Status</abbr></th>
+            <th><abbr title=""></abbr></th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th><abbr title="xx">xx</abbr></th>
+            <th>My Budget</th>
+            <th><abbr title=""></abbr></th>
+            <th><abbr title=""></abbr></th>
+            <th><abbr title=""></abbr></th>
+            <th><abbr title=""></abbr></th>
+            <th><abbr title="Total Price">$Calculate total price</abbr></th>
+            <th><abbr title="Total DP">$Calculate total DP</abbr></th>
+            <th><abbr title=""></abbr></th>
+            <th><abbr title=""></abbr></th>
+            <th><abbr title="">Some notes (saved as string) <a href="">edit</a></abbr></th>
+            <th></th>
+          </tr>
+        </tfoot>
+        <tbody>
+      <!--{{test}}
+      {% for row in vendorInfo %}
+            <tr class="{{greenStatus}}">
+              <th>loop</th>
+              <td><a href="/portfolio?vendor-id=" title="My {{row.vendorType}}">My {{row.vendorType}}</a></td>
+              <td>{{row.contactName}}</td>
+              <td>{{row.businessName}}</td>
+              <td>206-123-5678</td>
+              <td>{{row.email}}</td>
+              <td>$5000</td>
+              <td>$500</td>
+              <td>Inquiring</td>
+              <td><button>Confirm</button></td>
+              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+            </tr>
+      {% endfor %}
+      -->
+      {% if venue %}
+      {% for row in venue %}
+          <tr class="{{greenStatus}}">
+            <th>1</th>
+            <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
+            <td>{{row.contactName}}</td>
+            <td>{{row.businessName}}</td>
+            <td>{{row.bookedDate}}</td>
+            <td>{{row.email}}</td>
+            <td>$5000</td>
+            <td>$500</td>
+            <td>Inquiring</td>
+            <td><button>Confirm</button></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
+        {% endfor %}
+        {% else %}
+          <tr class="{{greenStatus}}">
+            <th>1</th>
+            <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>$</td>
+            <td>$</td>
+            <td>Searching</td>
+            <td><button>Find</button></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
+      {% endif %}
+
+      {% if photographer %}
+      {% for row in photographer %}
+            <tr class="{{greenStatus}}">
+              <th>2</th>
+              <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
+              <td>{{row.contactName}}</td>
+              <td>{{row.businessName}}</td>
+              <td>{{row.bookedDate}}</td>
+              <td>{{row.email}}</td>
+              <td>$5000</td>
+              <td>$500</td>
+              <td>Inquiring</td>
+              <td><button>Confirm</button></td>
+              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+            </tr>
+        {% endfor %}
+        {% else %}
+          <tr class="{{greenStatus}}">
+            <th>2</th>
+            <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>$</td>
+            <td>$</td>
+            <td>Searching</td>
+            <td><button>Find</button></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
+      {% endif %}
+
+      {% if videographer %}
+      {% for row in videographer %}
+            <tr class="{{greenStatus}}">
+              <th>3</th>
+              <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
+              <td>{{row.contactName}}</td>
+              <td>{{row.businessName}}</td>
+              <td>{{row.bookedDate}}</td>
+              <td>{{row.email}}</td>
+              <td>$5000</td>
+              <td>$500</td>
+              <td>Inquiring</td>
+              <td><button>Confirm</button></td>
+              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+            </tr>
+        {% endfor %}
+        {% else %}
+          <tr class="{{greenStatus}}">
+            <th>3</th>
+            <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>$</td>
+            <td>$</td>
+            <td>Searching</td>
+            <td><button>Find</button></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
+      {% endif %}
+
+      {% if caterer %}
+      {% for row in caterer %}
+            <tr class="{{greenStatus}}">
+              <th>4</th>
+              <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
+              <td>{{row.contactName}}</td>
+              <td>{{row.businessName}}</td>
+              <td>{{row.bookedDate}}</td>
+              <td>{{row.email}}</td>
+              <td>$5000</td>
+              <td>$500</td>
+              <td>Inquiring</td>
+              <td><button>Confirm</button></td>
+              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+            </tr>
+        {% endfor %}
+        {% else %}
+          <tr class="{{greenStatus}}">
+            <th>4</th>
+            <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>$</td>
+            <td>$</td>
+            <td>Searching</td>
+            <td><button>Find</button></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
+      {% endif %}
+
+      {% if music %}
+      {% for row in music %}
+            <tr class="{{greenStatus}}">
+              <th>5</th>
+              <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
+              <td>{{row.contactName}}</td>
+              <td>{{row.businessName}}</td>
+              <td>{{row.bookedDate}}</td>
+              <td>{{row.email}}</td>
+              <td>$5000</td>
+              <td>$500</td>
+              <td>Inquiring</td>
+              <td><button>Confirm</button></td>
+              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+            </tr>
+        {% endfor %}
+        {% else %}
+          <tr class="{{greenStatus}}">
+            <th>5</th>
+            <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>$</td>
+            <td>$</td>
+            <td>Searching</td>
+            <td><button>Find</button></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
+      {% endif %}
+
+      {% if cosmetics %}
+      {% for row in cosmetics %}
+            <tr class="{{greenStatus}}">
+              <th>6</th>
+              <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
+              <td>{{row.contactName}}</td>
+              <td>{{row.businessName}}</td>
+              <td>{{row.bookedDate}}</td>
+              <td>{{row.email}}</td>
+              <td>$5000</td>
+              <td>$500</td>
+              <td>Inquiring</td>
+              <td><button>Confirm</button></td>
+              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+            </tr>
+        {% endfor %}
+        {% else %}
+          <tr class="{{greenStatus}}">
+            <th>6</th>
+            <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>$</td>
+            <td>$</td>
+            <td>Searching</td>
+            <td><button>Find</button></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
+      {% endif %}
+
+      {% if tailor %}
+      {% for row in tailor %}
+            <tr class="{{greenStatus}}">
+              <th>7</th>
+              <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
+              <td>{{row.contactName}}</td>
+              <td>{{row.businessName}}</td>
+              <td>{{row.bookedDate}}</td>
+              <td>{{row.email}}</td>
+              <td>$5000</td>
+              <td>$500</td>
+              <td>Inquiring</td>
+              <td><button>Confirm</button></td>
+              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+            </tr>
+        {% endfor %}
+        {% else %}
+          <tr class="{{greenStatus}}">
+            <th>7</th>
+            <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>$</td>
+            <td>$</td>
+            <td>Searching</td>
+            <td><button>Find</button></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
+      {% endif %}
+        </tbody>
+      </table>
     </div>
   </section>
 </div>
+
+
 {% endblock %}
