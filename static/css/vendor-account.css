@@ -1,0 +1,31 @@
+.datepicker .calendar .calendar-date .date-item {
+  min-height: 2.2rem;
+}
+
+.datepicker .calendar.is-large .date-item {
+  align-self: flex-end;
+  margin-right: 0;
+  margin-top: 0;
+}
+
+.calendar-body {
+  background: white;
+}
+
+.datepicker .calendar.is-large .calendar-event {
+  overflow: visible !important;
+}
+
+.datepicker .calendar.is-large .calendar-events {
+  overflow-y: visible !important;
+}
+
+#bookingDateBox,
+#startTimeBox,
+#endTimeBox {
+  text-align: center;
+}
+
+.detail {
+  font-size: 1rem;
+}
