@@ -12,10 +12,10 @@
 {% extends 'layout.html' %}
 {% block body %}
 
+
 <div class="tile is-ancestor">
     <div class="tile is-vertical is-parent is-3">
       <div class="tile is-child box">
-            
         <div class="columns">
           <div>
             <aside class="menu vendor-search-menu sticky">
@@ -92,7 +92,6 @@
           </div>
         </div>
 
-
       </div>
     </div>
     <div class="tile is-vertical is-parent">
@@ -148,6 +147,7 @@
       </tr>
     </tfoot>
     <tbody>
+<<<<<<< HEAD
 
 {{test}}
 {% for row in vendorInfo %}
@@ -181,6 +181,7 @@
         <td><button>Cancel</button></td>
         <td>Clicking cancel will reset the status to "searching" and display like example #7 <a href="" style="color: blue;">edit</a></td>
       </tr>
+
       <tr class="{{greenStatus}}">
         <th>2</th>
         <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
@@ -194,6 +195,7 @@
         <td><button>Confirm</button></td>
         <td>Find button (exampe #7) is the default, after user book a vendor, "Find" turn into "Confirm" button <a href="" style="color: blue;">edit</a></td>
       </tr>
+
       <tr class="{{greenStatus}}">
         <th>3</th>
         <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
@@ -207,6 +209,7 @@
         <td><button>Cancel</button></td>
         <td>Clicking cancel will reset the status to "searching" and display like example #7 <a href="" style="color: blue;">edit</a></td>
       </tr>
+
       <tr class="{{greenStatus}}">
         <th>4</th>
         <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
@@ -220,6 +223,7 @@
         <td><button>Cancel</button></td>
         <td>$50 per person, 120 guests <a href="" style="color: blue;">edit</a></td>
       </tr>
+
       <tr class="{{greenStatus}}">
         <th>5</th>
         <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
@@ -233,6 +237,7 @@
         <td><button>Confirm</button></td>
         <td>Some very long notes (what would be the max? how many characters?) <a href="" style="color: blue;">edit</a></td>
       </tr>
+
       <tr class="{{greenStatus}}">
         <th>6</th>
         <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
@@ -246,6 +251,7 @@
         <td><button>Confirm</button></td>
         <td>Some notes (saved as string) <a href="" style="color: blue;">edit</a></td>
       </tr>
+
       <tr class="{{greenStatus}}">
         <th>7</th>
         <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
@@ -260,9 +266,38 @@
         <td>Click "Find", get a pop up window to chose: "I want to look for a vendor" or "I have my own vendor", first choice will redirect user to vendor-list.html, second choice will change the row color to green <a href="" style="color: blue;">edit</a></td>
       </tr>
 
+
 -->
 
     </tbody>
   </table>
 </div>
+
+    </tbody>
+  </table>
+</div>
+
+
+{% for info in vendorInfo %}
+<ul style="list-style: none;">
+    {%if "Name" in info %}
+    <li>{{info}}</li>
+    {%elif "Business" in info %}
+    <li>{{info}}</li>
+    {%elif "Type" in info %}
+    <li>{{info}}</li>
+    {%elif "Street" in info %}
+    <li>{{info}}</li>
+    {%elif "City" in info %}
+    <li>{{info}}</li>
+    {%elif "Zipcode" in info %}
+    <li>{{info}}</li>
+    {%elif "State" in info %}
+    <li>{{info}}</li>
+    {% endif %}
+    </ul>
+{% endfor %}
+
+
+
 {% endblock %}

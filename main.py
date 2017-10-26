@@ -262,6 +262,7 @@ def organizer():
         vendorInfo.append("City: " + row['city'])
         vendorInfo.append("Zipcode: " + str(row['zipcode']))
 <<<<<<< HEAD
+<<<<<<< HEAD
         vendorInfo.append("State: " + row['state'])'''
         vendorInfo.append(row)
 
@@ -276,6 +277,11 @@ def organizer():
     return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, greenStatus = greenStatus, businessName = businessName, contactName = contactName, email = email)
     #return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
 
+=======
+        vendorInfo.append("State: " + row['state'])
+    return render_template("user-account.html", vendorInfo=vendorInfo)  
+    #return render_template("user-account.html")
+>>>>>>> 4b52e0d6a3574a343d31df7d643e91db5d6f9b6b
 
 @app.route('/book', methods=['POST'])
 def book():
