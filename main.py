@@ -236,7 +236,7 @@ def profile():
     if request.args.get('source') == "ajax":
         return jsonify(userInfo)
 
-    return render_template("vendor-account.html", userInfo = userInfo, vendor_id=vendor.id)
+    return render_template("vendor-account.html", userInfo=userInfo, vendor_id=vendor.id)
 
 
 @app.route('/user-account')
