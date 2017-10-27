@@ -51,8 +51,7 @@ class Vendor(db.Model):
     zipcode = db.Column(db.Integer)
     rating = db.Column(db.Float)
     vendorType = db.Column(db.String(50))
-    priceMin = db.Column(db.Integer)
-    priceMax = db.Column(db.Integer)
+    price = db.Column(db.BIGINT)
     password = db.Column(db.String(100))
     state = db.Column(db.String(2))
     users = db.relationship(
@@ -61,7 +60,7 @@ class Vendor(db.Model):
     )
 
 
-    def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, priceMin, priceMax, password, state):
+    def __init__(self, email, businessName, contactName, streetAddress, city, zipcode, rating, vendorType, price, password, state):
         self.businessName = businessName
         self.contactName = contactName
         self.email = email
@@ -70,8 +69,7 @@ class Vendor(db.Model):
         self.zipcode = zipcode
         self.rating = rating
         self.vendorType = vendorType
-        self.priceMin = priceMin
-        self.priceMax = priceMax
+        self.price = price
         self.password = password
         self.state = state
 
@@ -79,11 +77,12 @@ class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
-    email = db.Column(db.String(30))
+    email = db.Column(db.String(50))
     phoneNumber = db.Column(db.BIGINT)
     password = db.Column(db.String(100))
     numberOfGuests = db.Column(db.Integer)
     eventDate = db.Column(db.Date)
+    budget = db.Column(db.BIGINT)
     vendors = db.relationship(
         'Vendor',
         secondary='user_vendor'
@@ -251,8 +250,9 @@ def organizer():
     user_id = str(user.id) #get user's id - turn to string for query
 
     result = db.engine.execute("SELECT * FROM user_vendor JOIN vendor ON user_vendor.vendor_id=vendor.id WHERE user_id = '" + user_id + "'")
+
     #q = session.query(UserVendor).filter(UserVendor).join(UserVendor.vendor_id).filter.all()
-    #usersVendors = UserVendor.query.filter_by(user_id=users_id).first() 
+    #usersVendors = UserVendor.query.filter_by(user_id=users_id).first()
     #vendorName = result.contactName
     #for item in result:
         #vendorName == item.contactName
@@ -281,18 +281,18 @@ def organizer():
             cosmetics.append(row)
         elif row.vendorType == "tailor":
             tailor.append(row)
-                
+
     return render_template("user-account.html", venue=venue,
                                                 photographer=photographer,
                                                 videographer=videographer,
                                                 caterer=caterer,
                                                 music=music,
                                                 cosmetics=cosmetics,
-                                                tailor=tailor, 
+                                                tailor=tailor,
                                                 user=user )
 
 
-"""    
+"""
     vendorInfo = []
     '''vendorName = []
     vendorBusiness = []
@@ -304,7 +304,7 @@ def organizer():
     #connection.close()
     return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
     '''for row in result:
-        
+
         vendorInfo.append("Name: " + row['contactName'])
         vendorInfo.append("Business name: " + row['businessName'])
         vendorInfo.append("Vendor Type: " + row['vendorType'])
@@ -331,7 +331,7 @@ def organizer():
     return render_template("user-account.html", venue =venue, cosmetics= cosmetics)
 
     #return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, greenStatus = greenStatus, businessName = businessName, contactName = contactName, email = email)
-    #return render_template("testUserVendor.html", vendorInfo = vendorInfo)  
+    #return render_template("testUserVendor.html", vendorInfo = vendorInfo)
 """
 
 
@@ -389,8 +389,7 @@ def vendor():
             "state": vendor.state,
             "rating": vendor.rating,
             "vendorType": vendor.vendorType,
-            "prinMin": vendor.priceMin,
-            "priceMax": vendor.priceMax
+            "price": vendor.price,
         })
     return jsonify(type=vendor_type, vendors=vendors)
 
@@ -414,8 +413,7 @@ def signup():
       'cityerrors': [],
       'stateerrors': [],
       'zipcodeerrors': [],
-      'priceminerrors': [],
-      'pricemaxerrors': []
+      'priceerrors': []
     }
 
     user_info = {}
@@ -435,7 +433,7 @@ def signup():
             user_info['name'] = name = form['name']
             password = form['password']
             verify = form['verify']
-            
+
 
             if not name:
                 u_errors["nameerrors"].append("This field cannot be left blank.")
@@ -496,8 +494,7 @@ def signup():
             vendor_info['city'] = city = form['city']
             vendor_info['state'] = state = form['state']
             vendor_info['zipcode'] = zipcode = form['zipcode']
-            vendor_info['price_min'] = price_min = form['pricemin']
-            vendor_info['price_max'] = price_max = form['pricemax']
+            vendor_info['price'] = price = form['price']
 
             if not email:
                 v_errors["usererrors"].append('This field cannot be left blank.')
@@ -547,15 +544,10 @@ def signup():
             if not city:
                 v_errors["cityerrors"].append("This field cannot be left blank.")
 
-            if not price_min:
-                v_errors["priceminerrors"].append("This field cannot be left blank.")
-            elif price_min.isalpha():
-                v_errors["priceminerrors"].append("Minimum price must be a number.")
-
-            if not price_max:
-                v_errors["pricemaxerrors"].append("This field cannot be left blank.")
-            elif price_min.isalpha():
-                v_errors["pricemaxerrors"].append("Maximum price must be a number.")
+            if not price:
+                v_errors["priceerrors"].append("This field cannot be left blank.")
+            elif price.isalpha():
+                v_errors["priceerrors"].append("Price must be a number.")
 
 
             if all(v_errors.get(item) == [] for item in v_errors):
@@ -619,7 +611,7 @@ def portfolio():
 def genData():
   vendorTypes = ['venue', 'photographer', 'videographer', 'caterer', 'music', 'cosmetics', 'tailor']
   fake = Faker()
-  for i in range(5):
+  for i in range(10):
     user = User(
       fake.name(),
       fake.email(),
@@ -634,8 +626,7 @@ def genData():
       fake.zipcode(),
       random.randrange(1, 6),
       random.choice(vendorTypes),
-      random.randrange(1, 101),
-      random.randrange(101, 501),
+      random.randrange(1, 1000),
       make_pw_hash(fake.password(length=10, digits=True, upper_case=True, lower_case=True)),
       fake.state_abbr()
     )

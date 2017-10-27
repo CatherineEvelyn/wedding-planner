@@ -4,11 +4,7 @@ var sessionDetails = null;
 var vendors = [];
 
 $(function () {
-  progressively.init({
-    onLoadComplete: () => {
-      console.log("done loading");
-    }
-  });
+  progressively.init();
   getSessionDetails();
   addDismissNotificationListeners();
   addMobileMenuListener();
@@ -177,7 +173,7 @@ function displayVendors() {
             $("<small />", {"html": 'Rating: ' + value.rating})
           ),
           $("<p />").append(
-            $("<small />", {"html": 'Max Price: ' + value.priceMax})
+            $("<small />", {"html": 'Price/Rate: ' + value.price})
           )
         )
       ),

@@ -12,20 +12,7 @@
   background: white;
 }
 
-.datepicker .calendar.is-large .calendar-event {
-  overflow: visible !important;
-}
-
-.datepicker .calendar.is-large .calendar-events {
-  overflow-y: visible !important;
-}
-
-#bookingDateBox,
-#startTimeBox,
-#endTimeBox {
-  text-align: center;
-}
-
-.detail {
-  font-size: 1rem;
+.calendar-events,
+.calendar-event {
+  overflow: visible;
 }
