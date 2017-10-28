@@ -115,33 +115,123 @@
       </h1>
       <h1 class="subtitle">Edit your information and rates</h1>
       <hr>
-      <div class="columns">
-        <div class="column is-half">
-          <form method="POST">
+      <form method="POST">
+        <div class="columns">
+          <div class="column">
             <div class="field">
               <label class="label">Name</label>
               <div class="control">
-                <input id="contactName" class="input" type="text" placeholder="Full name">
+                <input id="contactName" class="input" type="text" name="name" placeholder="Full name">
               </div>
             </div>
             <div class="field">
               <label class="label">Business Name</label>
               <div class="control">
-                <input id="businessName" class="input" type="text" placeholder="Business name">
+                <input id="businessName" class="input" name="business" type="text" placeholder="Business name">
               </div>
             </div>
             <div class="field">
               <label class="label">Email</label>
               <div class="control">
-                <input id="businessName" class="input" type="text" readonly>
+                <input id="email" class="input" name="email" type="text" readonly>
               </div>
             </div>
             <div class="control">
               <input type="submit" class="button is-success" value="Save Changes">
             </div>
-          </form>
+          </div>
+          <div class="is-divider-vertical"></div>
+          <div class="column">
+            <div class="field">
+              <label class="label">Street Address</label>
+              <div class="control">
+                <input id="streetAddress" class="input" type="text" name="address" placeholder="Street address">
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">City</label>
+              <div class="control">
+                <input id="city" class="input" type="text" placeholder="City">
+              </div>
+            </div>
+            <label class="label">State/Zipcode</label>
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <span class="select is-fullwidth">
+                      <select id="state" name="state">
+                        <option value="AL" selected>AL</option>
+                        <option value="AK">AK</option>
+                        <option value="AR">AR</option>
+                        <option value="AZ">AZ</option>
+                        <option value="CA">CA</option>
+                        <option value="CO">CO</option>
+                        <option value="CT">CT</option>
+                        <option value="DC">DC</option>
+                        <option value="DE">DE</option>
+                        <option value="FL">FL</option>
+                        <option value="GA">GA</option>
+                        <option value="HI">HI</option>
+                        <option value="IA">IA</option>
+                        <option value="ID">ID</option>
+                        <option value="IL">IL</option>
+                        <option value="IN">IN</option>
+                        <option value="KS">KS</option>
+                        <option value="KY">KY</option>
+                        <option value="LA">LA</option>
+                        <option value="MA">MA</option>
+                        <option value="MD">MD</option>
+                        <option value="ME">ME</option>
+                        <option value="MI">MI</option>
+                        <option value="MN">MN</option>
+                        <option value="MO">MO</option>
+                        <option value="MS">MS</option>
+                        <option value="MT">MT</option>
+                        <option value="NC">NC</option>
+                        <option value="NE">NE</option>
+                        <option value="NH">NH</option>
+                        <option value="NJ">NJ</option>
+                        <option value="NM">NM</option>
+                        <option value="NV">NV</option>
+                        <option value="NY">NY</option>
+                        <option value="ND">ND</option>
+                        <option value="OH">OH</option>
+                        <option value="OK">OK</option>
+                        <option value="OR">OR</option>
+                        <option value="PA">PA</option>
+                        <option value="RI">RI</option>
+                        <option value="SC">SC</option>
+                        <option value="SD">SD</option>
+                        <option value="TN">TN</option>
+                        <option value="TX">TX</option>
+                        <option value="UT">UT</option>
+                        <option value="VT">VT</option>
+                        <option value="VA">VA</option>
+                        <option value="WA">WA</option>
+                        <option value="WI">WI</option>
+                        <option value="WV">WV</option>
+                        <option value="WY">WY</option>
+                      </select>
+                    </span>
+                    <span class="icon is-left">
+                      <i class="mdi mdi-map-marker"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="control has-icons-left">
+                    <input id="zipcode" class="input" type="text" name="zipcode" placeholder="Zipcode">
+                    <span class="icon is-left">
+                      <i class="mdi mdi-map-marker"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   </section>
 {% endblock %}
