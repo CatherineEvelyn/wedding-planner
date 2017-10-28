@@ -14,7 +14,6 @@ $(function () {
   addCloseModalListeners();
   addBookingListeners();
   addBookFulfillmentListener();
-  addSwitchViewListeners();
 });
 
 function addSignupListener() {
@@ -101,6 +100,9 @@ function sortArray(arr, type, order){
 }
 
 function getVendorByType(type) {
+  // First unbind other ajax call animation from document
+  $(document).unbind("ajaxStart.bookingCall");
+  $(document).unbind("ajaxStop.bookingCall");
   // Adding loading indicators for loading vendors call
   $(document).bind("ajaxStart.vendorCall", () => {
     $('.overlay-container').show();
@@ -254,6 +256,7 @@ function addBookFulfillmentListener() {
 function postBookRequest(id, date) {
   // First unbind main ajax animation from happening
   $(document).unbind("ajaxStart.vendorCall");
+  $(document).unbind("ajaxStop.vendorCall");
   // Adding loading indicators for booking call
   $(document).bind("ajaxStart.bookingCall", () => {
     $('.modal-card-body .overlay').fadeTo("fast", 0.75);
@@ -328,12 +331,5 @@ function getSessionDetails() {
 function addDismissNotificationListeners() {
   $('.flash-dismiss').on('click', e => {
     $(e.currentTarget).parent().remove();
-  });
-}
-
-function addSwitchViewListeners() {
-  $('.navbar-item.is-tab').on('click', e => {
-    $('.navbar-item.is-tab').removeClass('is-active');
-    $(e.currentTarget).addClass('is-active');
   });
 }

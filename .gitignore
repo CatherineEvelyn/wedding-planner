@@ -105,6 +105,3 @@ ENV/
 
 # DS Store
 .DS_Store/
-
-# Bower components
-static/components/

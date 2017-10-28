@@ -1,22 +1,73 @@
 let bookings = {}
 
 $(function() {
-  retrieveDates();
+  addAjaxListeners();
   addRerenderCalendarListeners();
   addBookingDetailsListeners();
 });
 
+function addAjaxListeners() {
+  $('.getBookings').on('click', e=> {
+    retrieveDates();
+  });
+  $('.getAccount').on('click', e=> {
+    retrieveAccountInfo();
+  });
+}
+
 function retrieveDates() {
+  $(document).unbind("ajaxStart.bookingsCall");
+  $(document).unbind("ajaxStop.bookingsCall");
+  // Adding loading indicators for loading bookings call
+  $(document).bind("ajaxStart.bookingsCall", () => {
+    $('.overlay').show();
+  });
+  $(document).bind("ajaxStop.bookingsCall", () => {
+    $('.overlay').hide();
+    console.log("ajax stopped");
+  });
+
+  $('#accountView').hide();
+  $('#bookingsView').show();
+
+  $('.navbar-item.is-tab').removeClass('is-active');  
+  $('.getBookings').addClass('is-active');
+
   $.ajax({
     method: "GET",
     url: "/profile",
     data: {
-      source: "ajax"
+      source: "ajax",
+      view: "bookings"
     }
   })
   .done(json => {
     bookings = json;
     addBookingsToCalendar(json);
+    console.log('booking call complete!');
+  })
+  .fail(err => {
+    console.log(err);
+  });
+}
+
+function retrieveAccountInfo() {
+  $('#bookingsView').hide();
+  $('#accountView').show();
+
+  $('.navbar-item.is-tab').removeClass('is-active');  
+  $('.getAccount').addClass('is-active');
+
+  $.ajax({
+    method: "GET",
+    url: "/profile",
+    data: {
+      source: "ajax",
+      view: "account"
+    }
+  })
+  .done(json => {
+    fillInputFields(json);
   })
   .fail(err => {
     console.log(err);
@@ -24,6 +75,9 @@ function retrieveDates() {
 }
 
 function addBookingsToCalendar(json) {
+  // Empty out date boxes from previous calls
+  $('.calendar-events').remove();
+
   $.each(json, (index, value) => {
     let $dayItem = $('#' + value.bookedDate);
     if ($dayItem.children('.calendar-events').length) {
@@ -76,6 +130,10 @@ function addBookingDetailsListeners() {
       $detail.clone().text(tConvert($self.attr('data-end-time')))
     );
   });
+}
+
+function fillInputFields(json) {
+  $('#contactName').val(json.contactName);
 }
 
 function formatDate(date) {

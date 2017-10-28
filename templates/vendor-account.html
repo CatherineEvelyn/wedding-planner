@@ -75,13 +75,13 @@
   <nav class="navbar has-shadow">
     <div class="container">
       <div class="navbar-tabs">
-        <a class="navbar-item is-tab is-active" href="#bookings">
+        <a class="navbar-item is-tab is-active getBookings" href="#bookings">
           <span class="icon">
             <i class="mdi mdi-book-open-variant"></i>
           </span>
           Bookings
         </a>
-        <a class="navbar-item is-tab" href="#account">
+        <a class="navbar-item is-tab getAccount" href="#account">
           <span class="icon">
             <i class="mdi mdi-account"></i>
           </span>
@@ -115,14 +115,34 @@
       </h1>
       <h1 class="subtitle">Edit your information and rates</h1>
       <hr>
-  </section>
-  <section id="accountView" class="section" style="display: none;">
-    <div class="container">
-      <h1 class="title is-2">
-        Your Account
-      </h1>
-      <h1 class="subtitle">Edit your information and rates</h1>
-      <hr>
+      <div class="columns">
+        <div class="column is-half">
+          <form method="POST">
+            <div class="field">
+              <label class="label">Name</label>
+              <div class="control">
+                <input id="contactName" class="input" type="text" placeholder="Full name">
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Business Name</label>
+              <div class="control">
+                <input id="businessName" class="input" type="text" placeholder="Business name">
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Email</label>
+              <div class="control">
+                <input id="businessName" class="input" type="text" readonly>
+              </div>
+            </div>
+            <div class="control">
+              <input type="submit" class="button is-success" value="Save Changes">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </section>
 {% endblock %}
 {% block scripts %}
@@ -134,5 +154,23 @@
     }
   );
 </script>
-<script src="{{ url_for('static', filename='js/genBookings.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor-profile.js') }}"></script>
+<script defer>
+  var loc, tag;
+  update_tag();
+  $(window).on('popstate', e => {
+    update_tag();
+  })
+  function update_tag() {
+    loc = window.location.href.split('#');
+    tag = loc.length > 1 ? loc[1] : '';
+    if (tag === "bookings") {
+      retrieveDates();
+    } else if (tag === "account") {
+      retrieveAccountInfo();
+    } else if (!tag) {
+      retrieveDates();
+    }
+  }
+</script>
 {% endblock %}

@@ -175,6 +175,7 @@ def login():
                 session['email'] = email #starts session
                 session['userType'] = "user"
                 session['name'] = user.name
+                session['id'] = user.id
                 return redirect_dest(fallback=url_for('index'))
         elif vendor:
             if not check_pw_hash(password, vendor.password):
@@ -183,6 +184,7 @@ def login():
                 session['email'] = email #starts session
                 session['userType'] = "vendor"
                 session['name'] = vendor.contactName
+                session['userID'] = vendor.id
                 return redirect_dest(fallback=url_for('index'))
         else:
             usererrors.append("That user doesn't exist.")
@@ -197,6 +199,7 @@ def logout():
     del session['email']
     del session['userType']
     del session['name']
+    del session['userID']
     return redirect('/')
 
 @app.route('/')
@@ -213,29 +216,41 @@ def profile():
     session['url'] = request.path
 
     vendor = Vendor.query.filter_by(email=session["email"]).first() #get vendor in session
-    vendId = str(vendor.id)
 
-    #result = db.engine.execute("SELECT * FROM user_vendor JOIN user ON user_vendor.user_id=user.id WHERE vendor_id = '"+vendId+"'")
-    result = UserVendor.query.join(User, UserVendor.user_id == User.id).add_columns(UserVendor.id, UserVendor.user_id, UserVendor.vendor_id, UserVendor.bookedDate, UserVendor.eventStartTime, UserVendor.eventEndTime, User.name, User.email).filter(UserVendor.vendor_id == vendor.id).order_by(UserVendor.bookedDate)
+    if request.args.get("view") == "bookings":
+        result = UserVendor.query.join(User, UserVendor.user_id == User.id).add_columns(UserVendor.id, UserVendor.user_id, UserVendor.vendor_id, UserVendor.bookedDate, UserVendor.eventStartTime, UserVendor.eventEndTime, User.name, User.email).filter(UserVendor.vendor_id == vendor.id).order_by(UserVendor.bookedDate)
+        userInfo = []
 
-    userInfo = []
+        for row in result:
+            userInfo.append({
+                "id": row.id,
+                "vendorID": row.vendor_id,
+                "userID": row.user_id,
+                "bookedDate": row.bookedDate.isoformat(),
+                "eventStartTime": row.eventStartTime.isoformat(),
+                "eventEndTime": row.eventStartTime.isoformat(),
+                "userName": row.name,
+                "userEmail": row.email
+            })
 
-    for row in result:
-        userInfo.append({
-            "id": row.id,
-            "vendorID": row.vendor_id,
-            "userID": row.user_id,
-            "bookedDate": row.bookedDate.isoformat(),
-            "eventStartTime": row.eventStartTime.isoformat(),
-            "eventEndTime": row.eventStartTime.isoformat(),
-            "userName": row.name,
-            "userEmail": row.email
-        })
-
-    if request.args.get('source') == "ajax":
         return jsonify(userInfo)
 
-    return render_template("vendor-account.html", userInfo=userInfo, vendor_id=vendor.id)
+    if request.args.get("view") == "account":
+        # Adding vendor's information to an object
+        accountInfo = {}
+        accountInfo['email'] = vendor.email
+        accountInfo['contactName'] = vendor.contactName
+        accountInfo['businessName'] = vendor.businessName
+        accountInfo['streetAddress'] = vendor.streetAddress
+        accountInfo['city'] = vendor.city
+        accountInfo['state'] = vendor.state
+        accountInfo['zipcode'] = vendor.zipcode
+        accountInfo['vendorType'] = vendor.vendorType
+        accountInfo['price'] = vendor.price
+
+        return jsonify(accountInfo)
+
+    return render_template("vendor-account.html", vendor_id=vendor.id)
 
 
 @app.route('/user-account')
@@ -282,58 +297,17 @@ def organizer():
         elif row.vendorType == "tailor":
             tailor.append(row)
 
-    return render_template("user-account.html", venue=venue,
-                                                photographer=photographer,
-                                                videographer=videographer,
-                                                caterer=caterer,
-                                                music=music,
-                                                cosmetics=cosmetics,
-                                                tailor=tailor,
-                                                user=user )
-
-
-"""
-    vendorInfo = []
-    '''vendorName = []
-    vendorBusiness = []
-    vendorEmail = []
-    for row in result:
-        vendorName.append("Name: " + row['contactName'])
-        vendorBusiness.append("Business name: " + row['businessName'])
-        vendorEmail.append("Email: " + row['email'])
-    #connection.close()
-    return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
-    '''for row in result:
-
-        vendorInfo.append("Name: " + row['contactName'])
-        vendorInfo.append("Business name: " + row['businessName'])
-        vendorInfo.append("Vendor Type: " + row['vendorType'])
-        vendorInfo.append("Street Address: " + row['streetAddress'])
-        vendorInfo.append("City: " + row['city'])
-        vendorInfo.append("Zipcode: " + str(row['zipcode']))
-
-        vendorInfo.append("State: " + row['state'])
-
-        vendorInfo.append(row)
-
-        if row.vendorType == 'cosmetics':
-            greenStatus = "is-selected"
-        else:
-            greenStatus = ""
-            '''
-    venue = []
-    cosmetics = []
-    for row in result:
-        if row.vendorType == "venue":
-            venue.append(row)
-        elif row.vendorType == "cosmetics":
-            cosmetics.append(row)
-    return render_template("user-account.html", venue =venue, cosmetics= cosmetics)
-
-    #return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, greenStatus = greenStatus, businessName = businessName, contactName = contactName, email = email)
-    #return render_template("testUserVendor.html", vendorInfo = vendorInfo)
-"""
-
+    return render_template(
+        "user-account.html", 
+        venue=venue,
+        photographer=photographer,
+        videographer=videographer,
+        caterer=caterer,
+        music=music,
+        cosmetics=cosmetics,
+        tailor=tailor,
+        user=user
+    )
 
 @app.route('/book', methods=['POST'])
 def book():
@@ -423,8 +397,6 @@ def signup():
         form = request.form
 
         register_type = "user"
-
-        print(register_type)
 
         # User signup validation
         if 'organizer_signup' in form:
@@ -600,11 +572,14 @@ def signup():
     #for testing front end of portfolio
 @app.route('/portfolio', methods=['GET', 'POST'])
 def portfolio():
+    vendor_id = request.args.get("vendor")
+    vendor = Vendor.query.filter_by(id=vendor_id)
+
+    if not vendor:
+        flash("That user no longer exists.", "is-danger")
+        return redirect('/')
+
     return render_template("portfolio.html")
-
-
-
-
 
 # FOR TESTING PURPOSES ONLY
 @app.route('/gendata')
