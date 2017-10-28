@@ -3,6 +3,18 @@
   position: relative;
 }
 
+@media screen and (max-width: 1360px) {
+  .vendor-list-card {
+    flex-basis: 50%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .vendor-list-card {
+    flex-basis: 100%;
+  }
+}
+
 .vendor-list-card-wrapper {
   flex-wrap: wrap;
 }

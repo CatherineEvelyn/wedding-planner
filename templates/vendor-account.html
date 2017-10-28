@@ -87,13 +87,7 @@
           </span>
           Account
         </a>
-        <a class="navbar-item is-tab" href="#settings">
-          <span class="icon">
-            <i class="mdi mdi-settings"></i>
-          </span>
-          Settings
-        </a>
-        <a class="navbar-item is-tab" href="/portfolio?id={{ vendor_id }}">
+        <a class="navbar-item is-tab" href="/portfolio?vendor={{ session['userID'] }}">
           <span class="icon">
             <i class="mdi mdi-treasure-chest"></i>
           </span>
@@ -102,7 +96,7 @@
       </div>
     </div>
   </nav>
-  <section class="section">
+  <section id="bookingsView" class="section">
     <div class="container">
       <h1 class="title is-2">
         Your Bookings
@@ -113,6 +107,22 @@
         <!-- The booking calendar is appended here at runtime -->
       </div>
     </div>
+  </section>
+  <section id="accountView" class="section" style="display: none;">
+    <div class="container">
+      <h1 class="title is-2">
+        Your Account
+      </h1>
+      <h1 class="subtitle">Edit your information and rates</h1>
+      <hr>
+  </section>
+  <section id="accountView" class="section" style="display: none;">
+    <div class="container">
+      <h1 class="title is-2">
+        Your Account
+      </h1>
+      <h1 class="subtitle">Edit your information and rates</h1>
+      <hr>
   </section>
 {% endblock %}
 {% block scripts %}
