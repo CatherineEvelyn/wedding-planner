@@ -67,13 +67,24 @@ function addAjaxListeners() {
     let order = $self.attr('data-order');
     $('.sortVendors').removeClass('is-active');
     $self.addClass('is-active');
+    $('.sortVendors').children().eq(0).remove();
 
     if (order == 'asc') {
       vendors = sortArray(vendors, type, 'asc')
       $self.attr("data-order", 'desc');
+      $self.append(
+        $('<span />', {"class": "icon"}).append(
+          $('<i />', {"class": "mdi mdi-arrow-up"})
+        )
+      );
     } else {
       vendors = sortArray(vendors, type, 'desc')
       $self.attr("data-order", 'asc');
+      $self.append(
+        $('<span />', {"class": "icon"}).append(
+          $('<i />', {"class": "mdi mdi-arrow-down"})
+        )
+      );
     }
     displayVendors();
   });
