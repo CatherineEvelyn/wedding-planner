@@ -11,7 +11,7 @@ function addAjaxListeners() {
     retrieveDates();
   });
   $('.getAccount').on('click', e=> {
-    retrieveAccountInfo();
+    showAccountInfo();
   });
 }
 
@@ -51,27 +51,12 @@ function retrieveDates() {
   });
 }
 
-function retrieveAccountInfo() {
+function showAccountInfo() {
   $('#bookingsView').hide();
   $('#accountView').show();
 
   $('.navbar-item.is-tab').removeClass('is-active');  
   $('.getAccount').addClass('is-active');
-
-  $.ajax({
-    method: "GET",
-    url: "/profile",
-    data: {
-      source: "ajax",
-      view: "account"
-    }
-  })
-  .done(json => {
-    fillInputFields(json);
-  })
-  .fail(err => {
-    console.log(err);
-  });
 }
 
 function addBookingsToCalendar(json) {
@@ -130,10 +115,6 @@ function addBookingDetailsListeners() {
       $detail.clone().text(tConvert($self.attr('data-end-time')))
     );
   });
-}
-
-function fillInputFields(json) {
-  $('#contactName').val(json.contactName);
 }
 
 function formatDate(date) {

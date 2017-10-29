@@ -71,6 +71,7 @@
                   <small>Logged in as <strong>{{ session['name'] }}</strong></small>
                 </div>
                 <hr class="navbar-divider">
+                {% if session['userType'] == 'vendor' %}
                 <a class="navbar-item" href="/profile#bookings">
                   <span class="icon">
                     <i class="mdi mdi-book-open-variant"></i>
@@ -89,6 +90,20 @@
                   </span>
                   Portfolio
                 </a>
+                {% elif session['userType'] == 'user' %}
+                <a class="navbar-item" href="/profile#bookings">
+                  <span class="icon">
+                    <i class="mdi mdi-book-open-variant"></i>
+                  </span>
+                  Bookings
+                </a>
+                <a class="navbar-item" href="/profile#account">
+                  <span class="icon">
+                    <i class="mdi mdi-account"></i>
+                  </span>
+                  Account
+                </a>
+                {% endif %}
               </div>
             </div>
           {% endif %}
@@ -111,7 +126,7 @@
         </div>
       </nav>
     </div>
-    <div class="container is-fluid is-marginless bg-image">
+    <div class="container is-fluid is-marginless brand-color">
     {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
       {% for category, message in messages %}
         <div class="notification {{ category }} is-radiusless flash-msg">

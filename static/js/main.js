@@ -57,6 +57,7 @@ function addAjaxListeners() {
     let $self = $(e.currentTarget);
     let type = $self.attr('data-type');
     api_call_made = true;
+    $('.sortVendors').removeClass('is-active');
     makeSidelinkActive(type);
     getVendorByType(type);
   });
@@ -64,15 +65,18 @@ function addAjaxListeners() {
     let $self = $(e.currentTarget);
     let type = $self.attr('data-type');
     let order = $self.attr('data-order');
-    if(order == 'asc'){
+    $('.sortVendors').removeClass('is-active');
+    $self.addClass('is-active');
+
+    if (order == 'asc') {
       vendors = sortArray(vendors, type, 'asc')
       $self.attr("data-order", 'desc');
-    }else{
+    } else {
       vendors = sortArray(vendors, type, 'desc')
       $self.attr("data-order", 'asc');
     }
     displayVendors();
-  })
+  });
 }
 
 function sortArray(arr, type, order){
@@ -175,7 +179,7 @@ function displayVendors() {
             $("<small />", {"html": 'Rating: ' + value.rating})
           ),
           $("<p />").append(
-            $("<small />", {"html": 'Price/Rate: ' + value.price})
+            $("<small />", {"html": 'Price/Rate: $' + value.price + ".00"})
           )
         )
       ),
