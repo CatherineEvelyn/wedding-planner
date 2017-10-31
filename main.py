@@ -221,8 +221,8 @@ def profile():
         form = request.form
 
         name = form['name']
-        business_name = form['business']
-        address = form['address']
+        business_name = form['businessName']
+        address = form['streetAddress']
         city = form['city']
         state = form['state']
         zipcode = form['zipcode']
@@ -244,7 +244,7 @@ def profile():
 
         db.session.commit()
 
-    if request.args.get("view") == "bookings":
+    if request.args.get("source") == "ajax":
         result = UserVendor.query.join(User, UserVendor.user_id == User.id).add_columns(UserVendor.id, UserVendor.user_id, UserVendor.vendor_id, UserVendor.bookedDate, UserVendor.eventStartTime, UserVendor.eventEndTime, User.name, User.email).filter(UserVendor.vendor_id == vendor.id).order_by(UserVendor.bookedDate)
         userInfo = []
 
@@ -261,21 +261,6 @@ def profile():
             })
 
         return jsonify(userInfo)
-
-    if request.args.get("view") == "account":
-        # Adding vendor's information to an object
-        accountInfo = {}
-        accountInfo['email'] = vendor.email
-        accountInfo['contactName'] = vendor.contactName
-        accountInfo['businessName'] = vendor.businessName
-        accountInfo['streetAddress'] = vendor.streetAddress
-        accountInfo['city'] = vendor.city
-        accountInfo['state'] = vendor.state
-        accountInfo['zipcode'] = vendor.zipcode
-        accountInfo['vendorType'] = vendor.vendorType
-        accountInfo['price'] = vendor.price
-
-        return jsonify(accountInfo)
 
     return render_template("vendor-account.html", vendor=vendor, statelist=statelist, typelist=typelist)
 
@@ -372,6 +357,15 @@ def vendorList():
 # AJAX call to return data from the DB as a json array
 @app.route('/getvendors')
 def vendor():
+    if request.args.get("booked") == "true" and session.get('userType') == "user":
+        user = User.query.filter_by(email=session['email']).first()
+        bookedVendors = []
+        query = UserVendor.query.join(Vendor, UserVendor.vendor_id == Vendor.id).add_columns(Vendor.id).filter(UserVendor.user_id == user.id).order_by(UserVendor.bookedDate)
+        for row in query:
+            bookedVendors.append(row.id)
+        
+        return jsonify(bookedVendors)
+
     vendor_type = request.args.get("type")
     if vendor_type == "all":
         query = Vendor.query.all()

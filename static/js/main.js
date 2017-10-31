@@ -2,9 +2,11 @@ var api_call_made = false;
 var vendorID = null;
 var sessionDetails = null;
 var vendors = [];
+var bookedVendors = [];
 
 $(function () {
   progressively.init();
+  retrieveBookedVendors();
   getSessionDetails();
   addDismissNotificationListeners();
   addMobileMenuListener();
@@ -52,6 +54,19 @@ function addBlur() {
   });
 }
 
+function retrieveBookedVendors() {
+  $.ajax({
+    method: "GET",
+    url: "/getvendors",
+    data: {
+      booked: "true"
+    }
+  })
+  .done(json => {
+    console.log(json);
+  })
+}
+
 function addAjaxListeners() {
   $('.getVendorByType').on('click', e => {
     let $self = $(e.currentTarget);
@@ -73,7 +88,7 @@ function addAjaxListeners() {
       vendors = sortArray(vendors, type, 'asc')
       $self.attr("data-order", 'desc');
       $self.append(
-        $('<span />', {"class": "icon"}).append(
+        $('<span />', {"class": "icon is-small"}).append(
           $('<i />', {"class": "mdi mdi-arrow-up"})
         )
       );
@@ -81,7 +96,7 @@ function addAjaxListeners() {
       vendors = sortArray(vendors, type, 'desc')
       $self.attr("data-order", 'asc');
       $self.append(
-        $('<span />', {"class": "icon"}).append(
+        $('<span />', {"class": "icon is-small"}).append(
           $('<i />', {"class": "mdi mdi-arrow-down"})
         )
       );
@@ -173,6 +188,13 @@ function displayVendors() {
   $.each(vendors, function(index, value) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
     let $card = $("<article />", {"class": "tile is-child card"}).attr("data-vendor-id", value.id);
+    let inBookedVendors = bookedVendors.indexOf(value.id)
+    
+    console.log(bookedVendors);
+
+    let buttonText = inBookedVendors !== -1 ? " Vendor Booked" : " Book Now";
+    let buttonIcon = inBookedVendors !== -1 ? "mdi-checkbox-marked-circle-outline" : "mdi-plus-circle";
+
     $card.append('<div class="overlay"></div>');
 
     $card.append(
@@ -197,9 +219,9 @@ function displayVendors() {
       $('<footer />', {"class": "card-footer"}).append(
         $('<a />', {"class": "card-footer-item book-button"}).append(
           $('<span />', {"class": "icon"}).append(
-            $('<i />', {"class": "mdi mdi-plus-circle"})
+            $('<i />', {"class": "mdi " + buttonIcon})
           )
-        ).append(" Book Now"),
+        ).append(buttonText),
         $('<a />', {"class": "card-footer-item"}).attr("href", "/portfolio").append(
           $('<span />', {"class": "icon"}).append(
             $('<i />', {"class": "mdi mdi-treasure-chest"})

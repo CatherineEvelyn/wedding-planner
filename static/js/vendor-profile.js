@@ -4,6 +4,7 @@ $(function() {
   addAjaxListeners();
   addRerenderCalendarListeners();
   addBookingDetailsListeners();
+  addSaveChangesListener();
 });
 
 function addAjaxListeners() {
@@ -37,8 +38,7 @@ function retrieveDates() {
     method: "GET",
     url: "/profile",
     data: {
-      source: "ajax",
-      view: "bookings"
+      source: "ajax"
     }
   })
   .done(json => {
@@ -114,6 +114,61 @@ function addBookingDetailsListeners() {
     $('#endTimeBox').append(
       $detail.clone().text(tConvert($self.attr('data-end-time')))
     );
+  });
+}
+
+function addSaveChangesListener() {
+  $('#saveButton').on('click', e => {
+    e.preventDefault();
+
+    let name = $('#contactName').val();
+    let bus = $('#businessName').val();
+    let add = $('#streetAddress').val();
+    let city = $('#city').val();
+    let state = $('#state').val();
+    let zip = $('#zipcode').val();
+
+    editAccountDetails(name, bus, add, city, state, zip);
+  })
+}
+
+function editAccountDetails(name, bus, addr, city, state, zip) {
+  $(document).unbind("ajaxStart.bookingsCall");
+  $(document).unbind("ajaxStop.bookingsCall");
+  // Adding loading indicators for loading bookings call
+  $(document).bind("ajaxStart.saveCall", () => {
+    $('#saveButton').addClass('is-loading');
+  });
+  $(document).bind("ajaxStop.saveCall", () => {
+    $('#saveButton').removeClass('is-loading');
+    console.log("ajax stopped");
+  });
+
+  $.ajax({
+    method: "POST",
+    url: "/profile",
+    data: {
+      name: name,
+      businessName: bus,
+      streetAddress: addr,
+      city: city,
+      state: state,
+      zipcode: zip
+    }
+  })
+  .done(() => {
+    $('.save-container').append(
+      $('<span />', {"class": "icon has-text-success"}).append(
+        $('<i />', {"class": "mdi mdi-check-circle"})
+      )
+    )
+    .append(
+      $('<span />', {"class": "is-5 has-text-success"})
+      .text("Changes saved!")
+    )
+  })
+  .fail(() => {
+    console.log("Something went wrong.")
   });
 }
 
