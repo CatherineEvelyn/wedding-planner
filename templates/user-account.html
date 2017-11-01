@@ -149,7 +149,7 @@
       -->
       {% if venue %}
       {% for row in venue %}
-          <tr class="{{greenStatus}}">
+          <tr id='venueStatus'class="is-primary">
             <th>1</th>
             <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
             <td>{{row.contactName}}</td>
@@ -159,7 +159,7 @@
             <td>$5000</td>
             <td>$500</td>
             <td>Inquiring</td>
-            <td><button id="venueConfirm">Confirm</button><p id="venueSelect">Is Selected</p></td>
+            <td><button id="venueButton">Confirm</button></td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
           </tr>
         {% endfor %}
@@ -181,7 +181,7 @@
 
       {% if photographer %}
       {% for row in photographer %}
-            <tr class="{{greenStatus}}">
+            <tr  id="photoStatus" class="is-primary">
               <th>2</th>
               <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
               <td>{{row.contactName}}</td>
@@ -191,12 +191,12 @@
               <td>$5000</td>
               <td>$500</td>
               <td>Inquiring</td>
-              <td><button id="photoConfirm">Confirm</button><p id="photoSelect">Is Selected</p></td>
+              <td><button id="photoButton">Confirm</button></td>
               <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
             </tr>
         {% endfor %}
         {% else %}
-          <tr id='photoStatus' class="is-primary">
+          <tr id="photoStatus2" class="is-primary">
             <th>2</th>
             <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
             <td></td>
@@ -206,14 +206,14 @@
             <td>$</td>
             <td>$</td>
             <td>Searching</td>
-            <td><button id='photoButton'>Find</button></td>
+            <td><button id="photoButton2" >Find</button></td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
           </tr>
       {% endif %}
 
       {% if videographer %}
       {% for row in videographer %}
-            <tr class="{{greenStatus}}">
+            <tr id="videoStatus" class="is-primary">
               <th>3</th>
               <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
               <td>{{row.contactName}}</td>
@@ -223,7 +223,7 @@
               <td>$5000</td>
               <td>$500</td>
               <td>Inquiring</td>
-              <td><button id="videoConfirm">Confirm</button><p id="videoSelect">Is Selected</p></td>
+              <td><button id="videoButton">Confirm</button></td>
               <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
             </tr>
         {% endfor %}
@@ -245,7 +245,7 @@
 
       {% if caterer %}
       {% for row in caterer %}
-            <tr class="{{greenStatus}}">
+            <tr id="catererStatus" class="is-primary">
               <th>4</th>
               <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
               <td>{{row.contactName}}</td>
@@ -255,7 +255,7 @@
               <td>$5000</td>
               <td>$500</td>
               <td>Inquiring</td>
-              <td><button id="catererConfirm">Confirm</button><p id="catererSelect">Is Selected</p></td>
+              <td><button id="catererButton">Confirm</button></td>
               <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
             </tr>
         {% endfor %}
@@ -277,7 +277,7 @@
 
       {% if music %}
       {% for row in music %}
-            <tr class="{{greenStatus}}">
+            <tr id="bandStatus" class="is-primary">
               <th>5</th>
               <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
               <td>{{row.contactName}}</td>
@@ -287,7 +287,7 @@
               <td>$5000</td>
               <td>$500</td>
               <td>Inquiring</td>
-              <td><button id="bandConfirm">Confirm</button><p id="bandSelect">Is Selected</p></td>
+              <td><button id="bandButton">Confirm</button></td>
               <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
             </tr>
         {% endfor %}
@@ -309,7 +309,7 @@
 
       {% if cosmetics %}
       {% for row in cosmetics %}
-            <tr class="{{greenStatus}}">
+            <tr id="hairStatus"class="is-primary">
               <th>6</th>
               <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
               <td>{{row.contactName}}</td>
@@ -319,7 +319,7 @@
               <td>$5000</td>
               <td>$500</td>
               <td>Inquiring</td>
-              <td><button id="hairConfirm">Confirm</button><p id="hairSelect">Is Selected</p></td>
+              <td><button id="hairButton">Confirm</button></td>
               <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
             </tr>
         {% endfor %}
@@ -341,7 +341,7 @@
 
       {% if tailor %}
       {% for row in tailor %}
-            <tr class="{{greenStatus}}">
+            <tr id="tailorStatus"class="is-primary">
               <th>7</th>
               <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
               <td>{{row.contactName}}</td>
@@ -351,7 +351,7 @@
               <td>$5000</td>
               <td>$500</td>
               <td>Inquiring</td>
-              <td><button id="tailorConfirm">Confirm</button><p id="tailorSelect">Is Selected</p></td>
+              <td><button id="tailorButton">Confirm</button></td>
               <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
             </tr>
         {% endfor %}
