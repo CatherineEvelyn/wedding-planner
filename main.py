@@ -238,7 +238,7 @@ def profile():
     return render_template("vendor-account.html", userInfo=userInfo, vendor_id=vendor.id)
 
 
-@app.route('/user-account')
+@app.route('/user-account', methods=['GET', 'POST'])
 def organizer():
     if session['userType'] == "vendor":
         flash("You do not have permission to visit that page.", "is-danger")
@@ -257,6 +257,8 @@ def organizer():
     #for item in result:
         #vendorName == item.contactName
 
+    #if request.method == 'POST':    
+
 
     venue = []
     photographer = []
@@ -265,6 +267,7 @@ def organizer():
     music = []
     cosmetics = []
     tailor = []
+    greenStatus = "is-Selected"
 
     for row in result:
         if row.vendorType == "venue":
@@ -289,7 +292,8 @@ def organizer():
                                                 music=music,
                                                 cosmetics=cosmetics,
                                                 tailor=tailor,
-                                                user=user )
+                                                user=user,
+                                                greenStatus=greenStatus)
 
 
 """
