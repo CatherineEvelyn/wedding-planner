@@ -105,8 +105,8 @@
           <tr>
             <th><abbr title="xx">xx</abbr></th>
             <th>My Vendors</th>
-            <th><abbr title="Company Name">Company Name</abbr></th>
             <th><abbr title="Contact Person">Contact Person</abbr></th>
+            <th><abbr title="Company Name">Company Name</abbr></th>
             <th><abbr title="Booking Date">Booking Date</abbr></th>
             <th><abbr title="Email">Email</abbr></th>
             <th><abbr title="Confirmed Price">Confirmed Price</abbr></th>
@@ -152,7 +152,7 @@
       -->
       {% if venue %}
       {% for row in venue %}
-          <tr id='venueStatus'class="is-primary">
+          <tr class="is-selected">
             <th>1</th>
             <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
             <td>{{row.contactName}}</td>
@@ -161,13 +161,15 @@
             <td>{{row.email}}</td>
             <td>$5000</td>
             <td>$500</td>
-            <td>Inquiring</td>
-            <td><button>Confirm</button></td>
+            <td>Confirmed</td>
+            <td>
+              <a id="venueButton" class="btn-green" href="#">Cancel</a>
+            </td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
           </tr>
         {% endfor %}
         {% else %}
-          <tr class="is-primary" id="venueStatus">
+          <tr class="">
             <th>1</th>
             <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
             <td></td>
@@ -188,18 +190,16 @@
                         I want to find a vendor on <br>
                         this website.
                       </p>
-                      <a href="/vendor-list"class="btn-green-flat">Look up vendor</a>
+                      <a href="/vendor-list" class="btn-green-flat">Look up vendor</a>
                     </div>
                     <div class="content-right">
-                    <p> No, thank you.<br> I already have a vendor <br>not from this website.</p>
-                    <a href="#"class="btn-green-flat" id="venueButton">Confirm</a>
+                      <p> No, thank you.<br> I already have a vendor <br>not from this website.</p>
+                      <a href="/user-account" class="btn-green-flat" id="outsideVendor">Confirm</a>
+                    </div>
                   </div>
                 </div>
               </div>
-              </div>
-              <div class="block center">
-                <a id="venueChange" class="btn-green-flat-trigger" href="#">Find</a>
-              </div>
+                <a id="venueButton" class="btn-green-flat-trigger" href="#">Find</a>
 
             </td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
@@ -208,7 +208,7 @@
 
       {% if photographer %}
       {% for row in photographer %}
-            <tr  id="photoStatus" class="is-primary">
+          <tr class="is-selected">
               <th>2</th>
               <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
               <td>{{row.contactName}}</td>
@@ -217,13 +217,13 @@
               <td>{{row.email}}</td>
               <td>$5000</td>
               <td>$500</td>
-              <td>Inquiring</td>
-              <td><button id="photoButton">Confirm</button></td>
+              <td>Confirmed</td>
+              <td><button id="photoButton">Cancel</button></td>
               <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
             </tr>
         {% endfor %}
         {% else %}
-          <tr id="photoStatus2" class="is-primary">
+          <tr class="">
             <th>2</th>
             <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
             <td></td>
@@ -240,7 +240,7 @@
 
       {% if videographer %}
       {% for row in videographer %}
-            <tr id="videoStatus" class="is-primary">
+          <tr class="is-selected">
               <th>3</th>
               <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
               <td>{{row.contactName}}</td>
@@ -249,13 +249,13 @@
               <td>{{row.email}}</td>
               <td>$5000</td>
               <td>$500</td>
-              <td>Inquiring</td>
-              <td><button id="videoButton">Confirm</button></td>
+              <td>Confirmed</td>
+              <td><button id="videoButton">Cancel</button></td>
               <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
             </tr>
         {% endfor %}
         {% else %}
-          <tr class="{{greenStatus}}">
+          <tr class="">
             <th>3</th>
             <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
             <td></td>
@@ -272,7 +272,7 @@
 
       {% if caterer %}
       {% for row in caterer %}
-            <tr id="catererStatus" class="is-primary">
+          <tr class="is-selected">
               <th>4</th>
               <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
               <td>{{row.contactName}}</td>
@@ -281,13 +281,15 @@
               <td>{{row.email}}</td>
               <td>$5000</td>
               <td>$500</td>
-              <td>Inquiring</td>
-              <td><button id="catererButton">Confirm</button></td>
+              <td>Confirmed</td>
+              <td>
+                  <a id="venueButton" class="btn-green" href="#">Cancel</a>
+              </td>
               <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
             </tr>
         {% endfor %}
         {% else %}
-          <tr class="{{greenStatus}}">
+          <tr class="">
             <th>4</th>
             <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
             <td></td>
@@ -304,7 +306,7 @@
 
       {% if music %}
       {% for row in music %}
-            <tr id="bandStatus" class="is-primary">
+          <tr class="is-selected">
               <th>5</th>
               <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
               <td>{{row.contactName}}</td>
@@ -313,13 +315,13 @@
               <td>{{row.email}}</td>
               <td>$5000</td>
               <td>$500</td>
-              <td>Inquiring</td>
-              <td><button id="bandButton">Confirm</button></td>
+              <td>Confirmed</td>
+              <td><button id="bandButton">Cancel</button></td>
               <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
             </tr>
         {% endfor %}
         {% else %}
-          <tr class="{{greenStatus}}">
+          <tr class="">
             <th>5</th>
             <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
             <td></td>
@@ -336,7 +338,7 @@
 
       {% if cosmetics %}
       {% for row in cosmetics %}
-            <tr id="hairStatus"class="is-primary">
+          <tr class="is-selected">
               <th>6</th>
               <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
               <td>{{row.contactName}}</td>
@@ -345,13 +347,13 @@
               <td>{{row.email}}</td>
               <td>$5000</td>
               <td>$500</td>
-              <td>Inquiring</td>
-              <td><button id="hairButton">Confirm</button></td>
+              <td>Confirmed</td>
+              <td><button id="hairButton">Cancel</button></td>
               <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
             </tr>
         {% endfor %}
         {% else %}
-          <tr class="{{greenStatus}}">
+          <tr class="">
             <th>6</th>
             <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
             <td></td>
@@ -368,7 +370,7 @@
 
       {% if tailor %}
       {% for row in tailor %}
-            <tr id="tailorStatus"class="is-primary">
+          <tr class="is-selected">
               <th>7</th>
               <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
               <td>{{row.contactName}}</td>
@@ -377,13 +379,13 @@
               <td>{{row.email}}</td>
               <td>$5000</td>
               <td>$500</td>
-              <td>Inquiring</td>
-              <td><button id="tailorButton">Confirm</button></td>
+              <td>Confirmed</td>
+              <td><button id="tailorButton">Cancel</button></td>
               <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
             </tr>
         {% endfor %}
         {% else %}
-          <tr class="{{greenStatus}}">
+          <tr class="">
             <th>7</th>
             <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
             <td></td>

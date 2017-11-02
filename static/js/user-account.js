@@ -8,7 +8,7 @@ var globalModal = $('.global-modal');
     $( ".overlay" ).on( "click", function() {
       $( globalModal ).toggleClass('global-modal-show');
     });
-    $( "#venueButton" ).on( "click", function() {
+    $( ".global-modal_close" ).on( "click", function() {
       $( globalModal ).toggleClass('global-modal-show');
     });
     $(".mobile-close").on("click", function(){
@@ -16,9 +16,8 @@ var globalModal = $('.global-modal');
     });
 
 // -- JS for vendor confirm display --//
-$("#venueButton").click(function(){
-    $('#venueStatus').toggleClass('is-selected')
-    let x = $("#venueChange")
+$("#outsideVendor").click(function(){
+    let x = $("#venueButton")
     if (x.text() == "Find") {
         x.text('Cancel')
     } else {
@@ -27,62 +26,55 @@ $("#venueButton").click(function(){
 })
 
 $("#photoButton").click(function(){
-    $('#photoStatus').toggleClass('is-selected')
     let x = $("#photoButton")
-    if (x.text() == "Confirm") {
+    if (x.text() == "Find") {
         x.text('Cancel')
     } else {
-        x.text('Confirm')
+        x.text('Find')
     }
 })
 
 $("#videoButton").click(function(){
-    $('#videoStatus').toggleClass('is-selected')
     let x = $("#videoButton")
-    if (x.text() == "Confirm") {
+    if (x.text() == "Find") {
         x.text('Cancel')
     } else {
-        x.text('Confirm')
+        x.text('Find')
     }
 })
 
 $("#catererButton").click(function(){
-    $('#catererStatus').toggleClass('is-selected')
     let x = $("#catererButton")
-    if (x.text() == "Confirm") {
+    if (x.text() == "Find") {
         x.text('Cancel')
     } else {
-        x.text('Confirm')
+        x.text('Find')
     }
 })
 
 $("#bandButton").click(function(){
-    $('#bandStatus').toggleClass('is-selected')
     let x = $("#bandButton")
-    if (x.text() == "Confirm") {
+    if (x.text() == "Find") {
         x.text('Cancel')
     } else {
-        x.text('Confirm')
+        x.text('Find')
     }
 })
 
 $("#hairButton").click(function(){
-    $('#hairStatus').toggleClass('is-selected')
     let x = $("#hairButton")
-    if (x.text() == "Confirm") {
+    if (x.text() == "Find") {
         x.text('Cancel')
     } else {
-        x.text('Confirm')
+        x.text('Find')
     }
 })
-
 $("#tailorButton").click(function(){
-    $('#tailorStatus').toggleClass('is-selected')
     let x = $("#tailorButton")
-    if (x.text() == "Confirm") {
+    if (x.text() == "Find") {
         x.text('Cancel')
     } else {
-        x.text('Confirm')
+        x.text('Find')
     }
 })
 

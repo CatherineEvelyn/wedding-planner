@@ -293,7 +293,7 @@ def organizer():
     music = []
     cosmetics = []
     tailor = []
-    greenStatus = "is-Selected"
+    greenStatus = "is-selected"
 
     for row in result:
         if row.vendorType == "venue":
@@ -311,7 +311,6 @@ def organizer():
         elif row.vendorType == "tailor":
             tailor.append(row)
 
-<<<<<<< HEAD
     return render_template("user-account.html", venue=venue,
                                                 photographer=photographer,
                                                 videographer=videographer,
