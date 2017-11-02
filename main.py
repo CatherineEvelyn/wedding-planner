@@ -199,7 +199,6 @@ def logout():
     del session['email']
     del session['userType']
     del session['name']
-    del session['userID']
     return redirect('/')
 
 @app.route('/')
