@@ -75,25 +75,19 @@
   <nav class="navbar has-shadow">
     <div class="container">
       <div class="navbar-tabs">
-        <a class="navbar-item is-tab is-active" href="#bookings">
+        <a class="navbar-item is-tab is-active getBookings" href="#bookings">
           <span class="icon">
             <i class="mdi mdi-book-open-variant"></i>
           </span>
           Bookings
         </a>
-        <a class="navbar-item is-tab" href="#account">
+        <a class="navbar-item is-tab getAccount" href="#account">
           <span class="icon">
             <i class="mdi mdi-account"></i>
           </span>
           Account
         </a>
-        <a class="navbar-item is-tab" href="#settings">
-          <span class="icon">
-            <i class="mdi mdi-settings"></i>
-          </span>
-          Settings
-        </a>
-        <a class="navbar-item is-tab" href="/portfolio?id={{ vendor_id }}">
+        <a class="navbar-item is-tab" href="/portfolio?vendor={{ session['userID'] }}">
           <span class="icon">
             <i class="mdi mdi-treasure-chest"></i>
           </span>
@@ -102,7 +96,7 @@
       </div>
     </div>
   </nav>
-  <section class="section">
+  <section id="bookingsView" class="section">
     <div class="container">
       <h1 class="title is-2">
         Your Bookings
@@ -112,6 +106,127 @@
       <div id="bookingViewer">
         <!-- The booking calendar is appended here at runtime -->
       </div>
+    </div>
+  </section>
+  <section id="accountView" class="section" style="display: none;">
+    <div class="container">
+      <h1 class="title is-2">
+        Your Account
+      </h1>
+      <h1 class="subtitle">Edit your information and rates</h1>
+      <hr>
+      <form method="POST">
+        <div class="columns">
+          <div class="column">
+            <h3 class="subtitle is-4">Name Information</h3>
+            <div class="field">
+              <label class="label">Name</label>
+              <div class="control has-icons-left">
+                <input id="contactName" class="input" type="text" name="name" 
+                  placeholder="Full name" value="{{ vendor.contactName }}">
+                <span class="icon is-left">
+                  <i class="mdi mdi-account-circle"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Email</label>
+              <div class="control has-icons-left">
+                <input id="email" class="input" name="email" type="text" 
+                value="{{ vendor.email }}" readonly>
+                <span class="icon is-left">
+                  <i class="mdi mdi-email-outline"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <label class="label">Business Name</label>
+                  <div class="control has-icons-left">
+                    <input id="businessName" class="input" name="business" type="text" 
+                      placeholder="Business name" value="{{ vendor.businessName }}">
+                    <span class="icon is-left">
+                      <i class="mdi mdi-account-card-details"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Vendor Type</label>
+                  <div class="control has-icons-left">
+                    <input id="vendorType" class="input" name="vendortype" type="text" 
+                      value="{{ vendor.vendorType }}" readonly>
+                    <span class="icon is-left">
+                      <i class="mdi mdi-camera"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="control save-container">
+              <button id="saveButton" class="button is-success">
+                Save Changes
+              </button>
+            </div>
+          </div>
+          <div class="is-divider-vertical"></div>
+          <div class="column">
+            <h3 class="subtitle is-4">Address Information</h3>
+            <div class="field">
+              <label class="label">Street Address</label>
+              <div class="control has-icons-left">
+                <input id="streetAddress" class="input" type="text" name="address" 
+                  placeholder="Street address" value="{{ vendor.streetAddress }}">
+                <span class="icon is-left">
+                  <i class="mdi mdi-home"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">City</label>
+              <div class="control has-icons-left">
+                <input id="city" class="input" type="text" name = "city" 
+                  placeholder="City" value="{{ vendor.city }}">
+                <span class="icon is-left">
+                  <i class="mdi mdi-google-maps"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <label class="label">State</label>
+                  <div class="control has-icons-left">
+                    <span class="select is-fullwidth">
+                      <select id="state" name="state">
+                        {% for state in statelist %}
+                          {% if state == vendor.state %}
+                            <option value="{{ vendor.state }}" selected>{{ vendor.state }}</option>
+                          {% endif %}
+                          <option value="{{ state }}">{{ state }}</option>
+                        {% endfor %}
+                      </select>
+                    </span>
+                    <span class="icon is-left">
+                      <i class="mdi mdi-map-marker"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Zipcode</label>
+                  <div class="control has-icons-left">
+                    <input id="zipcode" class="input" type="text" name="zipcode" 
+                      placeholder="Zipcode" value="{{ vendor.zipcode }}">
+                    <span class="icon is-left">
+                      <i class="mdi mdi-map-marker"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </section>
 {% endblock %}
@@ -124,5 +239,23 @@
     }
   );
 </script>
-<script src="{{ url_for('static', filename='js/genBookings.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor-profile.js') }}"></script>
+<script defer>
+  var loc, tag;
+  update_tag();
+  $(window).on('popstate', e => {
+    update_tag();
+  })
+  function update_tag() {
+    loc = window.location.href.split('#');
+    tag = loc.length > 1 ? loc[1] : '';
+    if (tag === "bookings") {
+      retrieveDates();
+    } else if (tag === "account") {
+      showAccountInfo();
+    } else if (!tag) {
+      retrieveDates();
+    }
+  }
+</script>
 {% endblock %}

@@ -1,0 +1,37 @@
+{
+  "name": "progressively",
+  "version": "1.1.5",
+  "description": "A JavaScript library to load images progressively",
+  "main": "dist/progressively.min.js",
+  "scripts": {
+    "lint": "standard \"src/**/*.js\"",
+    "build:css": "cssnano src/progressively.css dist/progressively.min.css",
+    "build:js": "uglifyjs src/progressively.js -cm -o dist/progressively.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinker3197/progressively.git"
+  },
+  "keywords": [
+    "progressive",
+    "lazy-load",
+    "images"
+  ],
+  "author": "Ashish",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thinker3197/progressively/issues"
+  },
+  "homepage": "https://github.com/thinker3197/progressively/blob/master/README.md",
+  "devDependencies": {
+    "cssnano-cli": "^1.0.5",
+    "standard": "^8.6.0",
+    "uglify-js": "^3.0.11"
+  },
+  "standard": {
+    "globals": [
+      "define",
+      "Image"
+    ]
+  }
+}

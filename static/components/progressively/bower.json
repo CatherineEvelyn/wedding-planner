@@ -1,0 +1,15 @@
+{
+  "name": "progressively",
+  "description": "A JavaScript library to load images progressively",
+  "main": "./src/progressively.js",
+  "authors": [
+    "Ashish"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "progressive",
+    "lazy-load",
+    "images"
+  ],
+  "homepage": "https://github.com/thinker3197/progressively"
+}

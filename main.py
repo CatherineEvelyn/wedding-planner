@@ -6,7 +6,7 @@ from faker import Faker
 import random
 from datetime import datetime
 from sqlalchemy import create_engine
-import json
+from globals import statelist, typelist
 
 engine = create_engine('sqlite:///association_tables.sqlite')
 
@@ -175,6 +175,7 @@ def login():
                 session['email'] = email #starts session
                 session['userType'] = "user"
                 session['name'] = user.name
+                session['id'] = user.id
                 return redirect_dest(fallback=url_for('index'))
         elif vendor:
             if not check_pw_hash(password, vendor.password):
@@ -183,6 +184,7 @@ def login():
                 session['email'] = email #starts session
                 session['userType'] = "vendor"
                 session['name'] = vendor.contactName
+                session['userID'] = vendor.id
                 return redirect_dest(fallback=url_for('index'))
         else:
             usererrors.append("That user doesn't exist.")
@@ -204,7 +206,7 @@ def index():
     session['url'] = request.path
     return render_template('index.html')
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
     if session['userType'] == "user":
         flash("You do not have permission to visit that page.", "is-danger")
@@ -213,29 +215,53 @@ def profile():
     session['url'] = request.path
 
     vendor = Vendor.query.filter_by(email=session["email"]).first() #get vendor in session
-    vendId = str(vendor.id)
 
-    #result = db.engine.execute("SELECT * FROM user_vendor JOIN user ON user_vendor.user_id=user.id WHERE vendor_id = '"+vendId+"'")
-    result = UserVendor.query.join(User, UserVendor.user_id == User.id).add_columns(UserVendor.id, UserVendor.user_id, UserVendor.vendor_id, UserVendor.bookedDate, UserVendor.eventStartTime, UserVendor.eventEndTime, User.name, User.email).filter(UserVendor.vendor_id == vendor.id).order_by(UserVendor.bookedDate)
+    if request.method == 'POST':
+        form = request.form
 
-    userInfo = []
+        name = form['name']
+        business_name = form['businessName']
+        address = form['streetAddress']
+        city = form['city']
+        state = form['state']
+        zipcode = form['zipcode']
 
-    for row in result:
-        userInfo.append({
-            "id": row.id,
-            "vendorID": row.vendor_id,
-            "userID": row.user_id,
-            "bookedDate": row.bookedDate.isoformat(),
-            "eventStartTime": row.eventStartTime.isoformat(),
-            "eventEndTime": row.eventStartTime.isoformat(),
-            "userName": row.name,
-            "userEmail": row.email
-        })
+        if name:
+            vendor.contactName = name
 
-    if request.args.get('source') == "ajax":
+        if business_name:
+            vendor.businessName = business_name
+
+        if address:
+            vendor.streetAddress = address
+
+        if city:
+            vendor.city = city
+
+        if zipcode:
+            vendor.zipcode = zipcode
+
+        db.session.commit()
+
+    if request.args.get("source") == "ajax":
+        result = UserVendor.query.join(User, UserVendor.user_id == User.id).add_columns(UserVendor.id, UserVendor.user_id, UserVendor.vendor_id, UserVendor.bookedDate, UserVendor.eventStartTime, UserVendor.eventEndTime, User.name, User.email).filter(UserVendor.vendor_id == vendor.id).order_by(UserVendor.bookedDate)
+        userInfo = []
+
+        for row in result:
+            userInfo.append({
+                "id": row.id,
+                "vendorID": row.vendor_id,
+                "userID": row.user_id,
+                "bookedDate": row.bookedDate.isoformat(),
+                "eventStartTime": row.eventStartTime.isoformat(),
+                "eventEndTime": row.eventStartTime.isoformat(),
+                "userName": row.name,
+                "userEmail": row.email
+            })
+
         return jsonify(userInfo)
 
-    return render_template("vendor-account.html", userInfo=userInfo, vendor_id=vendor.id)
+    return render_template("vendor-account.html", vendor=vendor, statelist=statelist, typelist=typelist)
 
 
 @app.route('/user-account', methods=['GET', 'POST'])
@@ -285,6 +311,7 @@ def organizer():
         elif row.vendorType == "tailor":
             tailor.append(row)
 
+<<<<<<< HEAD
     return render_template("user-account.html", venue=venue,
                                                 photographer=photographer,
                                                 videographer=videographer,
@@ -338,7 +365,6 @@ def organizer():
     #return render_template("testUserVendor.html", vendorInfo = vendorInfo)
 """
 
-
 @app.route('/book', methods=['POST'])
 def book():
     if session['userType'] == "vendor":
@@ -375,6 +401,15 @@ def vendorList():
 # AJAX call to return data from the DB as a json array
 @app.route('/getvendors')
 def vendor():
+    if request.args.get("booked") == "true" and session.get('userType') == "user":
+        user = User.query.filter_by(email=session['email']).first()
+        bookedVendors = []
+        query = UserVendor.query.join(Vendor, UserVendor.vendor_id == Vendor.id).add_columns(Vendor.id).filter(UserVendor.user_id == user.id).order_by(UserVendor.bookedDate)
+        for row in query:
+            bookedVendors.append(row.id)
+        
+        return jsonify(bookedVendors)
+
     vendor_type = request.args.get("type")
     if vendor_type == "all":
         query = Vendor.query.all()
@@ -396,6 +431,96 @@ def vendor():
             "price": vendor.price,
         })
     return jsonify(type=vendor_type, vendors=vendors)
+
+def verifyVendorInputs(errorObj, name, business_name, vendor_type, email, street_address, city, zipcode, password, verify, price):
+    if not email:
+        errorObj["usererrors"].append('This field cannot be left blank.')
+    # Check if is valid email
+    elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+        errorObj["usererrors"].append('Must be a valid email.')
+
+    if not password:
+        errorObj["passerrors"].append('This field cannot be left blank.')
+    else:
+        # Check if password has a minimum length of 8 characters
+        if len(password) < 8:
+            errorObj["passerrors"].append("Password must be at least 8 characters long.")
+        # Check if contains at least one digit
+        if not re.search(r'\d', password):
+            errorObj["passerrors"].append("Password must contain at least one number.")
+        # Check if contains at least one uppercase letter
+        if not re.search(r'[A-Z]', password):
+            errorObj["passerrors"].append("Password must contain at least one uppercase letter.")
+        # Check if contains at least one lowercase letter
+        if not re.search(r'[a-z]', password):
+            errorObj["passerrors"].append("Password must contain at least one lowercase letter.")
+
+    if password != verify:
+        errorObj["verifyerrors"].append("Your passwords don't match.")
+
+    if not name:
+        errorObj["nameerrors"].append("This field cannot be left blank.")
+    elif name.isdigit():
+        errorObj["nameerrors"].append("Your name cannot contain numbers.")
+
+    if not business_name:
+        errorObj["businesserrors"].append("This field cannot be left blank.")
+
+    if not vendor_type:
+        errorObj["vendortypeerrors"].append("Please select a vendor type.")
+
+    if not street_address:
+        errorObj["addresserrors"].append("This field cannot be left blank.")
+
+    if not zipcode:
+        errorObj["zipcodeerrors"].append("This field cannot be left blank.")
+    else:
+        if zipcode.isalpha() or len(zipcode) < 5:
+            errorObj["zipcodeerrors"].append("That is not a valid zipcode.")
+
+    if not city:
+        errorObj["cityerrors"].append("This field cannot be left blank.")
+
+    if not price:
+        errorObj["priceerrors"].append("This field cannot be left blank.")
+    elif price.isalpha():
+        errorObj["priceerrors"].append("Price must be a number.")
+
+    return errorObj
+
+def verifyUserInputs(errorObj, name, email, password, verify):
+    if not name:
+        errorObj["nameerrors"].append("This field cannot be left blank.")
+    elif name.isdigit():
+        errorObj["nameerrors"].append("Your name cannot contain numbers.")
+
+    if not email:
+        errorObj["usererrors"].append('This field cannot be left blank.')
+    # Check if is valid email
+    elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+        errorObj["usererrors"].append('Must be a valid email.')
+
+    if not password:
+        errorObj["passerrors"].append('This field cannot be left blank.')
+    else:
+        # Check if password has a minimum length of 8 characters
+        if len(password) < 8:
+            errorObj["passerrors"].append("Password must be at least 8 characters long.")
+        # Check if contains at least one digit
+        if not re.search(r'\d', password):
+            errorObj["passerrors"].append("Password must contain at least one number.")
+        # Check if contains at least one uppercase letter
+        if not re.search(r'[A-Z]', password):
+            errorObj["passerrors"].append("Password must contain at least one uppercase letter.")
+        # Check if contains at least one lowercase letter
+        if not re.search(r'[a-z]', password):
+            errorObj["passerrors"].append("Password must contain at least one lowercase letter.")
+
+    if password != verify:
+        errorObj["verifyerrors"].append("Your passwords don't match.")
+
+    return errorObj
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -428,8 +553,6 @@ def signup():
 
         register_type = "user"
 
-        print(register_type)
-
         # User signup validation
         if 'organizer_signup' in form:
 
@@ -438,36 +561,13 @@ def signup():
             password = form['password']
             verify = form['verify']
 
-
-            if not name:
-                u_errors["nameerrors"].append("This field cannot be left blank.")
-            elif name.isdigit():
-                u_errors["nameerrors"].append("Your name cannot contain numbers.")
-
-            if not email:
-                u_errors["usererrors"].append('This field cannot be left blank.')
-            # Check if is valid email
-            elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
-                u_errors["usererrors"].append('Must be a valid email.')
-
-            if not password:
-                u_errors["passerrors"].append('This field cannot be left blank.')
-            else:
-                # Check if password has a minimum length of 8 characters
-                if len(password) < 8:
-                    u_errors["passerrors"].append("Password must be at least 8 characters long.")
-                # Check if contains at least one digit
-                if not re.search(r'\d', password):
-                    u_errors["passerrors"].append("Password must contain at least one number.")
-                # Check if contains at least one uppercase letter
-                if not re.search(r'[A-Z]', password):
-                    u_errors["passerrors"].append("Password must contain at least one uppercase letter.")
-                # Check if contains at least one lowercase letter
-                if not re.search(r'[a-z]', password):
-                    u_errors["passerrors"].append("Password must contain at least one lowercase letter.")
-
-            if password != verify:
-                u_errors["verifyerrors"].append("Your passwords don't match.")
+            u_errors = verifyUserInputs(
+                u_errors, 
+                name, 
+                email, 
+                password, 
+                verify
+            )
 
             if all(u_errors.get(item) == [] for item in u_errors):
                 user = User.query.filter_by(email=email).first()
@@ -480,6 +580,7 @@ def signup():
                     session['email'] = email
                     session['userType'] = "user"
                     session['name'] = new_user.name
+                    session['userID'] = new_user.id
                     return render_template('confirmation-page.html')
                 else:
                     u_errors["usererrors"].append("Email is already in use.")
@@ -500,59 +601,19 @@ def signup():
             vendor_info['zipcode'] = zipcode = form['zipcode']
             vendor_info['price'] = price = form['price']
 
-            if not email:
-                v_errors["usererrors"].append('This field cannot be left blank.')
-            # Check if is valid email
-            elif not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
-                v_errors["usererrors"].append('Must be a valid email.')
-
-            if not password:
-                v_errors["passerrors"].append('This field cannot be left blank.')
-            else:
-                # Check if password has a minimum length of 8 characters
-                if len(password) < 8:
-                    v_errors["passerrors"].append("Password must be at least 8 characters long.")
-                # Check if contains at least one digit
-                if not re.search(r'\d', password):
-                    v_errors["passerrors"].append("Password must contain at least one number.")
-                # Check if contains at least one uppercase letter
-                if not re.search(r'[A-Z]', password):
-                    v_errors["passerrors"].append("Password must contain at least one uppercase letter.")
-                # Check if contains at least one lowercase letter
-                if not re.search(r'[a-z]', password):
-                    v_errors["passerrors"].append("Password must contain at least one lowercase letter.")
-
-            if password != verify:
-                v_errors["verifyerrors"].append("Your passwords don't match.")
-
-            if not name:
-                v_errors["nameerrors"].append("This field cannot be left blank.")
-            elif name.isdigit():
-                v_errors["nameerrors"].append("Your name cannot contain numbers.")
-
-            if not business_name:
-                v_errors["businesserrors"].append("This field cannot be left blank.")
-
-            if not vendor_type:
-                v_errors["vendortypeerrors"].append("Please select a vendor type.")
-
-            if not street_address:
-                v_errors["addresserrors"].append("This field cannot be left blank.")
-
-            if not zipcode:
-                v_errors["zipcodeerrors"].append("This field cannot be left blank.")
-            else:
-                if zipcode.isalpha() or len(zipcode) < 5:
-                    v_errors["zipcodeerrors"].append("That is not a valid zipcode.")
-
-            if not city:
-                v_errors["cityerrors"].append("This field cannot be left blank.")
-
-            if not price:
-                v_errors["priceerrors"].append("This field cannot be left blank.")
-            elif price.isalpha():
-                v_errors["priceerrors"].append("Price must be a number.")
-
+            v_errors = verifyVendorInputs(
+                v_errors, 
+                name, 
+                business_name,
+                vendor_type,
+                email, 
+                street_address, 
+                city, 
+                zipcode, 
+                password,
+                verify, 
+                price
+            )
 
             if all(v_errors.get(item) == [] for item in v_errors):
                 vendor = Vendor.query.filter_by(email=email).first()
@@ -569,8 +630,7 @@ def signup():
                         zipcode,
                         None,
                         vendor_type,
-                        price_min,
-                        price_max,
+                        price,
                         make_pw_hash(password),
                         state
                     )
@@ -579,6 +639,7 @@ def signup():
                     session['email'] = email
                     session['userType'] = "vendor"
                     session['name'] = new_vendor.contactName
+                    session['userID'] = new_vendor.id
                     return render_template('confirmation-page.html')
                 else:
                     v_errors["usererrors"].append("Email is already in use.")
@@ -590,7 +651,9 @@ def signup():
             v_errors=v_errors,
             user_info=user_info,
             vendor_info=vendor_info,
-            type=register_type
+            type=register_type,
+            statelist=statelist,
+            typelist=typelist
         )
     # method == get
     return render_template(
@@ -599,16 +662,21 @@ def signup():
         v_errors=v_errors,
         user_info=user_info,
         vendor_info=vendor_info,
-        type="user"
+        type="user",
+        statelist=statelist,
+        typelist=typelist
     )
     #for testing front end of portfolio
 @app.route('/portfolio', methods=['GET', 'POST'])
 def portfolio():
+    vendor_id = request.args.get("vendor")
+    vendor = Vendor.query.filter_by(id=vendor_id)
+
+    if not vendor:
+        flash("That user no longer exists.", "is-danger")
+        return redirect('/')
+
     return render_template("portfolio.html")
-
-
-
-
 
 # FOR TESTING PURPOSES ONLY
 @app.route('/gendata')
