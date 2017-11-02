@@ -18,13 +18,8 @@ p {
   font-size: 1.4em;
 }
 
-.bg-image {
-  background-color: #f7dfef;
-
-  /* Center and scale the image */
-  /* background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover; */
+.brand-color {
+  background-color: #fbf4f9;
 }
 
 .flash-msg {

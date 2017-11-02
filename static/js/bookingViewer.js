@@ -263,14 +263,18 @@ class BookingViewer {
 
   renderBody() {
     var calendarBody = document.createElement('div');
-    calendarBody.classList.add('calendar-body');
+    var bodyOverlay = document.createElement('div');
 
+    calendarBody.classList.add('calendar-body');
+    bodyOverlay.classList.add('overlay');
+
+    calendarBody.appendChild(bodyOverlay);
     return calendarBody;
   }
 
   renderCalendar() {
     var now = new Date();
-    now.setHours(0,0,0,0);
+    now.setHours(0, 0, 0, 0);
 
     var calendarNav = this.renderNav(this.year, this.month);
     var calendarHeader = this.renderHeader();

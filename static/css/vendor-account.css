@@ -12,7 +12,37 @@
   background: white;
 }
 
-.calendar-events,
-.calendar-event {
+.datepicker .calendar.is-large .calendar-events,
+.datepicker .calendar.is-large .calendar-event {
   overflow: visible;
+}
+
+.tooltip:hover::before, 
+.tooltip:hover::after {
+  z-index: 19;
+}
+
+#bookingDateBox,
+#startTimeBox,
+#endTimeBox {
+  text-align: center;
+}
+
+.detail {
+  font-size: 1rem;
+}
+
+.calendar-body {
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  background: white;
+  opacity: 0.7;
 }

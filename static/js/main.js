@@ -2,9 +2,11 @@ var api_call_made = false;
 var vendorID = null;
 var sessionDetails = null;
 var vendors = [];
+var bookedVendors = [];
 
 $(function () {
   progressively.init();
+  retrieveBookedVendors();
   getSessionDetails();
   addDismissNotificationListeners();
   addMobileMenuListener();
@@ -14,7 +16,6 @@ $(function () {
   addCloseModalListeners();
   addBookingListeners();
   addBookFulfillmentListener();
-  addSwitchViewListeners();
 });
 
 function addSignupListener() {
@@ -53,11 +54,25 @@ function addBlur() {
   });
 }
 
+function retrieveBookedVendors() {
+  $.ajax({
+    method: "GET",
+    url: "/getvendors",
+    data: {
+      booked: "true"
+    }
+  })
+  .done(json => {
+    console.log(json);
+  })
+}
+
 function addAjaxListeners() {
   $('.getVendorByType').on('click', e => {
     let $self = $(e.currentTarget);
     let type = $self.attr('data-type');
     api_call_made = true;
+    $('.sortVendors').removeClass('is-active');
     makeSidelinkActive(type);
     getVendorByType(type);
   });
@@ -65,15 +80,29 @@ function addAjaxListeners() {
     let $self = $(e.currentTarget);
     let type = $self.attr('data-type');
     let order = $self.attr('data-order');
-    if(order == 'asc'){
+    $('.sortVendors').removeClass('is-active');
+    $self.addClass('is-active');
+    $('.sortVendors').children().eq(0).remove();
+
+    if (order == 'asc') {
       vendors = sortArray(vendors, type, 'asc')
       $self.attr("data-order", 'desc');
-    }else{
+      $self.append(
+        $('<span />', {"class": "icon is-small"}).append(
+          $('<i />', {"class": "mdi mdi-arrow-up"})
+        )
+      );
+    } else {
       vendors = sortArray(vendors, type, 'desc')
       $self.attr("data-order", 'asc');
+      $self.append(
+        $('<span />', {"class": "icon is-small"}).append(
+          $('<i />', {"class": "mdi mdi-arrow-down"})
+        )
+      );
     }
     displayVendors();
-  })
+  });
 }
 
 function sortArray(arr, type, order){
@@ -101,6 +130,9 @@ function sortArray(arr, type, order){
 }
 
 function getVendorByType(type) {
+  // First unbind other ajax call animation from document
+  $(document).unbind("ajaxStart.bookingCall");
+  $(document).unbind("ajaxStop.bookingCall");
   // Adding loading indicators for loading vendors call
   $(document).bind("ajaxStart.vendorCall", () => {
     $('.overlay-container').show();
@@ -156,6 +188,13 @@ function displayVendors() {
   $.each(vendors, function(index, value) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
     let $card = $("<article />", {"class": "tile is-child card"}).attr("data-vendor-id", value.id);
+    let inBookedVendors = bookedVendors.indexOf(value.id)
+    
+    console.log(bookedVendors);
+
+    let buttonText = inBookedVendors !== -1 ? " Vendor Booked" : " Book Now";
+    let buttonIcon = inBookedVendors !== -1 ? "mdi-checkbox-marked-circle-outline" : "mdi-plus-circle";
+
     $card.append('<div class="overlay"></div>');
 
     $card.append(
@@ -173,16 +212,16 @@ function displayVendors() {
             $("<small />", {"html": 'Rating: ' + value.rating})
           ),
           $("<p />").append(
-            $("<small />", {"html": 'Price/Rate: ' + value.price})
+            $("<small />", {"html": 'Price/Rate: $' + value.price + ".00"})
           )
         )
       ),
       $('<footer />', {"class": "card-footer"}).append(
         $('<a />', {"class": "card-footer-item book-button"}).append(
           $('<span />', {"class": "icon"}).append(
-            $('<i />', {"class": "mdi mdi-plus-circle"})
+            $('<i />', {"class": "mdi " + buttonIcon})
           )
-        ).append(" Book Now"),
+        ).append(buttonText),
         $('<a />', {"class": "card-footer-item"}).attr("href", "/portfolio").append(
           $('<span />', {"class": "icon"}).append(
             $('<i />', {"class": "mdi mdi-treasure-chest"})
@@ -254,6 +293,7 @@ function addBookFulfillmentListener() {
 function postBookRequest(id, date) {
   // First unbind main ajax animation from happening
   $(document).unbind("ajaxStart.vendorCall");
+  $(document).unbind("ajaxStop.vendorCall");
   // Adding loading indicators for booking call
   $(document).bind("ajaxStart.bookingCall", () => {
     $('.modal-card-body .overlay').fadeTo("fast", 0.75);
@@ -328,12 +368,5 @@ function getSessionDetails() {
 function addDismissNotificationListeners() {
   $('.flash-dismiss').on('click', e => {
     $(e.currentTarget).parent().remove();
-  });
-}
-
-function addSwitchViewListeners() {
-  $('.navbar-item.is-tab').on('click', e => {
-    $('.navbar-item.is-tab').removeClass('is-active');
-    $(e.currentTarget).addClass('is-active');
   });
 }
