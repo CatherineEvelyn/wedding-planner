@@ -1,14 +1,28 @@
 $(document).ready(function() {
 
+var globalModal = $('.global-modal');
+    $( ".btn-green-flat-trigger" ).on( "click", function(e) {
+      e.preventDefault();
+      $( globalModal ).toggleClass('global-modal-show');
+    });
+    $( ".overlay" ).on( "click", function() {
+      $( globalModal ).toggleClass('global-modal-show');
+    });
+    $( "#venueButton" ).on( "click", function() {
+      $( globalModal ).toggleClass('global-modal-show');
+    });
+    $(".mobile-close").on("click", function(){
+      $( globalModal ).toggleClass('global-modal-show');
+    });
 
 // -- JS for vendor confirm display --//
 $("#venueButton").click(function(){
     $('#venueStatus').toggleClass('is-selected')
-    let x = $("#venueButton")
-    if (x.text() == "Confirm") {
+    let x = $("#venueChange")
+    if (x.text() == "Find") {
         x.text('Cancel')
     } else {
-        x.text('Confirm')
+        x.text('Find')
     }
 })
 
@@ -73,3 +87,4 @@ $("#tailorButton").click(function(){
 })
 
 })
+

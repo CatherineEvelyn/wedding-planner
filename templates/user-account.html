@@ -10,6 +10,9 @@
 <!-- TODO: This page will have a button linked to vendor-list.html page and a log out button -->
 
 {% extends 'layout.html' %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/user-account.css') }}">
+{% endblock %}
 {% block body %}
 
 
@@ -159,12 +162,12 @@
             <td>$5000</td>
             <td>$500</td>
             <td>Inquiring</td>
-            <td><button id="venueButton">Confirm</button></td>
+            <td><button>Confirm</button></td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
           </tr>
         {% endfor %}
         {% else %}
-          <tr class="{{greenStatus}}">
+          <tr class="is-primary" id="venueStatus">
             <th>1</th>
             <td><a href="/portfolio?vendor-id=" title="My Venues">My Venues</a></td>
             <td></td>
@@ -174,7 +177,31 @@
             <td>$</td>
             <td>$</td>
             <td>Searching</td>
-            <td><button>Find</button></td>
+            <td>
+
+              <div class="global-modal">
+                <div class="overlay"></div>
+                <div class="global-modal_contents modal-transition">
+                  <div class="global-modal-body">
+                    <div class="content-left">
+                      <p>
+                        I want to find a vendor on <br>
+                        this website.
+                      </p>
+                      <a href="/vendor-list"class="btn-green-flat">Look up vendor</a>
+                    </div>
+                    <div class="content-right">
+                    <p> No, thank you.<br> I already have a vendor <br>not from this website.</p>
+                    <a href="#"class="btn-green-flat" id="venueButton">Confirm</a>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="block center">
+                <a id="venueChange" class="btn-green-flat-trigger" href="#">Find</a>
+              </div>
+
+            </td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
           </tr>
       {% endif %}
