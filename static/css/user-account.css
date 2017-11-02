@@ -8,17 +8,6 @@ body {
   width: 100%;
 }
 
-body {
-  font-family: "Helvetica Neue";
-  color: #666;
-  padding: 40px;
-}
-
-a {
-  color: #D4341A;
-  text-decoration: none;
-}
-
 .center {
   text-align: center;
 }
