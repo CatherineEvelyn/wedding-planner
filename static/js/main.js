@@ -63,8 +63,26 @@ function retrieveBookedVendors() {
     }
   })
   .done(json => {
-    console.log(json);
+    bookedVendors = json;
+    updateBookingNotifiers(bookedVendors);
   })
+}
+
+function updateBookingNotifiers(json) {
+  console.log("Booked vendors: " + json);
+  $.each(json, (index, value) => {
+    let $card = $(".vendor-list-card").find(`[data-vendor-id='${value}']`);
+    if ($card.find(".booked").length === 0) {
+      $card.find(".book-button").remove();
+      $card.find("footer").prepend(
+        $('<span />', {"class": "card-footer-item has-text-success booked"}).append(
+          $('<span />', {"class": "icon"}).append(
+            $('<i />', {"class": "mdi mdi-check-circle"})
+          )
+        ).append(" Booked")
+      )
+    }
+  });
 }
 
 function addAjaxListeners() {
@@ -141,7 +159,6 @@ function getVendorByType(type) {
   $(document).bind("ajaxStop.vendorCall", () => {
     $('.overlay-container').hide();
     $('.vendor-list-card .overlay').hide();
-    console.log('complete!');
   });
 
   makeSidelinkActive(type);
@@ -188,12 +205,6 @@ function displayVendors() {
   $.each(vendors, function(index, value) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
     let $card = $("<article />", {"class": "tile is-child card"}).attr("data-vendor-id", value.id);
-    let inBookedVendors = bookedVendors.indexOf(value.id)
-    
-    console.log(bookedVendors);
-
-    let buttonText = inBookedVendors !== -1 ? " Vendor Booked" : " Book Now";
-    let buttonIcon = inBookedVendors !== -1 ? "mdi-checkbox-marked-circle-outline" : "mdi-plus-circle";
 
     $card.append('<div class="overlay"></div>');
 
@@ -219,9 +230,9 @@ function displayVendors() {
       $('<footer />', {"class": "card-footer"}).append(
         $('<a />', {"class": "card-footer-item book-button"}).append(
           $('<span />', {"class": "icon"}).append(
-            $('<i />', {"class": "mdi " + buttonIcon})
+            $('<i />', {"class": "mdi mdi-plus-circle"})
           )
-        ).append(buttonText),
+        ).append(" Book Now"),
         $('<a />', {"class": "card-footer-item"}).attr("href", "/portfolio").append(
           $('<span />', {"class": "icon"}).append(
             $('<i />', {"class": "mdi mdi-treasure-chest"})
@@ -232,6 +243,7 @@ function displayVendors() {
     $vendorCardWrapper.append($card);
     $wrapper.append($vendorCardWrapper);
   });
+  updateBookingNotifiers(bookedVendors);
 }
 
 function addMobileMenuListener() {
