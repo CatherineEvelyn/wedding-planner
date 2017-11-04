@@ -177,7 +177,7 @@ def login():
                 session['email'] = email #starts session
                 session['userType'] = "user"
                 session['name'] = user.name
-                session['id'] = user.id
+                session['userID'] = user.id
                 return redirect_dest(fallback=url_for('index'))
         elif vendor:
             if not check_pw_hash(password, vendor.password):
@@ -201,6 +201,7 @@ def logout():
     del session['email']
     del session['userType']
     del session['name']
+    del session['userID']
     return redirect('/')
 
 @app.route('/')
