@@ -5,7 +5,6 @@ var vendors = [];
 var bookedVendors = [];
 
 $(function () {
-  progressively.init();
   retrieveBookedVendors();
   getSessionDetails();
   addDismissNotificationListeners();
@@ -60,16 +59,19 @@ function retrieveBookedVendors() {
     url: "/getvendors",
     data: {
       booked: "true"
-    }
+    },
+    global: false
   })
   .done(json => {
     bookedVendors = json;
     updateBookingNotifiers(bookedVendors);
   })
+  .fail(err => {
+    console.log(err);
+  });
 }
 
 function updateBookingNotifiers(json) {
-  console.log("Booked vendors: " + json);
   $.each(json, (index, value) => {
     let $card = $(".vendor-list-card").find(`[data-vendor-id='${value}']`);
     if ($card.find(".booked").length === 0) {
@@ -89,6 +91,11 @@ function addAjaxListeners() {
   $('.getVendorByType').on('click', e => {
     let $self = $(e.currentTarget);
     let type = $self.attr('data-type');
+
+    if (type === "all") {
+      history.pushState({}, document.title, window.location.href.split('#')[0]);
+    }
+
     api_call_made = true;
     $('.sortVendors').removeClass('is-active');
     makeSidelinkActive(type);
@@ -128,23 +135,30 @@ function sortArray(arr, type, order){
       // a and b will here be two objects from the array
       // thus a[1] and b[1] will equal the names
       // if they are equal, return 0 (no sorting)
-      if (a[type] == b[type]) { return 0; }
-      if (a[type] > b[type]){
-          // if a should come after b, return 1
-          if(order == 'asc')
-            return 1;
-          else
-            return -1;
-      }else{
-          // if b should come after a, return -1
-          if(order == 'asc')
-            return -1;
-          else
-            return 1;
+      if (a[type] == b[type]) { 
+        return 0; 
+      }
+      if (a[type] > b[type]) {
+        // if a should come after b, return 1
+        if (order == 'asc') {
+          return 1;
+        } else {
+          return -1;
+        }
+      } else {
+        // if b should come after a, return -1
+        if (order == 'asc') {
+          return -1;
+        } else {
+          return 1;
+        }
       }
   });
-
   return arr;
+}
+
+function filterArray(query) {
+  return;
 }
 
 function getVendorByType(type) {
@@ -325,7 +339,7 @@ function postBookRequest(id, date) {
     }
   })
   .done(json => {
-    displayBookingConfirmation(json);
+    displayBookingConfirmation(json, id);
     console.log(json);
   })
   .fail((xhr) => {
@@ -333,7 +347,7 @@ function postBookRequest(id, date) {
   });
 }
 
-function displayBookingConfirmation(json) {
+function displayBookingConfirmation(json, id) {
   const info = json.bookingInfo;
 
   $('.bookingInputBox, #bookingFooter').hide();
@@ -343,6 +357,8 @@ function displayBookingConfirmation(json) {
   $('#vendorNameBox').append($('<p class="subtitle detail">').text(info.vendor_name));
 
   $('.confirmationMessage, #confirmFooter').show();
+  bookedVendors.push(id);
+  updateBookingNotifiers(bookedVendors);
 }
 
 function displayErrorMessage(err) {
