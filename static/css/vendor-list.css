@@ -15,6 +15,17 @@
   }
 }
 
+#vendorSearch {
+  box-shadow: none;
+  border: 1px solid #f9eef6;
+  font-size: 0.85rem;
+  border-radius: 4px;
+}
+
+#vendorSearch ~ .icon {
+  font-size: 0.85rem;
+}
+
 .vendor-list-card > article {
   border-left: 4px solid #c7def3;
 }
@@ -148,6 +159,8 @@
 }
 
 .ajax-loader {
+  display: flex;
+  flex-direction: column;
   position: relative;
   top: 20vh;
 }
@@ -157,6 +170,10 @@
   height: 100px;
   width: 100px;
   position: relative;
+}
+
+.fetch-message {
+  font-size: 0.85rem;
 }
 
 .path {

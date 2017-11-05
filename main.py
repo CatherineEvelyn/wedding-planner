@@ -29,15 +29,17 @@ class UserVendor(db.Model):
     bookedDate = db.Column(db.Date)
     eventStartTime = db.Column(db.Time)
     eventEndTime = db.Column(db.Time)
+    enabled = db.Column(db.Boolean, default = True)
     vendor = db.relationship('Vendor', backref="user_assoc")
     user = db.relationship('User', backref="vendor_assoc")
 
-    def __init__(self, vendor_id, user_id, bookedDate, eventStartTime, eventEndTime):
+    def __init__(self, vendor_id, user_id, bookedDate, eventStartTime, eventEndTime, enabled):
         self.vendor_id = vendor_id
         self.user_id = user_id
         self.bookedDate = bookedDate
         self.eventStartTime = eventStartTime
         self.eventEndTime = eventEndTime
+        self.enabled = True
 
 
 class Vendor(db.Model):
@@ -175,7 +177,7 @@ def login():
                 session['email'] = email #starts session
                 session['userType'] = "user"
                 session['name'] = user.name
-                session['id'] = user.id
+                session['userID'] = user.id
                 return redirect_dest(fallback=url_for('index'))
         elif vendor:
             if not check_pw_hash(password, vendor.password):
@@ -199,6 +201,7 @@ def logout():
     del session['email']
     del session['userType']
     del session['name']
+    del session['userID']
     return redirect('/')
 
 @app.route('/')
@@ -275,7 +278,7 @@ def organizer():
     user = User.query.filter_by(email=session["email"]).first() #TODO: get user in session
     user_id = str(user.id) #get user's id - turn to string for query
 
-    result = db.engine.execute("SELECT * FROM user_vendor JOIN vendor ON user_vendor.vendor_id=vendor.id WHERE user_id = '" + user_id + "'")
+    result = db.engine.execute("SELECT * FROM user_vendor JOIN vendor ON user_vendor.vendor_id=vendor.id WHERE user_id = '" + user_id + "' AND enabled = 1;")
 
     #q = session.query(UserVendor).filter(UserVendor).join(UserVendor.vendor_id).filter.all()
     #usersVendors = UserVendor.query.filter_by(user_id=users_id).first()
@@ -377,6 +380,7 @@ def book():
     eventDate = form['date']
     eventStartTime = "12:00:00"
     eventEndTime = "12:00:00"
+    enabled = 1
 
     bookingInfo = {}
     bookingInfo['vendor_name'] = vendor.contactName
@@ -386,7 +390,7 @@ def book():
     formattedDate = dateInput.strftime('%B %d, %Y')
     bookingInfo['book_date'] = formattedDate
 
-    new_Booking = UserVendor(vendor_id, user_id, eventDate, eventStartTime, eventEndTime)
+    new_Booking = UserVendor(vendor_id, user_id, eventDate, eventStartTime, eventEndTime, enabled)
     db.session.add(new_Booking)
     db.session.commit()
 
