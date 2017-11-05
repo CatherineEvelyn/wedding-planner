@@ -162,9 +162,7 @@
             <td>$5000</td>
             <td>$500</td>
             <td>Confirmed</td>
-            <td>
-              <a id="venueButton" class="btn-green" href="#">Cancel</a>
-            </td>
+            <td><a id="venueButton" class="btn-green" href="#">Cancel</a></td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
           </tr>
         {% endfor %}
@@ -199,7 +197,7 @@
                   </div>
                 </div>
               </div>
-                <a id="venueButton" class="btn-green-flat-trigger" href="#">Find</a>
+              <a id="venueButton" class="btn-green-flat-trigger" href="#">Find</a>
 
             </td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
@@ -208,19 +206,19 @@
 
       {% if photographer %}
       {% for row in photographer %}
-          <tr class="is-selected">
-              <th>2</th>
-              <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
-              <td>{{row.contactName}}</td>
-              <td>{{row.businessName}}</td>
-              <td>{{row.bookedDate}}</td>
-              <td>{{row.email}}</td>
-              <td>$5000</td>
-              <td>$500</td>
-              <td>Confirmed</td>
-              <td><button id="photoButton">Cancel</button></td>
-              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-            </tr>
+        <tr class="is-selected">
+            <th>2</th>
+            <td><a href="/portfolio?vendor-id=" title="My Photographer">My Photographer</a></td>
+            <td>{{row.contactName}}</td>
+            <td>{{row.businessName}}</td>
+            <td>{{row.bookedDate}}</td>
+            <td>{{row.email}}</td>
+            <td>$5000</td>
+            <td>$500</td>
+            <td>Confirmed</td>
+            <td><a id="photoButton" class="btn-green" href="#">Cancel</a></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
         {% endfor %}
         {% else %}
           <tr class="">
@@ -233,26 +231,48 @@
             <td>$</td>
             <td>$</td>
             <td>Searching</td>
-            <td><button id="photoButton2" >Find</button></td>
+            <td>
+
+              <div class="global-modal">
+                <div class="overlay"></div>
+                <div class="global-modal_contents modal-transition">
+                  <div class="global-modal-body">
+                    <div class="content-left">
+                      <p>
+                        I want to find a vendor on <br>
+                        this website.
+                      </p>
+                      <a href="/vendor-list" class="btn-green-flat">Look up vendor</a>
+                    </div>
+                    <div class="content-right">
+                      <p> No, thank you.<br> I already have a vendor <br>not from this website.</p>
+                      <a href="/user-account" class="btn-green-flat" id="outsideVendor">Confirm</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a id="photoButton" class="btn-green-flat-trigger" href="#">Find</a>
+
+            </td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
           </tr>
       {% endif %}
 
       {% if videographer %}
       {% for row in videographer %}
-          <tr class="is-selected">
-              <th>3</th>
-              <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
-              <td>{{row.contactName}}</td>
-              <td>{{row.businessName}}</td>
-              <td>{{row.bookedDate}}</td>
-              <td>{{row.email}}</td>
-              <td>$5000</td>
-              <td>$500</td>
-              <td>Confirmed</td>
-              <td><button id="videoButton">Cancel</button></td>
-              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-            </tr>
+        <tr class="is-selected">
+            <th>3</th>
+            <td><a href="/portfolio?vendor-id=" title="My Videographer">My Videographer</a></td>
+            <td>{{row.contactName}}</td>
+            <td>{{row.businessName}}</td>
+            <td>{{row.bookedDate}}</td>
+            <td>{{row.email}}</td>
+            <td>$5000</td>
+            <td>$500</td>
+            <td>Confirmed</td>
+            <td><a id="videoButton" class="btn-green" href="#">Cancel</a></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
         {% endfor %}
         {% else %}
           <tr class="">
@@ -265,28 +285,48 @@
             <td>$</td>
             <td>$</td>
             <td>Searching</td>
-            <td><button>Find</button></td>
+            <td>
+
+              <div class="global-modal">
+                <div class="overlay"></div>
+                <div class="global-modal_contents modal-transition">
+                  <div class="global-modal-body">
+                    <div class="content-left">
+                      <p>
+                        I want to find a vendor on <br>
+                        this website.
+                      </p>
+                      <a href="/vendor-list" class="btn-green-flat">Look up vendor</a>
+                    </div>
+                    <div class="content-right">
+                      <p> No, thank you.<br> I already have a vendor <br>not from this website.</p>
+                      <a href="/user-account" class="btn-green-flat" id="outsideVendor">Confirm</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a id="videoButton" class="btn-green-flat-trigger" href="#">Find</a>
+
+            </td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
           </tr>
       {% endif %}
 
       {% if caterer %}
       {% for row in caterer %}
-          <tr class="is-selected">
-              <th>4</th>
-              <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
-              <td>{{row.contactName}}</td>
-              <td>{{row.businessName}}</td>
-              <td>{{row.bookedDate}}</td>
-              <td>{{row.email}}</td>
-              <td>$5000</td>
-              <td>$500</td>
-              <td>Confirmed</td>
-              <td>
-                  <a id="venueButton" class="btn-green" href="#">Cancel</a>
-              </td>
-              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-            </tr>
+        <tr class="is-selected">
+            <th>4</th>
+            <td><a href="/portfolio?vendor-id=" title="My Caterer">My Caterer</a></td>
+            <td>{{row.contactName}}</td>
+            <td>{{row.businessName}}</td>
+            <td>{{row.bookedDate}}</td>
+            <td>{{row.email}}</td>
+            <td>$5000</td>
+            <td>$500</td>
+            <td>Confirmed</td>
+            <td><a id="catererButton" class="btn-green" href="#">Cancel</a></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
         {% endfor %}
         {% else %}
           <tr class="">
@@ -299,26 +339,48 @@
             <td>$</td>
             <td>$</td>
             <td>Searching</td>
-            <td><button>Find</button></td>
+            <td>
+
+              <div class="global-modal">
+                <div class="overlay"></div>
+                <div class="global-modal_contents modal-transition">
+                  <div class="global-modal-body">
+                    <div class="content-left">
+                      <p>
+                        I want to find a vendor on <br>
+                        this website.
+                      </p>
+                      <a href="/vendor-list" class="btn-green-flat">Look up vendor</a>
+                    </div>
+                    <div class="content-right">
+                      <p> No, thank you.<br> I already have a vendor <br>not from this website.</p>
+                      <a href="/user-account" class="btn-green-flat" id="outsideVendor">Confirm</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a id="catererButton" class="btn-green-flat-trigger" href="#">Find</a>
+
+            </td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
           </tr>
       {% endif %}
 
       {% if music %}
       {% for row in music %}
-          <tr class="is-selected">
-              <th>5</th>
-              <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
-              <td>{{row.contactName}}</td>
-              <td>{{row.businessName}}</td>
-              <td>{{row.bookedDate}}</td>
-              <td>{{row.email}}</td>
-              <td>$5000</td>
-              <td>$500</td>
-              <td>Confirmed</td>
-              <td><button id="bandButton">Cancel</button></td>
-              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-            </tr>
+        <tr class="is-selected">
+            <th>5</th>
+            <td><a href="/portfolio?vendor-id=" title="My Band / DJ">My Band / DJ</a></td>
+            <td>{{row.contactName}}</td>
+            <td>{{row.businessName}}</td>
+            <td>{{row.bookedDate}}</td>
+            <td>{{row.email}}</td>
+            <td>$5000</td>
+            <td>$500</td>
+            <td>Confirmed</td>
+            <td><a id="bandButton" class="btn-green" href="#">Cancel</a></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
         {% endfor %}
         {% else %}
           <tr class="">
@@ -331,26 +393,48 @@
             <td>$</td>
             <td>$</td>
             <td>Searching</td>
-            <td><button>Find</button></td>
+            <td>
+
+              <div class="global-modal">
+                <div class="overlay"></div>
+                <div class="global-modal_contents modal-transition">
+                  <div class="global-modal-body">
+                    <div class="content-left">
+                      <p>
+                        I want to find a vendor on <br>
+                        this website.
+                      </p>
+                      <a href="/vendor-list" class="btn-green-flat">Look up vendor</a>
+                    </div>
+                    <div class="content-right">
+                      <p> No, thank you.<br> I already have a vendor <br>not from this website.</p>
+                      <a href="/user-account" class="btn-green-flat" id="outsideVendor">Confirm</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a id="bandButton" class="btn-green-flat-trigger" href="#">Find</a>
+
+            </td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
           </tr>
       {% endif %}
 
       {% if cosmetics %}
       {% for row in cosmetics %}
-          <tr class="is-selected">
-              <th>6</th>
-              <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
-              <td>{{row.contactName}}</td>
-              <td>{{row.businessName}}</td>
-              <td>{{row.bookedDate}}</td>
-              <td>{{row.email}}</td>
-              <td>$5000</td>
-              <td>$500</td>
-              <td>Confirmed</td>
-              <td><button id="hairButton">Cancel</button></td>
-              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-            </tr>
+        <tr class="is-selected">
+            <th>6</th>
+            <td><a href="/portfolio?vendor-id=" title="My Hairstylist / Make Up Artist">My Hairstylist / Make Up Artist</a></td>
+            <td>{{row.contactName}}</td>
+            <td>{{row.businessName}}</td>
+            <td>{{row.bookedDate}}</td>
+            <td>{{row.email}}</td>
+            <td>$5000</td>
+            <td>$500</td>
+            <td>Confirmed</td>
+            <td><a id="hairButton" class="btn-green" href="#">Cancel</a></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
         {% endfor %}
         {% else %}
           <tr class="">
@@ -363,26 +447,48 @@
             <td>$</td>
             <td>$</td>
             <td>Searching</td>
-            <td><button>Find</button></td>
+            <td>
+
+              <div class="global-modal">
+                <div class="overlay"></div>
+                <div class="global-modal_contents modal-transition">
+                  <div class="global-modal-body">
+                    <div class="content-left">
+                      <p>
+                        I want to find a vendor on <br>
+                        this website.
+                      </p>
+                      <a href="/vendor-list" class="btn-green-flat">Look up vendor</a>
+                    </div>
+                    <div class="content-right">
+                      <p> No, thank you.<br> I already have a vendor <br>not from this website.</p>
+                      <a href="/user-account" class="btn-green-flat" id="outsideVendor">Confirm</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a id="hairButton" class="btn-green-flat-trigger" href="#">Find</a>
+
+            </td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
           </tr>
       {% endif %}
 
       {% if tailor %}
       {% for row in tailor %}
-          <tr class="is-selected">
-              <th>7</th>
-              <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
-              <td>{{row.contactName}}</td>
-              <td>{{row.businessName}}</td>
-              <td>{{row.bookedDate}}</td>
-              <td>{{row.email}}</td>
-              <td>$5000</td>
-              <td>$500</td>
-              <td>Confirmed</td>
-              <td><button id="tailorButton">Cancel</button></td>
-              <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
-            </tr>
+        <tr class="is-selected">
+            <th>7</th>
+            <td><a href="/portfolio?vendor-id=" title="My Tailor">My Tailor</a></td>
+            <td>{{row.contactName}}</td>
+            <td>{{row.businessName}}</td>
+            <td>{{row.bookedDate}}</td>
+            <td>{{row.email}}</td>
+            <td>$5000</td>
+            <td>$500</td>
+            <td>Confirmed</td>
+            <td><a id="tailorButton" class="btn-green" href="#">Cancel</a></td>
+            <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
+          </tr>
         {% endfor %}
         {% else %}
           <tr class="">
@@ -395,7 +501,29 @@
             <td>$</td>
             <td>$</td>
             <td>Searching</td>
-            <td><button>Find</button></td>
+            <td>
+
+              <div class="global-modal">
+                <div class="overlay"></div>
+                <div class="global-modal_contents modal-transition">
+                  <div class="global-modal-body">
+                    <div class="content-left">
+                      <p>
+                        I want to find a vendor on <br>
+                        this website.
+                      </p>
+                      <a href="/vendor-list" class="btn-green-flat">Look up vendor</a>
+                    </div>
+                    <div class="content-right">
+                      <p> No, thank you.<br> I already have a vendor <br>not from this website.</p>
+                      <a href="/user-account" class="btn-green-flat" id="outsideVendor">Confirm</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a id="tailorButton" class="btn-green-flat-trigger" href="#">Find</a>
+
+            </td>
             <td>Not functional yet <a href="" style="color: blue;">edit</a></td>
           </tr>
       {% endif %}
