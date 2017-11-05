@@ -173,32 +173,39 @@ var delay = (function() {
 function addSearchListener() {
   $("#vendorSearch").on('keyup', e => {
     let $self = $(e.currentTarget);
+    $('.overlay-container').show();
+    $('.vendor-list-card .overlay').show();
     delay(() => {
       isActiveSearch = $self.val() === "" ? false : true;
       filterArray($self.val());
-    }, 1050);
+      $('.overlay-container').hide();
+      $('.vendor-list-card .overlay').hide();
+    }, 1000);
   });
 }
 
 function filterArray(query) {
+  // Checking to see if anything is in the input box
   if (isActiveSearch) {
     queryResults = []
-    $.each(vendors, (idx, value) => {
-      let strings = [];
-      for (element of Object.values(value)) {
-        if (typeof element == "string") {
-          strings.push(element.toLowerCase());
+    $.each(vendors, (idx, entry) => {
+      // Cycling through entries in each vendor object. If a match is detected in
+      // any of the fields (contact name, business name, address) except email,
+      // it will be added to the queryResults array, then displayed in the view.
+      for (const [key, value] of Object.entries(entry)) {
+        if (key != "email" && typeof value == "string") {
+          if (value.toLowerCase().indexOf(query.toLowerCase()) > -1) {
+            queryResults.push(entry);
+            break;
+          }
         }
       }
-  
-      for (let el of strings) {
-        if (el.indexOf(query.toLowerCase()) > -1) {
-          queryResults.push(value);
-          break;
-        }
-      } 
     });
     displayVendors(queryResults);
+  } else if (!isActiveSearch) {
+    // Showing all results in selected category if there was once an active search and input is now blank
+    queryResults = [];
+    displayVendors(vendors);
   }
 }
 
