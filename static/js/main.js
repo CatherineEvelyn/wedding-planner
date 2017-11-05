@@ -3,6 +3,8 @@ var vendorID = null;
 var sessionDetails = null;
 var vendors = [];
 var bookedVendors = [];
+var queryResults = [];
+var isActiveSearch = false;
 
 $(function () {
   retrieveBookedVendors();
@@ -12,6 +14,7 @@ $(function () {
   addSignupListener();
   addBlur();
   addAjaxListeners();
+  addSearchListener();
   addCloseModalListeners();
   addBookingListeners();
   addBookFulfillmentListener();
@@ -101,16 +104,18 @@ function addAjaxListeners() {
     makeSidelinkActive(type);
     getVendorByType(type);
   });
+
   $('.sortVendors').on('click', e => {
     let $self = $(e.currentTarget);
     let type = $self.attr('data-type');
     let order = $self.attr('data-order');
+    let sortTarget = queryResults.length === 0 ? vendors : queryResults;
     $('.sortVendors').removeClass('is-active');
     $self.addClass('is-active');
     $('.sortVendors').children().eq(0).remove();
 
     if (order == 'asc') {
-      vendors = sortArray(vendors, type, 'asc')
+      sortTarget = sortArray(sortTarget, type, 'asc')
       $self.attr("data-order", 'desc');
       $self.append(
         $('<span />', {"class": "icon is-small"}).append(
@@ -118,7 +123,7 @@ function addAjaxListeners() {
         )
       );
     } else {
-      vendors = sortArray(vendors, type, 'desc')
+      sortTarget = sortArray(sortTarget, type, 'desc')
       $self.attr("data-order", 'asc');
       $self.append(
         $('<span />', {"class": "icon is-small"}).append(
@@ -126,7 +131,7 @@ function addAjaxListeners() {
         )
       );
     }
-    displayVendors();
+    displayVendors(sortTarget);
   });
 }
 
@@ -157,8 +162,51 @@ function sortArray(arr, type, order){
   return arr;
 }
 
+var delay = (function() {
+  var timer = 0;
+  return function(callback, ms) {
+    clearTimeout(timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
+
+function addSearchListener() {
+  $("#vendorSearch").on('keyup', e => {
+    let $self = $(e.currentTarget);
+    $('.overlay-container').show();
+    $('.vendor-list-card .overlay').show();
+    delay(() => {
+      isActiveSearch = $self.val() === "" ? false : true;
+      filterArray($self.val());
+      $('.overlay-container').hide();
+      $('.vendor-list-card .overlay').hide();
+    }, 1000);
+  });
+}
+
 function filterArray(query) {
-  return;
+  // Checking to see if anything is in the input box
+  if (isActiveSearch) {
+    queryResults = []
+    $.each(vendors, (idx, entry) => {
+      // Cycling through entries in each vendor object. If a match is detected in
+      // any of the fields (contact name, business name, address) except email,
+      // it will be added to the queryResults array, then displayed in the view.
+      for (const [key, value] of Object.entries(entry)) {
+        if (key != "email" && typeof value == "string") {
+          if (value.toLowerCase().indexOf(query.toLowerCase()) > -1) {
+            queryResults.push(entry);
+            break;
+          }
+        }
+      }
+    });
+    displayVendors(queryResults);
+  } else if (!isActiveSearch) {
+    // Showing all results in selected category if there was once an active search and input is now blank
+    queryResults = [];
+    displayVendors(vendors);
+  }
 }
 
 function getVendorByType(type) {
@@ -183,7 +231,7 @@ function getVendorByType(type) {
     data: {
       "type": type
     },
-    success: function(data){
+    success: data => {
       vendors = [];
       // Convert JSON into an array
       for(let vendor in data.vendors){
@@ -192,7 +240,13 @@ function getVendorByType(type) {
     }
   })
   .done(json => {
-    displayVendors();
+    query = $("#vendorSearch").val();
+
+    if (query) {
+      filterArray(query);
+    } else {
+      displayVendors(vendors);
+    }
     api_call_made = false;
   })
   .fail((xhr, status, error) => {
@@ -211,12 +265,12 @@ function makeSidelinkActive(type) {
   $('a[href="#' + type + '"]').addClass('is-active');
 }
 
-function displayVendors() {
+function displayVendors(arr) {
   let $wrapper = $(".vendor-list-card-wrapper")
 
   $wrapper.empty();
   // Use global vendors to allow local sorting
-  $.each(vendors, function(index, value) {
+  $.each(arr, function(index, value) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
     let $card = $("<article />", {"class": "tile is-child card"}).attr("data-vendor-id", value.id);
 

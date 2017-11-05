@@ -159,6 +159,8 @@
 }
 
 .ajax-loader {
+  display: flex;
+  flex-direction: column;
   position: relative;
   top: 20vh;
 }
@@ -168,6 +170,10 @@
   height: 100px;
   width: 100px;
   position: relative;
+}
+
+.fetch-message {
+  font-size: 0.85rem;
 }
 
 .path {
