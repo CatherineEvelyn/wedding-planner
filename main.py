@@ -29,7 +29,7 @@ VENDOR_TYPES = { "venue":1,
                  "videographer":3, 
                  "caterer":4, 
                  "music":5, 
-                 "cosmetic":6, 
+                 "cosmetics":6, 
                  "tailor":7 }
 
 class UserVendor(db.Model):
@@ -444,9 +444,16 @@ def bookExternal(vendor_type):
     eventStartTime = None
     eventEndTime = None
     enabled = 1
-    new_Booking = UserVendor(vendor_id, user_id, eventDate, eventStartTime, eventEndTime, enabled)
-    db.session.add(new_Booking)
-    db.session.commit()
+    
+    booking = UserVendor.query.filter_by(user_id=user.id, vendor_id=vendor_id).first()
+    if booking is not None:
+        booking.enabled = True
+        db.session.commit()
+    else:
+
+        new_Booking = UserVendor(vendor_id, user_id, eventDate, eventStartTime, eventEndTime, enabled)
+        db.session.add(new_Booking)
+        db.session.commit()
     return redirect("user-account")
     
 @app.route('/vendor-list', methods=['GET', 'POST'])
