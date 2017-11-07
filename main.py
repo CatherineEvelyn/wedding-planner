@@ -4,6 +4,7 @@ from hashutils import *
 import re
 from faker import Faker
 import random
+import sys
 from datetime import datetime
 from sqlalchemy import create_engine
 from globals import statelist, typelist
@@ -20,6 +21,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://wedding:password@35.197
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "246Pass"
+
+#EXTERNAL_VENDOR_ID = 1
+EXTERNAL_VENDOR_IDS = [ 1,2,3,4,5,6,7 ]
+VENDOR_TYPES = { "venue":1, 
+                 "photographer":2, 
+                 "videographer":3, 
+                 "caterer":4, 
+                 "music":5, 
+                 "cosmetics":6, 
+                 "tailor":7 }
 
 class UserVendor(db.Model):
     __tablename__ = 'user_vendor'
@@ -97,7 +108,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    blacklist = ['user', 'profile', 'book']
+    blacklist = ['user', 'profile', 'book', ]
     if all([request.endpoint in blacklist, 'email' not in session, '/static/' not in request.path]):
         message = Markup("You must to be <strong>logged in</strong> to access this page.")
         flash(message, "is-danger")
@@ -267,7 +278,36 @@ def profile():
     return render_template("vendor-account.html", vendor=vendor, statelist=statelist, typelist=typelist)
 
 
-@app.route('/user-account')
+
+@app.route('/cancel/vendor/<int:vendor_id>')
+def cancel(vendor_id):
+    user = User.query.filter_by(email=session["email"]).first()  
+    booking = UserVendor.query.filter_by(user_id=user.id, vendor_id=vendor_id).first()
+    #booking = UserVendor.query.get(booking_id)
+
+    """
+    bookings = UserVendor.query.all()
+    output = ''
+
+    for b in bookings:
+        output += "{} {} {} {} {} {} {}".format(
+            b.id,
+            b.user_id,
+            b.user.name,
+            b.vendor_id,
+            b.vendor.businessName,
+            b.bookedDate,
+            b.enabled)
+    print("UserVendor: {}".format(output), file=sys.stderr)"""
+   
+    if booking is not None:
+       booking.enabled = False
+       db.session.add(booking)
+       db.session.commit()
+
+    return redirect("user-account")
+
+@app.route('/user-account', methods=['GET', 'POST'])
 def organizer():
     if session['userType'] == "vendor":
         flash("You do not have permission to visit that page.", "is-danger")
@@ -286,6 +326,7 @@ def organizer():
     #for item in result:
         #vendorName == item.contactName
 
+    #if request.method == 'POST':    
 
     venue = []
     photographer = []
@@ -294,6 +335,7 @@ def organizer():
     music = []
     cosmetics = []
     tailor = []
+    greenStatus = "is-selected"
 
     for row in result:
         if row.vendorType == "venue":
@@ -311,17 +353,58 @@ def organizer():
         elif row.vendorType == "tailor":
             tailor.append(row)
 
-    return render_template(
-        "user-account.html", 
-        venue=venue,
-        photographer=photographer,
-        videographer=videographer,
-        caterer=caterer,
-        music=music,
-        cosmetics=cosmetics,
-        tailor=tailor,
-        user=user
-    )
+    return render_template("user-account.html", venue=venue,
+                                                photographer=photographer,
+                                                videographer=videographer,
+                                                caterer=caterer,
+                                                music=music,
+                                                cosmetics=cosmetics,
+                                                tailor=tailor,
+                                                user=user,
+                                                greenStatus=greenStatus)
+
+
+"""
+    vendorInfo = []
+    '''vendorName = []
+    vendorBusiness = []
+    vendorEmail = []
+    for row in result:
+        vendorName.append("Name: " + row['contactName'])
+        vendorBusiness.append("Business name: " + row['businessName'])
+        vendorEmail.append("Email: " + row['email'])
+    #connection.close()
+    return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
+    '''for row in result:
+
+        vendorInfo.append("Name: " + row['contactName'])
+        vendorInfo.append("Business name: " + row['businessName'])
+        vendorInfo.append("Vendor Type: " + row['vendorType'])
+        vendorInfo.append("Street Address: " + row['streetAddress'])
+        vendorInfo.append("City: " + row['city'])
+        vendorInfo.append("Zipcode: " + str(row['zipcode']))
+
+        vendorInfo.append("State: " + row['state'])
+
+        vendorInfo.append(row)
+
+        if row.vendorType == 'cosmetics':
+            greenStatus = "is-selected"
+        else:
+            greenStatus = ""
+            '''
+    venue = []
+    cosmetics = []
+    for row in result:
+        if row.vendorType == "venue":
+            venue.append(row)
+        elif row.vendorType == "cosmetics":
+            cosmetics.append(row)
+    return render_template("user-account.html", venue =venue, cosmetics= cosmetics)
+
+    #return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, greenStatus = greenStatus, businessName = businessName, contactName = contactName, email = email)
+    #return render_template("testUserVendor.html", vendorInfo = vendorInfo)
+"""
 
 @app.route('/book', methods=['POST'])
 def book():
@@ -352,6 +435,27 @@ def book():
 
     return jsonify(bookingInfo=bookingInfo)
 
+@app.route('/bookexternal/vendortype/<string:vendor_type>')
+def bookExternal(vendor_type):
+    user = User.query.filter_by(email=session["email"]).first()
+    vendor_id = VENDOR_TYPES[vendor_type]
+    user_id = user.id
+    eventDate = None
+    eventStartTime = None
+    eventEndTime = None
+    enabled = 1
+    
+    booking = UserVendor.query.filter_by(user_id=user.id, vendor_id=vendor_id).first()
+    if booking is not None:
+        booking.enabled = True
+        db.session.commit()
+    else:
+
+        new_Booking = UserVendor(vendor_id, user_id, eventDate, eventStartTime, eventEndTime, enabled)
+        db.session.add(new_Booking)
+        db.session.commit()
+    return redirect("user-account")
+    
 @app.route('/vendor-list', methods=['GET', 'POST'])
 def vendorList():
     session['url'] = request.path
@@ -376,6 +480,9 @@ def vendor():
         query = Vendor.query.filter_by(vendorType=vendor_type)
     vendors = []
     for vendor in query:
+        if vendor.id in EXTERNAL_VENDOR_IDS:
+            continue
+
         vendors.append({
             "id": vendor.id,
             "businessName": vendor.businessName,
