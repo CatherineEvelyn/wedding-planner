@@ -8,6 +8,7 @@ import sys
 from datetime import datetime
 from sqlalchemy import create_engine
 from globals import statelist, typelist
+import os
 
 engine = create_engine('sqlite:///association_tables.sqlite')
 
@@ -17,19 +18,19 @@ from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://wedding:password@35.197.5.142/wedding' #TODO set for Wedding Planner
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", 'mysql+pymysql://wedding:password@35.197.5.142/wedding')
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "246Pass"
 
 #EXTERNAL_VENDOR_ID = 1
 EXTERNAL_VENDOR_IDS = [ 1,2,3,4,5,6,7 ]
-VENDOR_TYPES = { "venue":1, 
-                 "photographer":2, 
-                 "videographer":3, 
-                 "caterer":4, 
-                 "music":5, 
-                 "cosmetics":6, 
+VENDOR_TYPES = { "venue":1,
+                 "photographer":2,
+                 "videographer":3,
+                 "caterer":4,
+                 "music":5,
+                 "cosmetics":6,
                  "tailor":7 }
 
 class UserVendor(db.Model):
@@ -281,7 +282,7 @@ def profile():
 
 @app.route('/cancel/vendor/<int:vendor_id>')
 def cancel(vendor_id):
-    user = User.query.filter_by(email=session["email"]).first()  
+    user = User.query.filter_by(email=session["email"]).first()
     booking = UserVendor.query.filter_by(user_id=user.id, vendor_id=vendor_id).first()
     #booking = UserVendor.query.get(booking_id)
 
@@ -299,7 +300,7 @@ def cancel(vendor_id):
             b.bookedDate,
             b.enabled)
     print("UserVendor: {}".format(output), file=sys.stderr)"""
-   
+
     if booking is not None:
        booking.enabled = False
        db.session.add(booking)
@@ -326,7 +327,7 @@ def organizer():
     #for item in result:
         #vendorName == item.contactName
 
-    #if request.method == 'POST':    
+    #if request.method == 'POST':
 
     venue = []
     photographer = []
@@ -444,7 +445,7 @@ def bookExternal(vendor_type):
     eventStartTime = None
     eventEndTime = None
     enabled = 1
-    
+
     booking = UserVendor.query.filter_by(user_id=user.id, vendor_id=vendor_id).first()
     if booking is not None:
         booking.enabled = True
@@ -455,7 +456,7 @@ def bookExternal(vendor_type):
         db.session.add(new_Booking)
         db.session.commit()
     return redirect("user-account")
-    
+
 @app.route('/vendor-list', methods=['GET', 'POST'])
 def vendorList():
     session['url'] = request.path
@@ -470,7 +471,7 @@ def vendor():
         query = UserVendor.query.join(Vendor, UserVendor.vendor_id == Vendor.id).add_columns(Vendor.id).filter(UserVendor.user_id == user.id).order_by(UserVendor.bookedDate)
         for row in query:
             bookedVendors.append(row.id)
-        
+
         return jsonify(bookedVendors)
 
     vendor_type = request.args.get("type")
@@ -628,10 +629,10 @@ def signup():
             verify = form['verify']
 
             u_errors = verifyUserInputs(
-                u_errors, 
-                name, 
-                email, 
-                password, 
+                u_errors,
+                name,
+                email,
+                password,
                 verify
             )
 
@@ -668,16 +669,16 @@ def signup():
             vendor_info['price'] = price = form['price']
 
             v_errors = verifyVendorInputs(
-                v_errors, 
-                name, 
+                v_errors,
+                name,
                 business_name,
                 vendor_type,
-                email, 
-                street_address, 
-                city, 
-                zipcode, 
+                email,
+                street_address,
+                city,
+                zipcode,
                 password,
-                verify, 
+                verify,
                 price
             )
 
