@@ -105,3 +105,5 @@ ENV/
 
 # DS Store
 .DS_Store/
+
+static/components/
