@@ -1,28 +1,20 @@
 {
   "name": "wedding-planner",
   "version": "0.0.1",
-  "description": "A wedding planner application for organizers and vendors alike",
+  "description": "A wedding planner app for vendors and organizers",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack -p",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CatherineEvelyn/wedding-planner.git"
+    "url": "git+https://github.com/seanmstevens/wedding-planner.git"
   },
-  "keywords": [
-    "python"
-  ],
-  "authors": [
-      "Evelyn Hung", 
-      "Kristen Sharkey", 
-      "Zach Foutz", 
-      "Jared George", 
-      "Sean Stevens"
-  ],
+  "author": "Sean Stevens",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CatherineEvelyn/wedding-planner/issues"
+    "url": "https://github.com/seanmstevens/wedding-planner/issues"
   },
-  "homepage": "https://github.com/CatherineEvelyn/wedding-planner#readme"
+  "homepage": "https://github.com/seanmstevens/wedding-planner#readme"
 }

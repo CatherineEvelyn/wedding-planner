@@ -63,7 +63,11 @@
           <div class="navbar-end">
           {% if session['email'] %}
             <div class="navbar-item has-dropdown is-hoverable">
+              {% if session['userType'] == 'vendor'%}
               <a href="/profile" class="navbar-link">
+              {% elif session['userType'] == 'user' %}
+              <a href="/user-account" class="navbar-link">
+              {% endif %}
                 <span class="icon is-small">
                   <i class="mdi mdi-account-circle mdi-24px"></i>
                 </span>
@@ -93,13 +97,13 @@
                   Portfolio
                 </a>
                 {% elif session['userType'] == 'user' %}
-                <a class="navbar-item" href="/profile#bookings">
+                <a class="navbar-item" href="/user-account#organizer">
                   <span class="icon">
                     <i class="mdi mdi-book-open-variant"></i>
                   </span>
-                  Bookings
+                  Organizer
                 </a>
-                <a class="navbar-item" href="/profile#account">
+                <a class="navbar-item" href="/user-account#account">
                   <span class="icon">
                     <i class="mdi mdi-account"></i>
                   </span>
@@ -150,13 +154,8 @@
     </footer>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='components/Stickyfill/dist/stickyfill.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='components/progressively/dist/progressively.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/datepicker.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bookingViewer.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/user-account.js') }}"></script>
     <!-- Optional JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    {%block scripts%}{%endblock%}
+    {% block scripts %}{% endblock %}
   </body>
 </html>

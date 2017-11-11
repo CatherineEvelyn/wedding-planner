@@ -22,8 +22,17 @@
   border-radius: 4px;
 }
 
+#vendorSearch::placeholder {
+  color: #adadad;
+}
+
 #vendorSearch ~ .icon {
   font-size: 0.85rem;
+  color: #adadad;
+}
+
+#vendorSearch:focus ~ .icon {
+  color: #4e4e4e;
 }
 
 .vendor-list-card > article {
