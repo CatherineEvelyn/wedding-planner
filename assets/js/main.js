@@ -1,3 +1,5 @@
+let $ = require("jquery");
+
 var api_call_made = false;
 var vendorID = null;
 var sessionDetails = null;
@@ -140,8 +142,8 @@ function sortArray(arr, type, order){
       // a and b will here be two objects from the array
       // thus a[1] and b[1] will equal the names
       // if they are equal, return 0 (no sorting)
-      if (a[type] == b[type]) { 
-        return 0; 
+      if (a[type] == b[type]) {
+        return 0;
       }
       if (a[type] > b[type]) {
         // if a should come after b, return 1
