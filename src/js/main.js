@@ -1,5 +1,3 @@
-let $ = require("jquery");
-
 var api_call_made = false;
 var vendorID = null;
 var sessionDetails = null;
