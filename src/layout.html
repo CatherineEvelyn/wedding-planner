@@ -4,9 +4,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='../static/vendor.2fa780b9049e6b4d6d3f5f0909967957.bundle.css') }}">
-    
+    <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link rel="stylesheet" href="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.css[css] %>') }}">
+    <% } %>
     {% block head %} {% endblock %}
   </head>
   <body>
@@ -148,11 +148,9 @@
         </div>
       </div>
     </footer>
-    
-    <script type="text/javascript" src="{{ url_for('static', filename='../static/main.8cce3758fb7d5ba81e33.bundle.js') }}'"></script>
-    
-    <script type="text/javascript" src="{{ url_for('static', filename='../static/vendor.8cce3758fb7d5ba81e33.bundle.js') }}'"></script>
-    
+    <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+    <script type="text/javascript" src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.chunks[chunk].entry %>') }}'"></script>
+    <% } %>
     {% block scripts %}{% endblock %}
   </body>
 </html>

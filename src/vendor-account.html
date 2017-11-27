@@ -239,9 +239,9 @@
     }
   );
 </script>
-
-<script type="text/javascript" src="{{ url_for('static', filename='../static/vendoracc.8cce3758fb7d5ba81e33.bundle.js') }}'"></script>
-
+<% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+<script type="text/javascript" src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.chunks[chunk].entry %>') }}'"></script>
+<% } %>
 <script defer>
   var loc, tag;
   update_tag();

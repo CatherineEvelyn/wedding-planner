@@ -2,21 +2,24 @@ const path = require('path');
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const package = require('./package.json');
 
 module.exports = {
   entry: {
     main: [
-      './src/js/bookingViewer.js',
       './src/js/datepicker.js',
-      './src/js/user-account.js',
-      './src/js/vendor-profile.js',
       './src/js/main.js'
     ],
-    vendor: Object.keys(package.dependencies)
+    vendoracc: [
+      './src/js/bookingViewer.js',
+      './src/js/vendor-profile.js'
+    ],
+    useracc: './src/js/user-account.js',
+    vendor: './src/vendor-plugins/framework.sass'
   },
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].[hash].bundle.js',
     path: path.resolve(__dirname, 'static')
   },
   watch: true,
@@ -35,6 +38,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        include: path.resolve(__dirname, 'src/css'),
         use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: ['css-loader'],
@@ -42,6 +46,11 @@ module.exports = {
       },
       {
         test: /\.(sass|scss)$/,
+        include:[
+          path.resolve(__dirname, 'src/vendor-plugins'),
+          path.resolve(__dirname, 'node_modules/bulma'),
+          path.resolve(__dirname, 'node_modules/bulma-extensions')
+        ],
         use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: ['css-loader', 'sass-loader'],
@@ -50,13 +59,20 @@ module.exports = {
     ]
   },
   plugins: [
+    new WebpackCleanupPlugin(),
     new ExtractTextPlugin({
-      filename: '[name].css'
+      filename: '[name].[contenthash].bundle.css'
     }),
     new HtmlWebpackPlugin({
-      hash: true,
-      template: 'src/script-block.html',
-      filename: '../templates/components/script-block.html',
+      template: 'src/layout.html',
+      filename: '../templates/layout.html',
+      chunks: ['vendor', 'main'],
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: 'src/vendor-account.html',
+      filename: '../templates/vendor-account.html',
+      chunks: ['vendoracc'],
       inject: false
     })
   ]
