@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <link rel="stylesheet" href="{{ url_for('static', filename='../static/vendor.2fa780b9049e6b4d6d3f5f0909967957.bundle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='commonstyles.bundle.css?6b16c445bfc7fa01ee54') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='framework.bundle.css?6b16c445bfc7fa01ee54') }}">
     
     {% block head %} {% endblock %}
   </head>
@@ -149,9 +151,11 @@
       </div>
     </footer>
     
-    <script type="text/javascript" src="{{ url_for('static', filename='../static/main.8cce3758fb7d5ba81e33.bundle.js') }}'"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='commonstyles.bundle.js?6b16c445bfc7fa01ee54') }}'"></script>
     
-    <script type="text/javascript" src="{{ url_for('static', filename='../static/vendor.8cce3758fb7d5ba81e33.bundle.js') }}'"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='framework.bundle.js?6b16c445bfc7fa01ee54') }}'"></script>
+    
+      <script type="text/javascript" src="{{ url_for('static', filename='main.bundle.js?6b16c445bfc7fa01ee54') }}'"></script>
     
     {% block scripts %}{% endblock %}
   </body>
