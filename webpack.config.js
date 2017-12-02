@@ -8,18 +8,13 @@ const package = require('./package.json');
 
 module.exports = {
   entry: {
-    main: [
-      './src/js/datepicker.js',
-      './src/js/main.js',
-    ],
-    vendoracc: [
-      './src/js/bookingViewer.js',
-      './src/js/vendor-profile.js'
-    ],
-    useracc: './src/js/user-account.js',
     framework: [
       './src/vendor-plugins/framework.sass',
       './src/vendor-plugins/framework.js'
+    ],
+    main: [
+      './src/js/datepicker.js',
+      './src/js/main.js',
     ],
     commonstyles: [
       './src/css/login.css',
@@ -28,14 +23,18 @@ module.exports = {
       './src/css/user-account.css',
       './src/css/vendor-account.css',
       './src/css/vendor-list.css'
-    ]
+    ],
+    vendoracc: [
+      './src/js/bookingViewer.js',
+      './src/js/vendor-profile.js'
+    ],
+    useracc: './src/js/user-account.js',
   },
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].[hash].js',
     path: path.resolve(__dirname, 'static'),
     publicPath: ""
   },
-  watch: true,
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.sass', '.scss']
   },
@@ -85,21 +84,25 @@ module.exports = {
       comments: false
     }),
     new ExtractTextPlugin({
-      filename: '[name].bundle.css'
+      filename: '[name].[contenthash].css'
     }),
     new HtmlWebpackPlugin({
-      hash: true,
       template: 'src/layout.html',
       filename: '../templates/layout.html',
       chunks: ['framework', 'main', 'commonstyles'],
+      chunksSortMode: 'manual',
       inject: false
     }),
     new HtmlWebpackPlugin({
-      hash: true,
       template: 'src/vendor-account.html',
       filename: '../templates/vendor-account.html',
       chunks: ['vendoracc'],
+      chunksSortMode: 'manual',
       inject: false
+    }),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery',
     })
   ]
 };

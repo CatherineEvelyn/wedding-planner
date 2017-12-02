@@ -149,7 +149,7 @@
       </div>
     </footer>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
-      <script type="text/javascript" src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.chunks[chunk].entry %>') }}'"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.chunks[chunk].entry %>') }}"></script>
     <% } %>
     {% block scripts %}{% endblock %}
   </body>
