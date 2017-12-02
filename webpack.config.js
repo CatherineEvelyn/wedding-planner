@@ -101,8 +101,10 @@ module.exports = {
       inject: false
     }),
     new webpack.ProvidePlugin({
-      jQuery: 'jquery',
-      $: 'jquery',
+      $: "jquery",
+      jQuery: "jquery",
+      progressively: "progressively",
+      getVendorByType: "getVendorByType"
     })
   ]
 };

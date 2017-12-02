@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-navbar-fixed-top">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -12,8 +12,8 @@
     {% block head %} {% endblock %}
   </head>
   <body>
-    <div class="container">
-      <nav class="navbar" role="navigation" aria-label="dropdown navigation">
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="dropdown navigation">
+      <div class="container">
         <div class="navbar-brand">
           <a href="/" class="navbar-item">
             <span>My Wedding Planner</span>
@@ -128,8 +128,8 @@
             </div>
           </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
     <div class="container is-fluid is-marginless brand-color">
     {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
       {% for category, message in messages %}
@@ -151,11 +151,11 @@
       </div>
     </footer>
     
-      <script type="text/javascript" src="{{ url_for('static', filename='framework.dbb13f6e18215080d4fc.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='framework.94be2cb7f83e7498912f.js') }}"></script>
     
-      <script type="text/javascript" src="{{ url_for('static', filename='main.dbb13f6e18215080d4fc.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='main.94be2cb7f83e7498912f.js') }}"></script>
     
-      <script type="text/javascript" src="{{ url_for('static', filename='commonstyles.dbb13f6e18215080d4fc.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='commonstyles.94be2cb7f83e7498912f.js') }}"></script>
     
     {% block scripts %}{% endblock %}
   </body>

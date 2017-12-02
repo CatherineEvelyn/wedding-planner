@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-navbar-fixed-top">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -10,8 +10,8 @@
     {% block head %} {% endblock %}
   </head>
   <body>
-    <div class="container">
-      <nav class="navbar" role="navigation" aria-label="dropdown navigation">
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="dropdown navigation">
+      <div class="container">
         <div class="navbar-brand">
           <a href="/" class="navbar-item">
             <span>My Wedding Planner</span>
@@ -126,8 +126,8 @@
             </div>
           </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
     <div class="container is-fluid is-marginless brand-color">
     {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
       {% for category, message in messages %}
