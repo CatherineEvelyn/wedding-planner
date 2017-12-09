@@ -10,8 +10,13 @@
 
 <!-- I've copy pasted these lines of codes from profile.html and deleted that page -->
 {% extends 'layout.html' %}
+
 {% block head %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='vendoracc.3d407683df0cd3728dae2a06f31349f8.css') }}">
+
 {% endblock %}
+
 {% block body %}
   <div class="modal">
     <div class="modal-background closeModal"></div>
@@ -229,8 +234,9 @@
     </div>
   </section>
 {% endblock %}
+
 {% block scripts %}
 
-<script type="text/javascript" src="{{ url_for('static', filename='vendoracc.3644d6847e8eb5e1b5c4.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='vendoracc.08598ae0d2d67978ba98.js') }}"></script>
 
 {% endblock %}

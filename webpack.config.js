@@ -15,23 +15,23 @@ module.exports = {
     main: [
       './src/js/datepicker.js',
       './src/js/main.js',
+      './src/css/style.css',
+      './src/css/mainpage.css',
     ],
     vendorlist: [
-      './src/js/vendor-list.js'
-    ],
-    commonstyles: [
-      './src/css/login.css',
-      './src/css/mainpage.css',
-      './src/css/style.css',
-      './src/css/user-account.css',
-      './src/css/vendor-account.css',
+      './src/js/vendor-list.js',
       './src/css/vendor-list.css'
     ],
     vendoracc: [
       './src/js/bookingViewer.js',
-      './src/js/vendor-profile.js'
+      './src/js/vendor-profile.js',
+      './src/css/vendor-account.css'
     ],
-    useracc: './src/js/user-account.js',
+    useracc: [
+      './src/js/user-account.js',
+      './src/css/user-account.css'
+    ],
+    login: './src/css/login.css'
   },
   output: {
     filename: '[name].[hash].js',
@@ -113,8 +113,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
-      progressively: "progressively",
-      Stickyfill: "Stickyfill"
+      progressively: "progressively"
     })
   ]
 };

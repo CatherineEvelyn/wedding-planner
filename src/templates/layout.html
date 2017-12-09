@@ -7,6 +7,7 @@
     <% for (var css in htmlWebpackPlugin.files.css) { %>
     <link rel="stylesheet" href="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.css[css] %>') }}">
     <% } %>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/progressively/dist/progressively.min.js"></script> -->
     {% block head %} {% endblock %}
   </head>
   <body>
@@ -149,8 +150,11 @@
       </div>
     </footer>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
-      <script type="text/javascript" src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.chunks[chunk].entry %>') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.chunks[chunk].entry %>') }}"></script>
     <% } %>
+    <script>
+      progressively.init();
+    </script>
     {% block scripts %}{% endblock %}
   </body>
 </html>

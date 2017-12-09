@@ -10,8 +10,13 @@
 
 <!-- I've copy pasted these lines of codes from profile.html and deleted that page -->
 {% extends 'layout.html' %}
+
 {% block head %}
+<% for (var css in htmlWebpackPlugin.files.css) { %>
+<link rel="stylesheet" href="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.css[css] %>') }}">
+<% } %>
 {% endblock %}
+
 {% block body %}
   <div class="modal">
     <div class="modal-background closeModal"></div>
@@ -229,6 +234,7 @@
     </div>
   </section>
 {% endblock %}
+
 {% block scripts %}
 <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
 <script type="text/javascript" src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.chunks[chunk].entry %>') }}"></script>

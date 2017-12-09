@@ -1,6 +1,11 @@
-{% block head %}
-{% endblock %}
 {% extends 'layout.html' %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='vendorlist.3de8348fb7bab6aee89fb9fac26df9e2.css') }}">
+
+{% endblock %}
+
 {% block body %}
 <div class="container is-fluid">
   <section class="section">
@@ -198,8 +203,9 @@
   </section>
 </div>
 {% endblock %}
+
 {% block scripts %}
 
-  <script type="text/javascript" src="{{ url_for('static', filename='vendorlist.3644d6847e8eb5e1b5c4.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='vendorlist.08598ae0d2d67978ba98.js') }}"></script>
 
 {% endblock %}

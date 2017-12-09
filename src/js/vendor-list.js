@@ -1,10 +1,11 @@
+import stickybits from "stickybits";
+
 var api_call_made = false;
 var vendorID = null;
 var vendors = [];
 var bookedVendors = [];
 var queryResults = [];
 var isActiveSearch = false;
-import "stickyfill";
 
 $(function() {
   retrieveBookedVendors();
@@ -34,7 +35,7 @@ $(function() {
   
   // Adding position:sticky polyfill for side menu to make sure it works in older browers
   var elements = $('.sticky');
-  Stickyfill.add(elements);
+  stickybits(elements, {stickyBitStickyOffset: 67});
 });
 
 function retrieveBookedVendors() {
