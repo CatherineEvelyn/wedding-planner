@@ -199,7 +199,7 @@
 </div>
 {% endblock %}
 {% block scripts %}
-
-  <script type="text/javascript" src="{{ url_for('static', filename='vendorlist.3644d6847e8eb5e1b5c4.js') }}"></script>
-
+<% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+  <script type="text/javascript" src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.chunks[chunk].entry %>') }}"></script>
+<% } %>
 {% endblock %}

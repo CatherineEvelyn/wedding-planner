@@ -11,7 +11,6 @@
 <!-- I've copy pasted these lines of codes from profile.html and deleted that page -->
 {% extends 'layout.html' %}
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/vendor-account.css') }}">
 {% endblock %}
 {% block body %}
   <div class="modal">
@@ -231,33 +230,7 @@
   </section>
 {% endblock %}
 {% block scripts %}
-<script>
-  var bookingViewer = new BookingViewer(
-    document.getElementById('bookingViewer'), {
-      dataFormat: "yyyy-mm-dd",
-      closeOnSelect: false
-    }
-  );
-</script>
 
-<script type="text/javascript" src="{{ url_for('static', filename='vendoracc.94be2cb7f83e7498912f.js') }}'"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='vendoracc.3644d6847e8eb5e1b5c4.js') }}"></script>
 
-<script defer>
-  var loc, tag;
-  update_tag();
-  $(window).on('popstate', e => {
-    update_tag();
-  })
-  function update_tag() {
-    loc = window.location.href.split('#');
-    tag = loc.length > 1 ? loc[1] : '';
-    if (tag === "bookings") {
-      retrieveDates();
-    } else if (tag === "account") {
-      showAccountInfo();
-    } else if (!tag) {
-      retrieveDates();
-    }
-  }
-</script>
 {% endblock %}

@@ -16,6 +16,9 @@ module.exports = {
       './src/js/datepicker.js',
       './src/js/main.js',
     ],
+    vendorlist: [
+      './src/js/vendor-list.js'
+    ],
     commonstyles: [
       './src/css/login.css',
       './src/css/mainpage.css',
@@ -87,16 +90,23 @@ module.exports = {
       filename: '[name].[contenthash].css'
     }),
     new HtmlWebpackPlugin({
-      template: 'src/layout.html',
+      template: 'src/templates/layout.html',
       filename: '../templates/layout.html',
       chunks: ['framework', 'main', 'commonstyles'],
       chunksSortMode: 'manual',
       inject: false
     }),
     new HtmlWebpackPlugin({
-      template: 'src/vendor-account.html',
+      template: 'src/templates/vendor-account.html',
       filename: '../templates/vendor-account.html',
       chunks: ['vendoracc'],
+      chunksSortMode: 'manual',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: 'src/templates/vendor-list.html',
+      filename: '../templates/vendor-list.html',
+      chunks: ['vendorlist'],
       chunksSortMode: 'manual',
       inject: false
     }),
@@ -104,7 +114,7 @@ module.exports = {
       $: "jquery",
       jQuery: "jquery",
       progressively: "progressively",
-      getVendorByType: "getVendorByType"
+      Stickyfill: "Stickyfill"
     })
   ]
 };
