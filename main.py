@@ -23,14 +23,14 @@ app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "246Pass"
 
-EXTERNAL_VENDOR_IDS = [ 1,2,3,4,5,6,7 ]
-VENDOR_TYPES = { "venue":1,
-                 "photographer":2,
-                 "videographer":3,
-                 "caterer":4,
-                 "music":5,
-                 "cosmetics":6,
-                 "tailor":7 }
+EXTERNAL_VENDOR_IDS = [1, 2, 3, 4, 5, 6, 7]
+VENDOR_TYPES = {"venue": 1,
+                "photographer": 2,
+                "videographer": 3,
+                "caterer": 4,
+                "music": 5,
+                "cosmetics": 6,
+                "tailor": 7}
 
 class UserVendor(db.Model):
     __tablename__ = 'user_vendor'
