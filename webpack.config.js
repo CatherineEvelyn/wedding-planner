@@ -97,6 +97,12 @@ module.exports = {
       inject: false
     }),
     new HtmlWebpackPlugin({
+      template: 'src/templates/index.html',
+      filename: '../templates/index.html',
+      chunks: ['main'],
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
       template: 'src/templates/vendor-account.html',
       filename: '../templates/vendor-account.html',
       chunks: ['vendoracc'],
@@ -108,6 +114,12 @@ module.exports = {
       filename: '../templates/vendor-list.html',
       chunks: ['vendorlist'],
       chunksSortMode: 'manual',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: 'src/templates/login.html',
+      filename: '../templates/login.html',
+      chunks: ['login'],
       inject: false
     }),
     new webpack.ProvidePlugin({

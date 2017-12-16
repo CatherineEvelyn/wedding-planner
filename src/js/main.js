@@ -6,6 +6,7 @@ $(function () {
   addMobileMenuListener();
   addSignupListener();
   addBlur();
+  progressively.init();
 });
 
 function addSignupListener() {
