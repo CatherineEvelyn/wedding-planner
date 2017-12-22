@@ -145,17 +145,25 @@ function sortArray(arr, type, order){
   return arr;
 }
 
+const delay = (function() {
+  var timer = 0;
+  return function(callback, ms) {
+    clearTimeout(timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
+
 function addSearchListener() {
   $("#vendorSearch").on('keyup', e => {
     let $self = $(e.currentTarget);
     $('.overlay-container').show();
     $('.vendor-list-card .overlay').show();
-    window.setTimeout(() => {
+    delay(() => {
       isActiveSearch = $self.val() === "" ? false : true;
       filterArray($self.val());
       $('.overlay-container').hide();
       $('.vendor-list-card .overlay').hide();
-    }, 600);
+    }, 700);
   });
 }
 
@@ -241,7 +249,7 @@ function makeSidelinkActive(type) {
 function displayVendors(arr) {
   let $wrapper = $(".vendor-list-card-wrapper")
 
-  $wrapper.empty();
+  $wrapper.hide().empty();
   // Use global vendors to allow local sorting
   $.each(arr, function(index, value) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
@@ -284,6 +292,7 @@ function displayVendors(arr) {
     $vendorCardWrapper.append($card);
     $wrapper.append($vendorCardWrapper);
   });
+  $wrapper.fadeIn(325);
   updateBookingNotifiers(bookedVendors);
 }
 

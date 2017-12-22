@@ -36,7 +36,6 @@ module.exports = {
     path: path.resolve(__dirname, 'static'),
     publicPath: ""
   },
-  watch: true,
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.sass', '.scss']
   },
