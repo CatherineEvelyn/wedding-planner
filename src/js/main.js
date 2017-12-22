@@ -1,5 +1,3 @@
-var sessionDetails = null;
-
 $(function () {
   getSessionDetails();
   addDismissNotificationListeners();
@@ -77,7 +75,7 @@ function getSessionDetails() {
       "source": "ajax"
     }
   }).done(data => {
-    sessionDetails = data;
+    window.sessionDetails = data;
     console.log(data);
   });
 }

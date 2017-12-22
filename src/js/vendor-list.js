@@ -1,4 +1,5 @@
 import stickybits from "stickybits";
+import { DatePicker } from "./datepicker.js";
 
 var api_call_made = false;
 var vendorID = null;
@@ -144,25 +145,17 @@ function sortArray(arr, type, order){
   return arr;
 }
 
-var delay = (function() {
-  var timer = 0;
-  return function(callback, ms) {
-    clearTimeout(timer);
-    timer = setTimeout(callback, ms);
-  };
-})();
-
 function addSearchListener() {
   $("#vendorSearch").on('keyup', e => {
     let $self = $(e.currentTarget);
     $('.overlay-container').show();
     $('.vendor-list-card .overlay').show();
-    delay(() => {
+    window.setTimeout(() => {
       isActiveSearch = $self.val() === "" ? false : true;
       filterArray($self.val());
       $('.overlay-container').hide();
       $('.vendor-list-card .overlay').hide();
-    }, 1000);
+    }, 600);
   });
 }
 
@@ -192,23 +185,12 @@ function filterArray(query) {
 }
 
 function getVendorByType(type) {
-  console.log("before");
-  // First unbind other ajax call animation from document
-  $(document).unbind("ajaxStart.bookingCall");
-  $(document).unbind("ajaxStop.bookingCall");
-  // Adding loading indicators for loading vendors call
-  $(document).bind("ajaxStart.vendorCall", () => {
-    $('.overlay-container').show();
-    $('.vendor-list-card .overlay').show();
-  });
-  $(document).bind("ajaxStop.vendorCall", () => {
-    $('.overlay-container').hide();
-    $('.vendor-list-card .overlay').hide();
-  });
+  // Show AJAX loading animation
+
+  $('.overlay-container').show();
+  $('.vendor-list-card .overlay').show();
 
   makeSidelinkActive(type);
-
-  console.log("after");
 
   $.ajax({
     method: 'GET',
@@ -232,6 +214,12 @@ function getVendorByType(type) {
     } else {
       displayVendors(vendors);
     }
+
+    // Hide AJAX loading animation
+
+    $('.overlay-container').hide();
+    $('.vendor-list-card .overlay').hide();
+
     api_call_made = false;
   })
   .fail((xhr, status, error) => {
@@ -303,7 +291,7 @@ function displayVendors(arr) {
 
 function addBookingListeners() {
   $(document).on('click', '.book-button', e => {
-    if (sessionDetails.session === false) {
+    if (window.sessionDetails.session == false) {
       alert("You must be logged in to book a vendor.");
     } else {
       $('#bookingModal').addClass('is-active');
@@ -334,19 +322,11 @@ function addBookFulfillmentListener() {
 }
 
 function postBookRequest(id, date) {
-  // First unbind main ajax animation from happening
-  $(document).unbind("ajaxStart.vendorCall");
-  $(document).unbind("ajaxStop.vendorCall");
-  // Adding loading indicators for booking call
-  $(document).bind("ajaxStart.bookingCall", () => {
-    $('.modal-card-body .overlay').fadeTo("fast", 0.75);
-    $('#bookVendor').addClass('is-loading');
-  });
-  $(document).bind("ajaxStop.bookingCall", () => {
-    $('.modal-card-body .overlay').fadeOut("fast");
-    $('#bookVendor').removeClass('is-loading');
-    console.log('complete!');
-  });
+  // Show AJAX booking animation
+
+  $('.modal-card-body .overlay').fadeTo("fast", 0.75);
+  $('#bookVendor').addClass('is-loading');
+
   $.ajax({
     method: "POST",
     url: "/book",
@@ -357,10 +337,19 @@ function postBookRequest(id, date) {
   })
   .done(json => {
     displayBookingConfirmation(json, id);
-    console.log(json);
+    
+    // Hide AJAX booking animation
+
+    $('.modal-card-body .overlay').fadeOut("fast");
+    $('#bookVendor').removeClass('is-loading');
   })
   .fail((xhr) => {
     displayErrorMessage(xhr.responseJSON.message);
+
+    // Hide AJAX booking animation
+
+    $('.modal-card-body .overlay').fadeOut("fast");
+    $('#bookVendor').removeClass('is-loading');
   });
 }
 

@@ -1,3 +1,5 @@
+import { BookingViewer } from './BookingViewer.js';
+
 var bookings = {};
 var bookingViewer = new BookingViewer(
   document.getElementById('bookingViewer'), {

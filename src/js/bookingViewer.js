@@ -28,7 +28,7 @@ var datepicker_langs = {
   }
 }
 
-class BookingViewer {
+export class BookingViewer {
   constructor(selector, options) {
     if (!options) options = {}
 

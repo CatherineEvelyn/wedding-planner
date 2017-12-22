@@ -13,7 +13,6 @@ module.exports = {
       './src/vendor-plugins/framework.js'
     ],
     main: [
-      './src/js/datepicker.js',
       './src/js/main.js',
       './src/css/style.css',
       './src/css/mainpage.css',
@@ -23,7 +22,6 @@ module.exports = {
       './src/css/vendor-list.css'
     ],
     vendoracc: [
-      './src/js/bookingViewer.js',
       './src/js/vendor-profile.js',
       './src/css/vendor-account.css'
     ],
@@ -38,6 +36,7 @@ module.exports = {
     path: path.resolve(__dirname, 'static'),
     publicPath: ""
   },
+  watch: true,
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.sass', '.scss']
   },
