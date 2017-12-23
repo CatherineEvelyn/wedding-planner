@@ -1,10 +1,38 @@
-let bookings = {}
+import { BookingViewer } from './BookingViewer.js';
+
+var bookings = {};
+var bookingViewer = new BookingViewer(
+  document.getElementById('bookingViewer'), {
+    dataFormat: "yyyy-mm-dd",
+    closeOnSelect: false
+  }
+);
 
 $(function() {
   addAjaxListeners();
   addRerenderCalendarListeners();
   addBookingDetailsListeners();
   addSaveChangesListener();
+
+  var loc, tag;
+
+  update_tag();
+
+  $(window).on('popstate', e => {
+    update_tag();
+  });
+
+  function update_tag() {
+    loc = window.location.href.split('#');
+    tag = loc.length > 1 ? loc[1] : '';
+    if (tag === "bookings") {
+      retrieveDates();
+    } else if (tag === "account") {
+      showAccountInfo();
+    } else if (!tag) {
+      retrieveDates();
+    }
+  }
 });
 
 function addAjaxListeners() {

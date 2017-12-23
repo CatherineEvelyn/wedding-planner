@@ -14,73 +14,44 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/user-account.css') }}">
 {% endblock %}
 {% block body %}
-
-
-<div class="container is-fluid">
+  <section class="hero is-brand is-bold">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title has-text-white">
+          Your Profile
+        </h1>
+        <h2 class="subtitle has-text-white">
+          Manage vendors in your organizer, edit account information...
+        </h2>
+      </div>
+    </div>
+  </section>
+  <nav class="navbar has-shadow">
+    <div class="container">
+      <div class="navbar-tabs">
+        <a class="navbar-item is-tab is-active" href="#overview">
+          <span class="icon">
+            <i class="mdi mdi-book-open-variant"></i>
+          </span>
+          Overview
+        </a>
+        <a class="navbar-item is-tab" href="#organizer">
+          <span class="icon">
+            <i class="mdi mdi-book-open-variant"></i>
+          </span>
+          Organizer
+        </a>
+        <a class="navbar-item is-tab getAccount" href="#account">
+          <span class="icon">
+            <i class="mdi mdi-account"></i>
+          </span>
+          Account
+        </a>
+      </div>
+    </div>
+  </nav>
   <section class="section">
     <div class="tile is-ancestor">
-      <div class="tile is-vertical is-parent is-3">
-        <div class="tile is-child box">
-          <aside class="menu vendor-search-menu sticky">
-            <p class="menu-label">
-              Vendor Search
-            </p>
-            <div class="field">
-              <div class="control has-icons-left">
-                <input class="input is-small" type="text" placeholder="Name, type, location...">
-                <span class="icon is-left">
-                  <i class="mdi mdi-magnify"></i>
-                </span>
-              </div>
-            </div>
-            <p class="menu-label">
-              Vendor Types
-            </p>
-            <ul class="menu-list">
-              <li>
-                <a class="getVendorByType" data-type="all">
-                  All Vendors
-                </a>
-              </li>
-              <li>
-                <a href="/vendor-list#venue" data-type="venue">
-                  Venues
-                </a>
-              </li>
-              <li>
-                <a href="/vendor-list#photographer" data-type="photographer">
-                  Photographers
-                </a>
-              </li>
-              <li>
-                <a href="/vendor-list#videographer" data-type="videographer">
-                  Videographers
-                </a>
-              </li>
-              <li>
-                <a href="/vendor-list#caterer" data-type="caterer">
-                  Caterers
-                </a>
-              </li>
-              <li>
-                <a href="/vendor-list#music" data-type="music">
-                  Band/DJ
-                </a>
-              </li>
-              <li>
-                <a href="/vendor-list#cosmetics" data-type="cosmetics">
-                  Hairstyle &amp; Make Up Artists
-                </a>
-              </li>
-              <li>
-                <a href="/vendor-list#tailor" data-type="tailor">
-                  Tailors
-                </a>
-              </li>
-            </ul>
-          </aside>    
-        </div>
-      </div>
       <div class="tile is-vertical is-parent">
         <div class="tile is-child box">
           <p>Welcome back to your organizer {{user.name}}</p>

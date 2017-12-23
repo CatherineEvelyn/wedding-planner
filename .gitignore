@@ -106,4 +106,6 @@ ENV/
 # DS Store
 .DS_Store/
 
-static/components/
+# NPM modules and bundles
+static/
+node_modules/

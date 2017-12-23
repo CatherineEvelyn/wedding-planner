@@ -4,11 +4,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='framework.7a7050011a95058aa4f49f1c255a8efc.css') }}">
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.b57c9607c0d30ec8e1e3fde73b02ebe3.css') }}">
-    
+    <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link rel="stylesheet" href="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.css[css] %>') }}">
+    <% } %>
     <!-- <script src="https://cdn.jsdelivr.net/npm/progressively/dist/progressively.min.js"></script> -->
     {% block head %} {% endblock %}
   </head>
@@ -151,11 +149,9 @@
         </div>
       </div>
     </footer>
-    
-    <script type="text/javascript" src="{{ url_for('static', filename='framework.c709cc0049404c913e35.js') }}"></script>
-    
-    <script type="text/javascript" src="{{ url_for('static', filename='main.c709cc0049404c913e35.js') }}"></script>
-    
+    <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+    <script type="text/javascript" src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.chunks[chunk].entry %>') }}"></script>
+    <% } %>
     {% block scripts %}{% endblock %}
   </body>
 </html>

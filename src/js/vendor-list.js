@@ -1,60 +1,43 @@
+import stickybits from "stickybits";
+import { DatePicker } from "./datepicker.js";
+
 var api_call_made = false;
 var vendorID = null;
-var sessionDetails = null;
 var vendors = [];
 var bookedVendors = [];
 var queryResults = [];
 var isActiveSearch = false;
 
-$(function () {
+$(function() {
   retrieveBookedVendors();
-  getSessionDetails();
-  addDismissNotificationListeners();
-  addMobileMenuListener();
-  addSignupListener();
-  addBlur();
   addAjaxListeners();
   addSearchListener();
-  addCloseModalListeners();
   addBookingListeners();
   addBookFulfillmentListener();
-});
+  addCloseModalListeners();
 
-function addSignupListener() {
-  $('.toggle-form').click(e => {
-    let $self = $(e.currentTarget);
-
-    $('.toggle-form').parent().removeClass('is-active');
-    $self.parent().addClass('is-active');
-
-    if ($self.hasClass('show-vendor')) {
-      $('.vendor-signup').show();
-      $('.organizer-signup').hide();
-      $('.signup-container').addClass('expanded-form');
-    } else {
-      $('.vendor-signup').hide();
-      $('.organizer-signup').show();
-      $('.signup-container').removeClass('expanded-form');
-    }
-  })
-}
-
-function addBlur() {
-  $('.vendor-card').on({
-    mouseover: e => {
-      let $self = $(e.currentTarget);
-      $self.children('.vendor-card-image').addClass('in-focus');
-      $self.children('.vendor-icon').addClass('slide-up');
-      $self.children('.vendor-text').addClass('text-shown');
-    },
-    mouseleave: e => {
-      let $self = $(e.currentTarget);
-      $self.children('.vendor-card-image').removeClass('in-focus');
-      $self.children('.vendor-icon').removeClass('slide-up');
-      $self.children('.vendor-text').removeClass('text-shown');
-    }
+  var loc, tag;
+  
+  update_tag();
+  
+  $(window).on('popstate', e => {
+    update_tag();
   });
-}
+  
+  function update_tag() {
+    loc = window.location.href.split('#');
+    tag = loc.length > 1 ? loc[1] : '';
+    if (tag != '' && !api_call_made) {
+      getVendorByType(tag);
+    } else if (!tag) {
+      getVendorByType("all");
+    }
+  }
+  
+  // Adding position:sticky polyfill for side menu to make sure it works in older browers
+  var elements = $('.sticky');
+  stickybits(elements, {stickyBitStickyOffset: 67});
+});
 
 function retrieveBookedVendors() {
   $.ajax({
@@ -140,8 +123,8 @@ function sortArray(arr, type, order){
       // a and b will here be two objects from the array
       // thus a[1] and b[1] will equal the names
       // if they are equal, return 0 (no sorting)
-      if (a[type] == b[type]) { 
-        return 0; 
+      if (a[type] == b[type]) {
+        return 0;
       }
       if (a[type] > b[type]) {
         // if a should come after b, return 1
@@ -162,7 +145,7 @@ function sortArray(arr, type, order){
   return arr;
 }
 
-var delay = (function() {
+const delay = (function() {
   var timer = 0;
   return function(callback, ms) {
     clearTimeout(timer);
@@ -180,7 +163,7 @@ function addSearchListener() {
       filterArray($self.val());
       $('.overlay-container').hide();
       $('.vendor-list-card .overlay').hide();
-    }, 1000);
+    }, 700);
   });
 }
 
@@ -210,18 +193,10 @@ function filterArray(query) {
 }
 
 function getVendorByType(type) {
-  // First unbind other ajax call animation from document
-  $(document).unbind("ajaxStart.bookingCall");
-  $(document).unbind("ajaxStop.bookingCall");
-  // Adding loading indicators for loading vendors call
-  $(document).bind("ajaxStart.vendorCall", () => {
-    $('.overlay-container').show();
-    $('.vendor-list-card .overlay').show();
-  });
-  $(document).bind("ajaxStop.vendorCall", () => {
-    $('.overlay-container').hide();
-    $('.vendor-list-card .overlay').hide();
-  });
+  // Show AJAX loading animation
+
+  $('.overlay-container').show();
+  $('.vendor-list-card .overlay').show();
 
   makeSidelinkActive(type);
 
@@ -240,18 +215,24 @@ function getVendorByType(type) {
     }
   })
   .done(json => {
-    query = $("#vendorSearch").val();
+    let query = $("#vendorSearch").val();
 
     if (query) {
       filterArray(query);
     } else {
       displayVendors(vendors);
     }
+
+    // Hide AJAX loading animation
+
+    $('.overlay-container').hide();
+    $('.vendor-list-card .overlay').hide();
+
     api_call_made = false;
   })
   .fail((xhr, status, error) => {
     console.log(xhr, status, error);
-  })
+  });
 }
 
 function makeSidelinkActive(type) {
@@ -268,7 +249,7 @@ function makeSidelinkActive(type) {
 function displayVendors(arr) {
   let $wrapper = $(".vendor-list-card-wrapper")
 
-  $wrapper.empty();
+  $wrapper.hide().empty();
   // Use global vendors to allow local sorting
   $.each(arr, function(index, value) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
@@ -311,36 +292,15 @@ function displayVendors(arr) {
     $vendorCardWrapper.append($card);
     $wrapper.append($vendorCardWrapper);
   });
+  $wrapper.fadeIn(325);
   updateBookingNotifiers(bookedVendors);
 }
 
-function addMobileMenuListener() {
-  // Get all "navbar-burger" elements
-  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-  // Check if there are any navbar burgers
-  if ($navbarBurgers.length > 0) {
-
-    // Add a click event on each of them
-    $navbarBurgers.forEach(function ($el) {
-      $el.addEventListener('click', function () {
-
-        // Get the target from the "data-target" attribute
-        var target = $el.dataset.target;
-        var $target = document.getElementById(target);
-
-        // Toggle the class on both the "navbar-burger" and the "navbar-menu"
-        $el.classList.toggle('is-active');
-        $target.classList.toggle('is-active');
-
-      });
-    });
-  }
-}
+// Functions for booking vendors
 
 function addBookingListeners() {
   $(document).on('click', '.book-button', e => {
-    if (sessionDetails.session === false) {
+    if (window.sessionDetails.session == false) {
       alert("You must be logged in to book a vendor.");
     } else {
       $('#bookingModal').addClass('is-active');
@@ -371,19 +331,11 @@ function addBookFulfillmentListener() {
 }
 
 function postBookRequest(id, date) {
-  // First unbind main ajax animation from happening
-  $(document).unbind("ajaxStart.vendorCall");
-  $(document).unbind("ajaxStop.vendorCall");
-  // Adding loading indicators for booking call
-  $(document).bind("ajaxStart.bookingCall", () => {
-    $('.modal-card-body .overlay').fadeTo("fast", 0.75);
-    $('#bookVendor').addClass('is-loading');
-  });
-  $(document).bind("ajaxStop.bookingCall", () => {
-    $('.modal-card-body .overlay').fadeOut("fast");
-    $('#bookVendor').removeClass('is-loading');
-    console.log('complete!');
-  });
+  // Show AJAX booking animation
+
+  $('.modal-card-body .overlay').fadeTo("fast", 0.75);
+  $('#bookVendor').addClass('is-loading');
+
   $.ajax({
     method: "POST",
     url: "/book",
@@ -394,10 +346,19 @@ function postBookRequest(id, date) {
   })
   .done(json => {
     displayBookingConfirmation(json, id);
-    console.log(json);
+    
+    // Hide AJAX booking animation
+
+    $('.modal-card-body .overlay').fadeOut("fast");
+    $('#bookVendor').removeClass('is-loading');
   })
   .fail((xhr) => {
     displayErrorMessage(xhr.responseJSON.message);
+
+    // Hide AJAX booking animation
+
+    $('.modal-card-body .overlay').fadeOut("fast");
+    $('#bookVendor').removeClass('is-loading');
   });
 }
 
@@ -432,23 +393,4 @@ function resetModalView() {
   $confirmView.hide();
   $errorView.hide();
   $('.detail').remove();
-}
-
-function getSessionDetails() {
-  $.ajax({
-    method: "GET",
-    url: "/session",
-    data: {
-      "source": "ajax"
-    }
-  }).done(data => {
-    sessionDetails = data;
-    console.log(data);
-  });
-}
-
-function addDismissNotificationListeners() {
-  $('.flash-dismiss').on('click', e => {
-    $(e.currentTarget).parent().remove();
-  });
 }

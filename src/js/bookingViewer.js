@@ -28,7 +28,7 @@ var datepicker_langs = {
   }
 }
 
-class DatePicker {
+export class BookingViewer {
   constructor(selector, options) {
     if (!options) options = {}
 
@@ -76,6 +76,7 @@ class DatePicker {
     this.calendarContainer = document.createElement('div');
     this.calendarContainer.id = 'datePicker' + ( new Date ).getTime();
     this.calendarContainer.classList.add('calendar');
+    this.calendarContainer.classList.add('is-large');
     this.renderCalendar();
 
     if (this.options.overlay) {
@@ -85,19 +86,9 @@ class DatePicker {
     }
 
     this.datePickerContainer.appendChild(this.calendarContainer);
-    document.getElementById('dateInput').appendChild(this.datePickerContainer);
+    document.getElementById('bookingViewer').appendChild(this.datePickerContainer);
 
-    this.element.addEventListener('click', function (e) {
-      e.preventDefault();
-
-      if (_this.open) {
-        _this.forcehide();
-        _this.open = false;
-      } else {
-        _this.show();
-        _this.open = true;
-      }
-    });
+    _this.show();
   }
 
   /**
@@ -112,10 +103,9 @@ class DatePicker {
     return abbr ? datepicker_langs[this.options.lang].weekdaysShort[day] : datepicker_langs[this.options.lang].weekdays[day];
   }
 
-  renderDay(day, month, year, isSelected, isToday, isDisabled, isEmpty, isBetween, isSelectedIn, isSelectedOut) {
+  renderDay(day, month, year, isSelected, isToday, isDisabled, isEmpty, isBetween, isSelectedIn, isSelectedOut, time) {
     var _this = this;
     var newDayContainer = document.createElement('div');
-    var newDay = document.createElement('div');
     var newDayButton = document.createElement('button');
 
     newDayButton.classList.add('date-item');
@@ -132,20 +122,23 @@ class DatePicker {
       }
     });
 
-    newDay.appendChild(newDayButton);
+    newDayContainer.appendChild(newDayButton);
     newDayContainer.classList.add('calendar-date');
-    newDayContainer.appendChild(newDay);
 
-
-    newDay.classList.add('calendar-date');
     if (isDisabled) {
       newDayContainer.setAttribute('disabled', 'disabled');
+      if (day > 15) {
+        month = month - 1;
+      } else {
+        month = month + 1;
+      }
+      newDayContainer.id = year + "-" + month + "-" + day;
     }
     if (isToday) {
-      newDayContainer.classList.add('is-today');
+      newDayButton.classList.add('is-today');
     }
     if (isSelected) {
-      newDayContainer.classList.add('is-active');
+      newDayButton.classList.add('is-active');
     }
     if (isBetween) {
       newDayContainer.classList.add('calendar-range');
@@ -156,6 +149,12 @@ class DatePicker {
     if (isSelectedOut) {
       newDayContainer.classList.add('range-end');
     }
+
+    month = month + 1;
+
+    day < 10 && ( day = '0' + day );
+    month < 10 && ( month = '0' + month );
+    newDayContainer.id = year + "-" + month + "-" + day;
 
     return newDayContainer;
   }
@@ -170,6 +169,9 @@ class DatePicker {
     this.previousYearButton = document.createElement('div');
     this.previousYearButton.classList.add('button');
     this.previousYearButton.classList.add('is-primary');
+    this.previousYearButton.classList.add('tooltip');
+    this.previousYearButton.setAttribute("data-tooltip", "Previous Year");
+    this.previousYearButton.id = "prevYear";
     var previousButtonIcon = document.createElement('i');
     previousButtonIcon.classList.add('mdi');
     previousButtonIcon.classList.add('mdi-rewind');
@@ -184,6 +186,9 @@ class DatePicker {
     this.previousMonthButton = document.createElement('div');
     this.previousMonthButton.classList.add('button');
     this.previousMonthButton.classList.add('is-primary');
+    this.previousMonthButton.classList.add('tooltip');
+    this.previousMonthButton.setAttribute("data-tooltip", "Previous Month");
+    this.previousMonthButton.id = "prevMonth";
     var previousMonthButtonIcon = document.createElement('i');
     previousMonthButtonIcon.classList.add('mdi');
     previousMonthButtonIcon.classList.add('mdi-arrow-left-thick');
@@ -195,25 +200,19 @@ class DatePicker {
     });
     previousButtonContainer.appendChild(this.previousMonthButton);
 
-    var calendarTitleContainer = document.createElement('div');
-    calendarTitleContainer.classList.add('calendar-title-container');
 
-    var calendarTitle = document.createElement('span');
-    calendarTitle.classList.add('calendar-title');
-    calendarTitle.innerHTML = datepicker_langs[this.options.lang].months[month];
+    var calendarTitle = document.createElement('div');
+    calendarTitle.innerHTML = datepicker_langs[this.options.lang].months[month] + ' ' + year;
 
-    var calendarTitleYear = document.createElement('span');
-    calendarTitleYear.classList.add('calendar-title-year');
-    calendarTitleYear.innerHTML = year;
-
-    calendarTitleContainer.appendChild(calendarTitle);
-    calendarTitleContainer.appendChild(calendarTitleYear);
 
     var nextButtonContainer = document.createElement('div');
     nextButtonContainer.classList.add('calendar-nav-right');
     this.nextMonthButton = document.createElement('div');
     this.nextMonthButton.classList.add('button');
     this.nextMonthButton.classList.add('is-primary');
+    this.nextMonthButton.classList.add('tooltip');
+    this.nextMonthButton.setAttribute("data-tooltip", "Next Month");
+    this.nextMonthButton.id = "nextMonth";
     var nextMonthButtonIcon = document.createElement('i');
     nextMonthButtonIcon.classList.add('mdi');
     nextMonthButtonIcon.classList.add('mdi-arrow-right-thick');
@@ -227,6 +226,9 @@ class DatePicker {
     this.nextYearButton = document.createElement('div');
     this.nextYearButton.classList.add('button');
     this.nextYearButton.classList.add('is-primary');
+    this.nextYearButton.classList.add('tooltip');
+    this.nextYearButton.setAttribute("data-tooltip", "Next Year");
+    this.nextYearButton.id = "nextYear";
     var nextYearButtonIcon = document.createElement('i');
     nextYearButtonIcon.classList.add('mdi');
     nextYearButtonIcon.classList.add('mdi-fast-forward');
@@ -239,7 +241,7 @@ class DatePicker {
     nextButtonContainer.appendChild(this.nextYearButton);
 
     calendarNav.appendChild(previousButtonContainer);
-    calendarNav.appendChild(calendarTitleContainer);
+    calendarNav.appendChild(calendarTitle);
     calendarNav.appendChild(nextButtonContainer);
 
     return calendarNav;
@@ -261,13 +263,18 @@ class DatePicker {
 
   renderBody() {
     var calendarBody = document.createElement('div');
-    calendarBody.classList.add('calendar-body');
+    var bodyOverlay = document.createElement('div');
 
+    calendarBody.classList.add('calendar-body');
+    bodyOverlay.classList.add('overlay');
+
+    calendarBody.appendChild(bodyOverlay);
     return calendarBody;
   }
 
   renderCalendar() {
     var now = new Date();
+    now.setHours(0, 0, 0, 0);
 
     var calendarNav = this.renderNav(this.year, this.month);
     var calendarHeader = this.renderHeader();
@@ -319,7 +326,7 @@ class DatePicker {
         isDisabled = true;
       }
 
-      calendarBody.append(this.renderDay(day.getDate(), this.month, this.year, isSelected, isToday, isDisabled, isEmpty, isBetween, isSelectedIn, isSelectedOut));
+      calendarBody.append(this.renderDay(day.getDate(), this.month, this.year, isSelected, isToday, isDisabled, isEmpty, isBetween, isSelectedIn, isSelectedOut, day.getTime()));
     }
   }
 
@@ -402,7 +409,7 @@ class DatePicker {
       }
     }
 
-    this.calendarContainer.style.position = 'absolute';
+    this.calendarContainer.style.position = 'relative';
     this.calendarContainer.style.zIndex = '100';
   }
 
@@ -473,6 +480,6 @@ class DatePicker {
 
   compareDates(a, b) {
     // weak date comparison (use setToStartOfDay(date) to ensure correct result)
-    return a.getTime() === b.getTime();
+    return a.getTime() == b.getTime();
   }
 }

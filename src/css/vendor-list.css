@@ -22,8 +22,21 @@
   border-radius: 4px;
 }
 
+.menu-list a.is-active {
+  background-color: #555555;
+}
+
+#vendorSearch::placeholder {
+  color: #adadad;
+}
+
 #vendorSearch ~ .icon {
   font-size: 0.85rem;
+  color: #adadad;
+}
+
+#vendorSearch:focus ~ .icon {
+  color: #4e4e4e;
 }
 
 .vendor-list-card > article {
@@ -32,12 +45,13 @@
 
 .vendor-list-card-wrapper {
   flex-wrap: wrap;
+  display: none;
 }
 
 .sticky {
   position: -webkit-sticky;
   position: sticky;
-  top: 20px;
+  top: 67px;
 }
 
 .sticky:before,
