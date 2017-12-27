@@ -711,7 +711,7 @@ def genData():
       fake.street_address(),
       fake.city(),
       fake.zipcode(),
-      random.randrange(1, 6),
+      random.randrange(0, 6),
       random.choice(vendorTypes),
       random.randrange(1, 1000),
       make_pw_hash(fake.password(length=10, digits=True, upper_case=True, lower_case=True)),

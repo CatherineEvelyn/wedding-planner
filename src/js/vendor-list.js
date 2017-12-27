@@ -255,22 +255,23 @@ function displayVendors(arr) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
     let $card = $("<article />", {"class": "tile is-child card"}).attr("data-vendor-id", value.id);
 
-    $card.append('<div class="overlay"></div>');
+    $card.append(
+      $('<div />', {"class": "tile-header"}).append(
+        $('<span />', {"class": "header-text"}).text(value.vendorType)
+      ), '<div class="overlay"></div>'
+    );
 
     $card.append(
       $('<div />', {"class": "card-content"}).append(
         $('<div />', {"class": "media"}).append(
           $('<div />', {"class": "media-content"}).append(
             $('<p />', {"class": "title is-3 vendorName"}).text(value.contactName),
-            $('<p />', {"class": "subtitle is-5 vendorType"}).text(value.vendorType)
+            generateRatingStars(value.rating)
           )
         ),
         $('<div />', {"class": "content"}).append(
           $('<p />', {"class": "businessName"}).text(value.businessName),
           $('<p />', {"class": "vendorLocation"}).text(value.city + ", " + value.state),
-          $("<p />").append(
-            $("<small />", {"html": 'Rating: ' + value.rating})
-          ),
           $("<p />").append(
             $("<small />", {"html": 'Price/Rate: $' + value.price + ".00"})
           )
@@ -294,6 +295,25 @@ function displayVendors(arr) {
   });
   $wrapper.fadeIn(325);
   updateBookingNotifiers(bookedVendors);
+}
+
+function generateRatingStars(rating) {
+  let container = $('<span />', {"class": "rating-container"});
+  let starClass;
+
+  container.attr("data-rating", rating);
+
+  for (let i = 0; i < 5; i++) {
+    starClass = i < rating ? "filled-star" : "empty-star";
+
+    container.append(
+      $('<span />', {"class": "icon is-small"}).append(
+        $('<i />', {"class": "mdi mdi-star " + starClass})
+      )
+    )
+  }
+
+  return container;
 }
 
 // Functions for booking vendors

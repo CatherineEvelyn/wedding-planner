@@ -40,7 +40,7 @@
 }
 
 .vendor-list-card > article {
-  border-left: 4px solid #c7def3;
+  border-left: 4px solid #03a9f4;
 }
 
 .vendor-list-card-wrapper {
@@ -88,7 +88,7 @@
   position: absolute;
   display: none;
   top: 0;
-  left: 0;
+  left: -4px;
   right: 0;
   bottom: 0;
   background-color: white;
@@ -96,7 +96,7 @@
 }
 
 .tile .overlay {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .vendorName {
@@ -220,6 +220,44 @@
   }
 }
 
+.menu {
+  max-height: 82.5vh;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
 
+/* Webkit Scrollbar Styling */
 
+.menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.menu:hover::-webkit-scrollbar-thumb {
+  background-color: #e7d7e3;
+}
+
+.getVendorByType.is-active {
+  pointer-events: none;
+  cursor: default;
+}
+
+.tile-header {
+  padding: 0.3rem 0 0.5rem .7rem;
+  background-color: #03a9f4;
+  color: #ffffff;
+}
+
+.tile-header .header-text {
+  letter-spacing: 0.15rem;
+  font-size: 0.8rem;
+  text-transform: lowercase;
+}
+
+.filled-star {
+  color: #ffe007;
+}
+
+.empty-star {
+  color: #dddddd;
+}
 
