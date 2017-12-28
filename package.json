@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack -p",
     "watch": "webpack --watch",
-    "heroku-postinstall": "webpack -p --progress"
+    "heroku-postinstall": "webpack -p"
   },
   "repository": {
     "type": "git",
