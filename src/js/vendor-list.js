@@ -253,10 +253,10 @@ function displayVendors(arr) {
   // Use global vendors to allow local sorting
   $.each(arr, function(index, value) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
-    let $card = $("<article />", {"class": "tile is-child card"}).attr("data-vendor-id", value.id);
+    let $card = $("<article />", {"class": "tile is-child card card-" + value.vendorType}).attr("data-vendor-id", value.id);
 
     $card.append(
-      $('<div />', {"class": "tile-header"}).append(
+      $('<div />', {"class": "tile-header card-header-" + value.vendorType}).append(
         $('<span />', {"class": "header-text"}).text(value.vendorType)
       ), '<div class="overlay"></div>'
     );
@@ -265,8 +265,13 @@ function displayVendors(arr) {
       $('<div />', {"class": "card-content"}).append(
         $('<div />', {"class": "media"}).append(
           $('<div />', {"class": "media-content"}).append(
-            $('<p />', {"class": "title is-3 vendorName"}).text(value.contactName),
-            generateRatingStars(value.rating)
+            $('<div />', {"class": "profile-picture-container"}).append(
+              $('<img />', {"class": "profile-picture"}).attr("src", "http://placekitten.com/70/70")
+            ),
+            $('<div />', {"class": "profile-info-container"}).append(
+              $('<p />', {"class": "title is-3 vendorName"}).text(value.contactName),
+              generateRatingStars(value.rating)
+            )
           )
         ),
         $('<div />', {"class": "content"}).append(
@@ -300,8 +305,6 @@ function displayVendors(arr) {
 function generateRatingStars(rating) {
   let container = $('<span />', {"class": "rating-container"});
   let starClass;
-
-  container.attr("data-rating", rating);
 
   for (let i = 0; i < 5; i++) {
     starClass = i < rating ? "filled-star" : "empty-star";

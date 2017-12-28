@@ -1,3 +1,9 @@
+/* Card size adjustments */
+
+.tile.is-parent.vendor-list-card {
+  max-width: 50%;
+}
+
 .vendor-list-card {
   flex-basis: 33.33%;
   position: relative;
@@ -14,6 +20,8 @@
     flex-basis: 100%;
   }
 }
+
+/* Side menu styles */
 
 #vendorSearch {
   box-shadow: none;
@@ -39,14 +47,28 @@
   color: #4e4e4e;
 }
 
-.vendor-list-card > article {
-  border-left: 4px solid #03a9f4;
+.menu {
+  max-height: 82.5vh;
+  overflow-y: auto;
+  padding-right: 1rem;
 }
 
-.vendor-list-card-wrapper {
-  flex-wrap: wrap;
-  display: none;
+/* Webkit Scrollbar Styling */
+
+.menu::-webkit-scrollbar {
+  width: 6px;
 }
+
+.menu:hover::-webkit-scrollbar-thumb {
+  background-color: #e7d7e3;
+}
+
+.getVendorByType.is-active {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Sticky menu */
 
 .sticky {
   position: -webkit-sticky;
@@ -59,6 +81,123 @@
   content: '';
   display: table;
 }
+
+/* General card styles */
+
+.vendor-list-card-wrapper {
+  flex-wrap: wrap;
+  display: none;
+}
+
+.tile .overlay {
+  opacity: 0.8;
+}
+
+.tile-header {
+  padding: 0.3rem 0 0.5rem .7rem;
+  background-color: #03a9f4;
+  color: #ffffff;
+}
+
+.tile-header .header-text {
+  letter-spacing: 0.15rem;
+  font-size: 0.8rem;
+  text-transform: lowercase;
+}
+
+.media-content {
+  display: flex;
+  max-width: 100%;
+}
+
+.profile-picture-container {
+  height: 70px;
+  width: 70px;
+  margin-right: 0.5rem;
+  border: 2px solid;
+  border-radius: 2000px;
+  overflow: hidden;
+}
+
+.vendorName {
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 0px !important;
+}
+
+.filled-star {
+  color: #ffe007;
+}
+
+.empty-star {
+  color: #dddddd;
+}
+
+/* Vendor Card Colors */
+
+/* BORDERS */
+
+.vendor-list-card > article.card-videographer .profile-picture-container {
+  border-color: #80DEEA;
+}
+
+.vendor-list-card > article.card-photographer .profile-picture-container {
+  border-color: #f48fb1;
+}
+
+.vendor-list-card > article.card-tailor .profile-picture-container {
+  border-color: #80cbc4;
+}
+
+.vendor-list-card > article.card-caterer .profile-picture-container {
+  border-color: #b39ddb;
+}
+
+.vendor-list-card > article.card-venue .profile-picture-container {
+  border-color: #676c86;
+}
+
+.vendor-list-card > article.card-music .profile-picture-container {
+  border-color: #aed581;
+}
+
+.vendor-list-card > article.card-cosmetics .profile-picture-container {
+  border-color: #ffab91;
+}
+
+/* HEADERS */
+
+.card-header-videographer {
+  background-color: #80DEEA;
+}
+
+.card-header-photographer {
+  background-color: #f48fb1;
+}
+
+.card-header-tailor {
+  background-color: #80cbc4;
+}
+
+.card-header-caterer {
+  background-color: #b39ddb;
+}
+
+.card-header-venue {
+  background-color: #676c86;
+}
+
+.card-header-music {
+  background-color: #aed581;
+}
+
+.card-header-cosmetics {
+  background-color: #ffab91;
+}
+
+/* Datepicker and modal styles */
 
 .calendar-title-container {
   display: flex;
@@ -88,22 +227,11 @@
   position: absolute;
   display: none;
   top: 0;
-  left: -4px;
+  left: 0;
   right: 0;
   bottom: 0;
   background-color: white;
   z-index: 101;
-}
-
-.tile .overlay {
-  opacity: 0.8;
-}
-
-.vendorName {
-  max-width: 100%;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
 
 .datepicker .calendar .calendar-header .calendar-date,
@@ -156,6 +284,8 @@
   font-size: 1rem;
 }
 
+/* AJAX loader styles */
+
 .loading-container {
   position: relative;
 }
@@ -184,10 +314,6 @@
   height: 100px;
   width: 100px;
   position: relative;
-}
-
-.fetch-message {
-  font-size: 0.85rem;
 }
 
 .path {
@@ -219,45 +345,3 @@
     stroke-dashoffset: -248;
   }
 }
-
-.menu {
-  max-height: 82.5vh;
-  overflow-y: auto;
-  padding-right: 1rem;
-}
-
-/* Webkit Scrollbar Styling */
-
-.menu::-webkit-scrollbar {
-  width: 6px;
-}
-
-.menu:hover::-webkit-scrollbar-thumb {
-  background-color: #e7d7e3;
-}
-
-.getVendorByType.is-active {
-  pointer-events: none;
-  cursor: default;
-}
-
-.tile-header {
-  padding: 0.3rem 0 0.5rem .7rem;
-  background-color: #03a9f4;
-  color: #ffffff;
-}
-
-.tile-header .header-text {
-  letter-spacing: 0.15rem;
-  font-size: 0.8rem;
-  text-transform: lowercase;
-}
-
-.filled-star {
-  color: #ffe007;
-}
-
-.empty-star {
-  color: #dddddd;
-}
-
