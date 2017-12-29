@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, render_template, url_for, session, flash, jsonify, Markup, abort
 from flask_sqlalchemy import SQLAlchemy
+from whitenoise import WhiteNoise
 from hashutils import *
 import re
 from faker import Faker
@@ -22,6 +23,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", 'mysql+py
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "246Pass"
+
+app.wsgi_app = WhiteNoise(app.wsgi_app, root='static/')
 
 EXTERNAL_VENDOR_IDS = [1, 2, 3, 4, 5, 6, 7]
 VENDOR_TYPES = {"venue": 1,

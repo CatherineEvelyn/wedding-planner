@@ -256,17 +256,19 @@ function displayVendors(arr) {
     let $card = $("<article />", {"class": "tile is-child card card-" + value.vendorType}).attr("data-vendor-id", value.id);
 
     $card.append(
-      $('<div />', {"class": "tile-header card-header-" + value.vendorType}).append(
-        $('<span />', {"class": "header-text"}).text(value.vendorType)
-      ), '<div class="overlay"></div>'
+      $('<div />', {"class": "tile-header card-header-" + value.vendorType}).text(value.vendorType),
+      $('<div />', {"class": "overlay"})
     );
 
     $card.append(
       $('<div />', {"class": "card-content"}).append(
         $('<div />', {"class": "media"}).append(
           $('<div />', {"class": "media-content"}).append(
-            $('<div />', {"class": "profile-picture-container"}).append(
-              $('<img />', {"class": "profile-picture"}).attr("src", "http://placekitten.com/70/70")
+            $('<div />', {"class": "image is-64x64 profile-picture-container"}).css(
+              {
+                "background-image": "url('http://placekitten.com/70/70')",
+                "background-size": "cover"
+              }
             ),
             $('<div />', {"class": "profile-info-container"}).append(
               $('<p />', {"class": "title is-3 vendorName"}).text(value.contactName),
