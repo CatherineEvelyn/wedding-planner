@@ -94,12 +94,27 @@
 }
 
 .tile-header {
-  padding: 0.375rem 0 0.375rem .7rem;
+  display: flex;
+  padding: 0.5rem 0 0.5rem .7rem;
   background-color: #03a9f4;
   letter-spacing: 0.15rem;
   font-size: 0.8rem;
   text-transform: lowercase;
   color: #ffffff;
+}
+
+.icon.card-icon-container {
+  position: relative;
+  height: 1.2rem;
+  width: 1.2rem
+}
+
+.card-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .media-content {
