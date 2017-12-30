@@ -224,14 +224,15 @@ function getVendorByType(type) {
       displayVendors(vendors);
     }
 
-    var pages = Math.ceil(vendors.length / 18);
+    // Infinite Scroll Prototype
 
-    console.log("Pages:", pages);
-  
-    $("#addVendors").on("click", e => {
-      displayVendors(vendors);
-    })
-
+    // $(window).scroll(e => {
+    //   if ($(window).scrollTop() + $(window).height() > $(document).height() - 250) {
+    //     console.log("near bottom; load more vendors");
+    //     displayVendors(vendors);
+    //   }
+    // });
+    
     // Hide AJAX loading animation
 
     $('.overlay-container').hide();
