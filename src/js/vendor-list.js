@@ -7,6 +7,7 @@ var vendors = [];
 var bookedVendors = [];
 var queryResults = [];
 var isActiveSearch = false;
+var currentVendorsTotal = 0;
 
 $(function() {
   retrieveBookedVendors();
@@ -223,6 +224,14 @@ function getVendorByType(type) {
       displayVendors(vendors);
     }
 
+    var pages = Math.ceil(vendors.length / 18);
+
+    console.log("Pages:", pages);
+  
+    $("#addVendors").on("click", e => {
+      displayVendors(vendors);
+    })
+
     // Hide AJAX loading animation
 
     $('.overlay-container').hide();
@@ -248,6 +257,7 @@ function makeSidelinkActive(type) {
 
 function displayVendors(arr) {
   let $wrapper = $(".vendor-list-card-wrapper")
+  let stoppingPoint = currentVendorsTotal + 18;
 
   const icons = {
     "venue": '<svg class="card-icon" viewBox="0 0 20 20" preserveAspectRation="xMinYMin meet"><path fill="#FFFFFF" d="m10,18a8,8 0 0 1 -8,-8a8,8 0 0 1 8,-8a8,8 0 0 1 8,8a8,8 0 0 1 -8,8m0,-18a10,10 0 0 0 -10,10a10,10 0 0 0 10,10a10,10 0 0 0 10,-10a10,10 0 0 0 -10,-10m0,10.5a1.5,1.5 0 0 1 -1.5,-1.5a1.5,1.5 0 0 1 1.5,-1.5a1.5,1.5 0 0 1 1.5,1.5a1.5,1.5 0 0 1 -1.5,1.5m0,-5.3c-2.1,0 -3.8,1.7 -3.8,3.8c0,3 3.8,6.5 3.8,6.5c0,0 3.8,-3.5 3.8,-6.5c0,-2.1 -1.7,-3.8 -3.8,-3.8z" /></svg>',
@@ -259,10 +269,10 @@ function displayVendors(arr) {
     "tailor": '<svg class="card-icon" viewBox="0 0 159.63 218.31" preserveAspectRatio="xMinYMin meet"><path fill="#FFFFFF" d="m147.2832,126.225c-13.701,-34.254 -36.034,-54.336 -45.563,-61.749l2.815,-10.558c2.356,-2.014 6.079,-5.628 9.272,-10.646c5.866,-9.217 3.786,-16.223 3.309,-17.535c-0.587,-1.617 -1.714,-2.983 -3.19,-3.869c-0.222,-0.133 -0.686,-0.398 -1.361,-0.721l0,-13.647c0,-4.143 -3.358,-7.5 -7.5,-7.5c-4.142,0 -7.5,3.357 -7.5,7.5l0,11.501c-2.746,0.439 -5.407,1.328 -7.945,2.681c-4.035,2.152 -7.288,4.871 -9.806,7.484c-2.518,-2.613 -5.77,-5.332 -9.805,-7.483c-2.538,-1.354 -5.198,-2.243 -7.944,-2.682l0,-11.501c0,-4.143 -3.358,-7.5 -7.5,-7.5c-4.142,0 -7.5,3.357 -7.5,7.5l0,13.646c-0.677,0.324 -1.141,0.589 -1.363,0.723c-1.475,0.885 -2.601,2.251 -3.189,3.868c-0.476,1.311 -2.556,8.318 3.309,17.535c3.193,5.018 6.916,8.632 9.272,10.646l2.815,10.558c-9.529,7.413 -31.862,27.495 -45.563,61.749c-17.274,43.183 -11.458,83.978 -11.202,85.694c0.548,3.674 3.704,6.393 7.418,6.393l142.506,0c3.714,0 6.869,-2.719 7.417,-6.393c0.256,-1.715 6.071,-42.51 -11.202,-85.694z"/></svg>'
   }
 
-  $wrapper.hide().empty();
-  // Use global vendors to allow local sorting
-  $.each(arr, function(index, value) {
+  while (currentVendorsTotal < stoppingPoint && arr[currentVendorsTotal] !== undefined) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
+    let value = arr[currentVendorsTotal];
+
     let $card = $("<article />", {"class": "tile is-child card card-" + value.vendorType}).attr("data-vendor-id", value.id);
 
     $card.append(
@@ -313,9 +323,69 @@ function displayVendors(arr) {
     );
     $vendorCardWrapper.append($card);
     $wrapper.append($vendorCardWrapper);
-  });
+
+    currentVendorsTotal++;
+    console.log(currentVendorsTotal);
+  }
+
+  // $.each(arr, function(index, value) {
+  //   let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
+  //   let $card = $("<article />", {"class": "tile is-child card card-" + value.vendorType}).attr("data-vendor-id", value.id);
+
+  //   $card.append(
+  //     $('<div />', {"class": "tile-header card-header-" + value.vendorType}).append(
+  //       $('<div />', {"class": "icon card-icon-container"}).append(
+  //         $(icons[value.vendorType])
+  //       )
+  //     ),
+  //     $('<div />', {"class": "overlay"})
+  //   );
+
+  //   $card.append(
+  //     $('<div />', {"class": "card-content"}).append(
+  //       $('<div />', {"class": "media"}).append(
+  //         $('<div />', {"class": "media-content"}).append(
+  //           $('<div />', {"class": "image is-64x64 profile-picture-container"}).css(
+  //             {
+  //               "background-image": "url('http://placekitten.com/70/70')",
+  //               "background-size": "cover"
+  //             }
+  //           ),
+  //           $('<div />', {"class": "profile-info-container"}).append(
+  //             $('<p />', {"class": "title is-3 vendorName"}).text(value.contactName),
+  //             generateRatingStars(value.rating)
+  //           )
+  //         )
+  //       ),
+  //       $('<div />', {"class": "content"}).append(
+  //         $('<p />', {"class": "businessName"}).text(value.businessName),
+  //         $('<p />', {"class": "vendorLocation"}).text(value.city + ", " + value.state),
+  //         $("<p />").append(
+  //           $("<small />", {"html": 'Price/Rate: $' + value.price + ".00"})
+  //         )
+  //       )
+  //     ),
+  //     $('<footer />', {"class": "card-footer"}).append(
+  //       $('<a />', {"class": "card-footer-item book-button"}).append(
+  //         $('<span />', {"class": "icon"}).append(
+  //           $('<i />', {"class": "mdi mdi-plus-circle"})
+  //         )
+  //       ).append(" Book Now"),
+  //       $('<a />', {"class": "card-footer-item"}).attr("href", "/portfolio").append(
+  //         $('<span />', {"class": "icon"}).append(
+  //           $('<i />', {"class": "mdi mdi-treasure-chest"})
+  //         )
+  //       ).append(" View Portfolio")
+  //     )
+  //   );
+  //   $vendorCardWrapper.append($card);
+  //   $wrapper.append($vendorCardWrapper);
+  // });
+  
   $wrapper.fadeIn(325);
   updateBookingNotifiers(bookedVendors);
+
+  console.log("Current Total:", currentVendorsTotal, "Stopping Point:", stoppingPoint, "Array Length:", arr.length);
 }
 
 function generateRatingStars(rating) {

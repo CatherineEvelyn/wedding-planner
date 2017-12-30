@@ -1,23 +1,33 @@
-/* Card size adjustments */
+/* Column and spacing adjustments */
 
-.tile.is-parent.vendor-list-card {
-  max-width: 50%;
-}
-
-.vendor-list-card {
-  flex-basis: 33.33%;
-  position: relative;
-}
-
-@media screen and (max-width: 1360px) {
-  .vendor-list-card {
-    flex-basis: 50%;
+@media screen and (max-width: 1230px) {
+  .spacer-column {
+    display: none;
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1160px) {
+  .list-container {
+    margin: 0;
+  }
+}
+
+/* Card size adjustments */
+
+.vendor-list-card {
+  min-width: 33.33%;
+  position: relative;
+}
+
+@media screen and (max-width: 1279px) {
   .vendor-list-card {
-    flex-basis: 100%;
+    min-width: 50%;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .vendor-list-card {
+    min-width: 100%;
   }
 }
 
@@ -130,9 +140,14 @@
   overflow: hidden;
 }
 
+.profile-info-container {
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
 .title.is-3.vendorName {
   max-width: 100%;
-  white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   margin-bottom: 0px !important;

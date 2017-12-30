@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://unpkg.com/progressively/dist/progressively.min.css">
     
     <link rel="stylesheet" href="{{ url_for('static', filename='framework.7a7050011a95058aa4f49f1c255a8efc.css') }}">
     
@@ -57,6 +58,11 @@
           <div class="navbar-item">
             <a href="/gendata">
               Generate Data
+            </a>
+          </div>
+          <div id="addVendors" class="navbar-item">
+            <a>
+              Add Vendors
             </a>
           </div>
           <div class="navbar-end">
@@ -151,10 +157,11 @@
         </div>
       </div>
     </footer>
+    <script src="https://unpkg.com/progressively/dist/progressively.min.js"></script>
     
-    <script type="text/javascript" src="{{ url_for('static', filename='framework.f2b1f9df6016b77872e5.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='framework.096ca6099a7921e7f26f.js') }}"></script>
     
-    <script type="text/javascript" src="{{ url_for('static', filename='main.f2b1f9df6016b77872e5.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='main.096ca6099a7921e7f26f.js') }}"></script>
     
     {% block scripts %}{% endblock %}
   </body>

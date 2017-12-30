@@ -40,6 +40,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.sass', '.scss']
   },
+  externals: {
+    progressively: "progressively"
+  },
   module: {
     rules: [
       {

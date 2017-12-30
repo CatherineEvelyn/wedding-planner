@@ -4,9 +4,9 @@
   "description": "A wedding planner app for vendors and organizers",
   "main": "main.js",
   "scripts": {
-    "build": "webpack -p",
+    "build": "webpack -p --progress",
     "watch": "webpack --watch",
-    "heroku-postbuild": "webpack -p"
+    "heroku-postbuild": "webpack -p --progress"
   },
   "repository": {
     "type": "git",

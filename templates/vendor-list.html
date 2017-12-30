@@ -2,12 +2,12 @@
 
 {% block head %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='vendorlist.b228bc71ed41bdade337a4ee7dd634f7.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendorlist.48f5e4e6725ddcc628c52ec683a1580d.css') }}">
 
 {% endblock %}
 
 {% block body %}
-<div class="container is-fluid">
+<div class="container is-fluid list-container">
   <section class="section">
     <div id="bookingModal" class="modal">
       <div id="modalCloseLayer" class="modal-background"></div>
@@ -185,8 +185,8 @@
           </ul>
         </aside>
       </div>
-      <div class="column is-narrow"></div>
-      <div class="column loading-container">
+      <div class="column is-narrow spacer-column"></div>
+      <div class="column is-10 loading-container">
         <div class="overlay-container">
           <div class="ajax-loader">
             <svg class="circular">
@@ -205,6 +205,6 @@
 
 {% block scripts %}
 
-<script type="text/javascript" src="{{ url_for('static', filename='vendorlist.f2b1f9df6016b77872e5.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='vendorlist.096ca6099a7921e7f26f.js') }}"></script>
 
 {% endblock %}
