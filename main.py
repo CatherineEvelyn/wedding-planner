@@ -19,7 +19,7 @@ from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", 'mysql+pymysql://wedding:password@35.197.5.142/wedding')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", 'mysql+pymysql://admin:Password1@wedding-planner.cl1lubxzpscn.us-east-2.rds.amazonaws.com/wedplan')
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "246Pass"
