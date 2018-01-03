@@ -1,13 +1,14 @@
 import stickybits from "stickybits";
 import { DatePicker } from "./datepicker.js";
 
-var api_call_made = false;
-var vendorID = null;
-var vendors = [];
-var bookedVendors = [];
-var queryResults = [];
-var isActiveSearch = false;
-var currentVendorsTotal = 0;
+var API_CALL_MADE = false;
+var VENDOR_ID = null;
+var VENDORS = [];
+var BOOKED_VENDORS = [];
+var QUERY_RESULTS = [];
+var IS_ACTIVE_SEARCH = false;
+var CURRENT_VENDORS_TOTAL = 0;
+var RESULTS_PER_PAGE = 18;
 
 $(function() {
   retrieveBookedVendors();
@@ -28,7 +29,7 @@ $(function() {
   function update_tag() {
     loc = window.location.href.split('#');
     tag = loc.length > 1 ? loc[1] : '';
-    if (tag != '' && !api_call_made) {
+    if (tag != '' && !API_CALL_MADE) {
       getVendorByType(tag);
     } else if (!tag) {
       getVendorByType("all");
@@ -50,8 +51,8 @@ function retrieveBookedVendors() {
     global: false
   })
   .done(json => {
-    bookedVendors = json;
-    updateBookingNotifiers(bookedVendors);
+    BOOKED_VENDORS = json;
+    updateBookingNotifiers(BOOKED_VENDORS);
   })
   .fail(err => {
     console.log(err);
@@ -83,7 +84,7 @@ function addAjaxListeners() {
       history.pushState({}, document.title, window.location.href.split('#')[0]);
     }
 
-    api_call_made = true;
+    API_CALL_MADE = true;
     $('.sortVendors').removeClass('is-active');
     makeSidelinkActive(type);
     getVendorByType(type);
@@ -93,7 +94,7 @@ function addAjaxListeners() {
     let $self = $(e.currentTarget);
     let type = $self.attr('data-type');
     let order = $self.attr('data-order');
-    let sortTarget = queryResults.length === 0 ? vendors : queryResults;
+    let sortTarget = QUERY_RESULTS.length === 0 ? VENDORS : QUERY_RESULTS;
     $('.sortVendors').removeClass('is-active');
     $self.addClass('is-active');
     $('.sortVendors').children().eq(0).remove();
@@ -160,7 +161,7 @@ function addSearchListener() {
     $('.overlay-container').show();
     $('.vendor-list-card .overlay').show();
     delay(() => {
-      isActiveSearch = $self.val() === "" ? false : true;
+      IS_ACTIVE_SEARCH = $self.val() === "" ? false : true;
       filterArray($self.val());
       $('.overlay-container').hide();
       $('.vendor-list-card .overlay').hide();
@@ -170,26 +171,26 @@ function addSearchListener() {
 
 function filterArray(query) {
   // Checking to see if anything is in the input box
-  if (isActiveSearch) {
-    queryResults = []
-    $.each(vendors, (idx, entry) => {
+  if (IS_ACTIVE_SEARCH) {
+    QUERY_RESULTS = []
+    $.each(VENDORS, (idx, entry) => {
       // Cycling through entries in each vendor object. If a match is detected in
       // any of the fields (contact name, business name, address) except email,
-      // it will be added to the queryResults array, then displayed in the view.
+      // it will be added to the QUERY_RESULTS array, then displayed in the view.
       for (const [key, value] of Object.entries(entry)) {
         if (key != "email" && typeof value == "string") {
           if (value.toLowerCase().indexOf(query.toLowerCase()) > -1) {
-            queryResults.push(entry);
+            QUERY_RESULTS.push(entry);
             break;
           }
         }
       }
     });
-    displayVendors(queryResults);
-  } else if (!isActiveSearch) {
+    displayVendors(QUERY_RESULTS);
+  } else if (!IS_ACTIVE_SEARCH) {
     // Showing all results in selected category if there was once an active search and input is now blank
-    queryResults = [];
-    displayVendors(vendors);
+    QUERY_RESULTS = [];
+    displayVendors(VENDORS);
   }
 }
 
@@ -208,20 +209,21 @@ function getVendorByType(type) {
       "type": type
     },
     success: data => {
-      vendors = [];
+      VENDORS = [];
       // Convert JSON into an array
       for(let vendor in data.vendors){
-        vendors.push(data.vendors[vendor]);
+        VENDORS.push(data.vendors[vendor]);
       }
     }
   })
   .done(json => {
+    $(".vendor-list-card-wrapper").empty().hide(); // Empty out vendor list display
     let query = $("#vendorSearch").val();
 
     if (query) {
       filterArray(query);
     } else {
-      displayVendors(vendors);
+      displayVendors(VENDORS);
     }
 
     // Infinite Scroll Prototype
@@ -238,7 +240,7 @@ function getVendorByType(type) {
     $('.overlay-container').hide();
     $('.vendor-list-card .overlay').hide();
 
-    api_call_made = false;
+    API_CALL_MADE = false;
   })
   .fail((xhr, status, error) => {
     console.log(xhr, status, error);
@@ -256,9 +258,15 @@ function makeSidelinkActive(type) {
   $('a[href="#' + type + '"]').addClass('is-active');
 }
 
+function changePage(page) {
+  let stoppingPoint = CURRENT_VENDORS_TOTAL + RESULTS_PER_PAGE;
+
+  
+}
+
 function displayVendors(arr) {
-  let $wrapper = $(".vendor-list-card-wrapper")
-  let stoppingPoint = currentVendorsTotal + 18;
+  let $wrapper = $(".vendor-list-card-wrapper");
+  let stoppingPoint = CURRENT_VENDORS_TOTAL + RESULTS_PER_PAGE;
 
   const icons = {
     "venue": '<svg class="card-icon" viewBox="0 0 20 20" preserveAspectRation="xMinYMin meet"><path fill="#FFFFFF" d="m10,18a8,8 0 0 1 -8,-8a8,8 0 0 1 8,-8a8,8 0 0 1 8,8a8,8 0 0 1 -8,8m0,-18a10,10 0 0 0 -10,10a10,10 0 0 0 10,10a10,10 0 0 0 10,-10a10,10 0 0 0 -10,-10m0,10.5a1.5,1.5 0 0 1 -1.5,-1.5a1.5,1.5 0 0 1 1.5,-1.5a1.5,1.5 0 0 1 1.5,1.5a1.5,1.5 0 0 1 -1.5,1.5m0,-5.3c-2.1,0 -3.8,1.7 -3.8,3.8c0,3 3.8,6.5 3.8,6.5c0,0 3.8,-3.5 3.8,-6.5c0,-2.1 -1.7,-3.8 -3.8,-3.8z" /></svg>',
@@ -268,11 +276,11 @@ function displayVendors(arr) {
     "music": '<svg class="card-icon" viewBox="0 0 19 18" preserveAspectRatio="xMinYMid meet"><path fill="#FFFFFF" d="m19,0l0,12.5a3.5,3.5 0 0 1 -3.5,3.5a3.5,3.5 0 0 1 -3.5,-3.5a3.5,3.5 0 0 1 3.5,-3.5c0.54,0 1.05,0.12 1.5,0.34l0,-5.87l-10,2.13l0,8.9a3.5,3.5 0 0 1 -3.5,3.5a3.5,3.5 0 0 1 -3.5,-3.5a3.5,3.5 0 0 1 3.5,-3.5c0.54,0 1.05,0.12 1.5,0.34l0,-8.34l14,-3z" /></svg>',
     "cosmetics": '<svg class="card-icon" viewBox="0 0 364 433" preserveAspectRatio="xMinYMid meet"><g><path fill="#FFFFFF" d="m284.888,117.03c-43.62,0 -79.106,35.487 -79.106,79.106l0,216.397c0,11.028 8.972,20 20,20l118.213,0c11.028,0 20,-8.972 20,-20l0,-216.396c0,-43.62 -35.487,-79.107 -79.107,-79.107z"/><path fill="#FFFFFF" d="m155.888,293.783l-4.621,-127.843c-0.493,-13.627 -10.22,-25.117 -22.937,-28.461l0.079,-59.77c0.013,-9.725 -5.824,-22.225 -13.289,-28.459l-54.237,-45.287c-3.15,-2.63 -6.307,-3.963 -9.385,-3.963c-3.246,0 -6.166,1.575 -8.011,4.32c-1.536,2.285 -2.313,5.27 -2.309,8.871l0.116,124.28c-12.733,3.334 -22.474,14.832 -22.968,28.47l-4.621,127.843c-7.95,2.646 -13.705,10.142 -13.705,18.969l0,99.781c0,11.028 8.972,20 20,20l129.594,0c11.028,0 20,-8.972 20,-20l0,-99.781c-0.001,-8.827 -5.756,-16.324 -13.706,-18.97zm-117.922,-1.03l4.026,-111.364c0.248,-6.855 6.063,-12.464 12.923,-12.464l59.764,0c6.86,0 12.675,5.609 12.923,12.464l4.026,111.364l-93.662,0"/></g></svg>',
     "tailor": '<svg class="card-icon" viewBox="0 0 159.63 218.31" preserveAspectRatio="xMinYMin meet"><path fill="#FFFFFF" d="m147.2832,126.225c-13.701,-34.254 -36.034,-54.336 -45.563,-61.749l2.815,-10.558c2.356,-2.014 6.079,-5.628 9.272,-10.646c5.866,-9.217 3.786,-16.223 3.309,-17.535c-0.587,-1.617 -1.714,-2.983 -3.19,-3.869c-0.222,-0.133 -0.686,-0.398 -1.361,-0.721l0,-13.647c0,-4.143 -3.358,-7.5 -7.5,-7.5c-4.142,0 -7.5,3.357 -7.5,7.5l0,11.501c-2.746,0.439 -5.407,1.328 -7.945,2.681c-4.035,2.152 -7.288,4.871 -9.806,7.484c-2.518,-2.613 -5.77,-5.332 -9.805,-7.483c-2.538,-1.354 -5.198,-2.243 -7.944,-2.682l0,-11.501c0,-4.143 -3.358,-7.5 -7.5,-7.5c-4.142,0 -7.5,3.357 -7.5,7.5l0,13.646c-0.677,0.324 -1.141,0.589 -1.363,0.723c-1.475,0.885 -2.601,2.251 -3.189,3.868c-0.476,1.311 -2.556,8.318 3.309,17.535c3.193,5.018 6.916,8.632 9.272,10.646l2.815,10.558c-9.529,7.413 -31.862,27.495 -45.563,61.749c-17.274,43.183 -11.458,83.978 -11.202,85.694c0.548,3.674 3.704,6.393 7.418,6.393l142.506,0c3.714,0 6.869,-2.719 7.417,-6.393c0.256,-1.715 6.071,-42.51 -11.202,-85.694z"/></svg>'
-  }
+  };
 
-  while (currentVendorsTotal < stoppingPoint && arr[currentVendorsTotal] !== undefined) {
+  while (CURRENT_VENDORS_TOTAL < stoppingPoint && arr[CURRENT_VENDORS_TOTAL] !== undefined) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
-    let value = arr[currentVendorsTotal];
+    let value = arr[CURRENT_VENDORS_TOTAL];
 
     let $card = $("<article />", {"class": "tile is-child card card-" + value.vendorType}).attr("data-vendor-id", value.id);
 
@@ -325,8 +333,8 @@ function displayVendors(arr) {
     $vendorCardWrapper.append($card);
     $wrapper.append($vendorCardWrapper);
 
-    currentVendorsTotal++;
-    console.log(currentVendorsTotal);
+    CURRENT_VENDORS_TOTAL++;
+    console.log(CURRENT_VENDORS_TOTAL);
   }
 
   // $.each(arr, function(index, value) {
@@ -384,9 +392,9 @@ function displayVendors(arr) {
   // });
   
   $wrapper.fadeIn(325);
-  updateBookingNotifiers(bookedVendors);
+  updateBookingNotifiers(BOOKED_VENDORS);
 
-  console.log("Current Total:", currentVendorsTotal, "Stopping Point:", stoppingPoint, "Array Length:", arr.length);
+  console.log("Current Total:", CURRENT_VENDORS_TOTAL, "Stopping Point:", stoppingPoint, "Array Length:", arr.length);
 }
 
 function generateRatingStars(rating) {
@@ -414,7 +422,7 @@ function addBookingListeners() {
       alert("You must be logged in to book a vendor.");
     } else {
       $('#bookingModal').addClass('is-active');
-      vendorID = $(e.currentTarget).parent().parent().attr('data-vendor-id');
+      VENDOR_ID = $(e.currentTarget).parent().parent().attr('data-vendor-id');
       $('#bookRequestName').val($(e.currentTarget).parent().siblings('.card-content').find('.vendorName').text());
       $('#bookRequestBusiness').val($(e.currentTarget).parent().siblings('.card-content').find('.businessName').text());
       // Adding DatePicker each time a booking modal is active
@@ -434,9 +442,9 @@ function addCloseModalListeners() {
 
 function addBookFulfillmentListener() {
   $('#bookVendor').on('click', e => {
-    let vendorId = vendorID;
+    let vendorID = VENDOR_ID;
     let date = $('#bookRequestDate').val();
-    postBookRequest(vendorId, date);
+    postBookRequest(vendorID, date);
   });
 }
 
@@ -482,8 +490,8 @@ function displayBookingConfirmation(json, id) {
   $('#vendorNameBox').append($('<p class="subtitle detail">').text(info.vendor_name));
 
   $('.confirmationMessage, #confirmFooter').show();
-  bookedVendors.push(id);
-  updateBookingNotifiers(bookedVendors);
+  BOOKED_VENDORS.push(id);
+  updateBookingNotifiers(BOOKED_VENDORS);
 }
 
 function displayErrorMessage(err) {

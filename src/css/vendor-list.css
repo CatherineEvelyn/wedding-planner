@@ -40,6 +40,10 @@
   border-radius: 4px;
 }
 
+.menu-list a {
+  font-size: 0.85rem;
+}
+
 .menu-list a.is-active {
   background-color: #555555;
 }
