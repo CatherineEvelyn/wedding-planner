@@ -15,19 +15,19 @@
 /* Card size adjustments */
 
 .vendor-list-card {
-  max-width: 33.33%;
+  min-width: 33.33%;
   position: relative;
 }
 
 @media screen and (max-width: 1369px) {
   .vendor-list-card {
-    max-width: 50%;
+    min-width: 50%;
   }
 }
 
 @media screen and (max-width: 945px) {
   .vendor-list-card {
-    max-width: 100%;
+    min-width: 100%;
   }
 }
 
