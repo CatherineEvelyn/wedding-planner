@@ -6,7 +6,7 @@
   }
 }
 
-@media screen and (max-width: 1160px) {
+@media screen and (max-width: 1060px) {
   .list-container {
     margin: 0;
   }
@@ -15,23 +15,27 @@
 /* Card size adjustments */
 
 .vendor-list-card {
-  min-width: 33.33%;
+  width: 33.33%;
   position: relative;
 }
 
-@media screen and (max-width: 1279px) {
+@media screen and (max-width: 1369px) {
   .vendor-list-card {
-    min-width: 50%;
+    width: 50%;
   }
 }
 
 @media screen and (max-width: 1050px) {
   .vendor-list-card {
-    min-width: 100%;
+    width: 100%;
   }
 }
 
 /* Side menu styles */
+
+.column.is-2 {
+  min-width: 250px;
+}
 
 #vendorSearch {
   box-shadow: none;
@@ -103,6 +107,10 @@
   display: none;
 }
 
+.tile.is-child.card {
+  border-radius: 6px;
+}
+
 .tile .overlay {
   opacity: 0.8;
 }
@@ -110,6 +118,7 @@
 .tile-header {
   display: flex;
   padding: 0.5rem 0 0.5rem .7rem;
+  border-radius: 6px 6px 0 0;
   background-color: #03a9f4;
   letter-spacing: 0.15rem;
   font-size: 0.8rem;
@@ -137,6 +146,9 @@
 }
 
 .profile-picture-container {
+  background: #d7dbdf;
+  background-image: url("http://placekitten.com/70/70");
+  background-size: cover;
   min-width: 64px;
   margin-right: 0.5rem;
   border: 2px solid;

@@ -228,12 +228,12 @@ function getVendorByType(type) {
 
     // Infinite Scroll Prototype
 
-    // $(window).scroll(e => {
-    //   if ($(window).scrollTop() + $(window).height() > $(document).height() - 250) {
-    //     console.log("near bottom; load more vendors");
-    //     displayVendors(vendors);
-    //   }
-    // });
+    $(window).scroll(e => {
+      if ($(window).scrollTop() + $(window).height() > $(document).height() - 200) {
+        console.log("near bottom; load more vendors");
+        displayVendors(vendors);
+      }
+    });
     
     // Hide AJAX loading animation
 
@@ -297,12 +297,7 @@ function displayVendors(arr) {
       $('<div />', {"class": "card-content"}).append(
         $('<div />', {"class": "media"}).append(
           $('<div />', {"class": "media-content"}).append(
-            $('<div />', {"class": "image is-64x64 profile-picture-container"}).css(
-              {
-                "background-image": "url('http://placekitten.com/70/70')",
-                "background-size": "cover"
-              }
-            ),
+            $('<div />', {"class": "image is-64x64 profile-picture-container"}),
             $('<div />', {"class": "profile-info-container"}).append(
               $('<p />', {"class": "title is-3 vendorName"}).text(value.contactName),
               generateRatingStars(value.rating)
