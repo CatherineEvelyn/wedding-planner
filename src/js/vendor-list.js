@@ -229,9 +229,9 @@ function getVendorByType(type) {
     // Infinite Scroll Prototype
 
     $(window).scroll(e => {
-      if ($(window).scrollTop() + $(window).height() > $(document).height() - 200) {
+      if ($(window).scrollTop() + $(window).height() > $(document).height() - 180) {
         console.log("near bottom; load more vendors");
-        displayVendors(vendors);
+        displayVendors(VENDORS);
       }
     });
     
@@ -288,6 +288,11 @@ function displayVendors(arr) {
       $('<div />', {"class": "tile-header card-header-" + value.vendorType}).append(
         $('<div />', {"class": "icon card-icon-container"}).append(
           $(icons[value.vendorType])
+        ),
+        $('<a href="#" class="card-header-icon" aria-label="more options" />').append(
+          $('<span class="icon" />').append(
+            $('<i class="mdi mdi-24px mdi-chevron-down" aria-hidden="true" />')
+          )
         )
       ),
       $('<div />', {"class": "overlay"})
@@ -296,10 +301,12 @@ function displayVendors(arr) {
     $card.append(
       $('<div />', {"class": "card-content"}).append(
         $('<div />', {"class": "media"}).append(
+          $('<div />', {"class": "media-left"}).append(
+            $('<div />', {"class": "image is-64x64 profile-picture-container"})
+          ),
           $('<div />', {"class": "media-content"}).append(
-            $('<div />', {"class": "image is-64x64 profile-picture-container"}),
             $('<div />', {"class": "profile-info-container"}).append(
-              $('<p />', {"class": "title is-3 vendorName"}).text(value.contactName),
+              $('<p />', {"class": "title is-4 vendorName"}).text(value.contactName),
               generateRatingStars(value.rating)
             )
           )
@@ -331,60 +338,6 @@ function displayVendors(arr) {
     CURRENT_VENDORS_TOTAL++;
     console.log(CURRENT_VENDORS_TOTAL);
   }
-
-  // $.each(arr, function(index, value) {
-  //   let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
-  //   let $card = $("<article />", {"class": "tile is-child card card-" + value.vendorType}).attr("data-vendor-id", value.id);
-
-  //   $card.append(
-  //     $('<div />', {"class": "tile-header card-header-" + value.vendorType}).append(
-  //       $('<div />', {"class": "icon card-icon-container"}).append(
-  //         $(icons[value.vendorType])
-  //       )
-  //     ),
-  //     $('<div />', {"class": "overlay"})
-  //   );
-
-  //   $card.append(
-  //     $('<div />', {"class": "card-content"}).append(
-  //       $('<div />', {"class": "media"}).append(
-  //         $('<div />', {"class": "media-content"}).append(
-  //           $('<div />', {"class": "image is-64x64 profile-picture-container"}).css(
-  //             {
-  //               "background-image": "url('http://placekitten.com/70/70')",
-  //               "background-size": "cover"
-  //             }
-  //           ),
-  //           $('<div />', {"class": "profile-info-container"}).append(
-  //             $('<p />', {"class": "title is-3 vendorName"}).text(value.contactName),
-  //             generateRatingStars(value.rating)
-  //           )
-  //         )
-  //       ),
-  //       $('<div />', {"class": "content"}).append(
-  //         $('<p />', {"class": "businessName"}).text(value.businessName),
-  //         $('<p />', {"class": "vendorLocation"}).text(value.city + ", " + value.state),
-  //         $("<p />").append(
-  //           $("<small />", {"html": 'Price/Rate: $' + value.price + ".00"})
-  //         )
-  //       )
-  //     ),
-  //     $('<footer />', {"class": "card-footer"}).append(
-  //       $('<a />', {"class": "card-footer-item book-button"}).append(
-  //         $('<span />', {"class": "icon"}).append(
-  //           $('<i />', {"class": "mdi mdi-plus-circle"})
-  //         )
-  //       ).append(" Book Now"),
-  //       $('<a />', {"class": "card-footer-item"}).attr("href", "/portfolio").append(
-  //         $('<span />', {"class": "icon"}).append(
-  //           $('<i />', {"class": "mdi mdi-treasure-chest"})
-  //         )
-  //       ).append(" View Portfolio")
-  //     )
-  //   );
-  //   $vendorCardWrapper.append($card);
-  //   $wrapper.append($vendorCardWrapper);
-  // });
   
   $wrapper.fadeIn(325);
   updateBookingNotifiers(BOOKED_VENDORS);
@@ -416,7 +369,7 @@ function addBookingListeners() {
     if (window.sessionDetails.session == false) {
       alert("You must be logged in to book a vendor.");
     } else {
-      $('#bookingModal').addClass('is-active');
+      $('#bookingModal').fadeIn(125);
       VENDOR_ID = $(e.currentTarget).parent().parent().attr('data-vendor-id');
       $('#bookRequestName').val($(e.currentTarget).parent().siblings('.card-content').find('.vendorName').text());
       $('#bookRequestBusiness').val($(e.currentTarget).parent().siblings('.card-content').find('.businessName').text());
@@ -428,10 +381,11 @@ function addBookingListeners() {
 
 function addCloseModalListeners() {
   $(document).on('click', '#modalCloseButton, #modalCloseLayer, #cancelButton', e => {
-    $('#bookingModal').removeClass('is-active');
+    $('#bookingModal').fadeOut(125, () => {
+      resetModalView();
+    });
     $('.datepicker').remove();
     $('#bookRequestDate').val("");
-    resetModalView();
   });
 }
 
