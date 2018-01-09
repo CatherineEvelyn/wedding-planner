@@ -326,7 +326,7 @@ export class BookingViewer {
         isDisabled = true;
       }
 
-      calendarBody.append(this.renderDay(day.getDate(), this.month, this.year, isSelected, isToday, isDisabled, isEmpty, isBetween, isSelectedIn, isSelectedOut, day.getTime()));
+      calendarBody.appendChild(this.renderDay(day.getDate(), this.month, this.year, isSelected, isToday, isDisabled, isEmpty, isBetween, isSelectedIn, isSelectedOut, day.getTime()));
     }
   }
 
