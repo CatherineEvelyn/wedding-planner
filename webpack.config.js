@@ -11,6 +11,7 @@ module.exports = {
   entry: {
     framework: [
       './src/vendor-plugins/framework.sass',
+      'babel-polyfill',
       './src/vendor-plugins/framework.js'
     ],
     main: [

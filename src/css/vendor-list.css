@@ -127,11 +127,18 @@
   justify-content: flex-start;
 }
 
-.card-header-icon {
+.card-dropdown {
   position: absolute;
-  right: 1rem;
+  right: 0.75rem;
+}
+
+.card-header-icon {
   color: white;
   padding: 0;
+}
+
+.card-header-icon:hover {
+  color: white;
 }
 
 .card-icon {

@@ -14,6 +14,7 @@ $(function() {
   retrieveBookedVendors();
   addAjaxListeners();
   addSearchListener();
+  addDropdownMenuListeners();
   addBookingListeners();
   addBookFulfillmentListener();
   addCloseModalListeners();
@@ -56,6 +57,13 @@ function retrieveBookedVendors() {
   })
   .fail(err => {
     console.log(err);
+  });
+}
+
+function addDropdownMenuListeners() {
+  $(document).on("click", ".card-dropdown", e => {
+    console.log("hi")
+    $(e.currentTarget).toggleClass("is-active");
   });
 }
 
@@ -289,9 +297,18 @@ function displayVendors(arr) {
         $('<div />', {"class": "icon card-icon-container"}).append(
           $(icons[value.vendorType])
         ),
-        $('<a href="#" class="card-header-icon" aria-label="more options" />').append(
-          $('<span class="icon" />').append(
-            $('<i class="mdi mdi-24px mdi-chevron-down" aria-hidden="true" />')
+        $('<div />', {"class": "dropdown is-right card-dropdown"}).append(
+          $('<div />', {"class": "dropdown-trigger"}).append(
+            $('<a class="card-header-icon" aria-controls="dropdown-menu" />').append(
+              $('<span class="icon" />').append(
+                $('<i class="mdi mdi-24px mdi-chevron-down" aria-hidden="true" />')
+              )
+            )
+          ),
+          $('<div />', {"class": "dropdown-menu", "id": "extra-actions"}).attr("role", "menu").append(
+            $('<div />', {"class": "dropdown-content"}).append(
+              $('<a />', {"class": "dropdown-item", "text": "Book Vendor"})
+            )
           )
         )
       ),
