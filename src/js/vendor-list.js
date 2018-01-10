@@ -62,8 +62,11 @@ function retrieveBookedVendors() {
 
 function addDropdownMenuListeners() {
   $(document).on("click", ".card-dropdown", e => {
-    console.log("hi")
+    e.stopPropagation();
     $(e.currentTarget).toggleClass("is-active");
+  });
+  $(document).on("click", e => {
+    $(".card-dropdown").removeClass("is-active");
   });
 }
 

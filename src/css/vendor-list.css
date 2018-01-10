@@ -130,6 +130,12 @@
 .card-dropdown {
   position: absolute;
   right: 0.75rem;
+  transition: background 70ms ease-in-out;
+  border-radius: .2rem;
+}
+
+.card-dropdown:hover {
+  background: rgba(0, 0, 0, .2);
 }
 
 .card-header-icon {
