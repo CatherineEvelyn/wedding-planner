@@ -134,6 +134,7 @@
   border-radius: .2rem;
 }
 
+.card-dropdown.is-active,
 .card-dropdown:hover {
   background: rgba(0, 0, 0, .2);
 }

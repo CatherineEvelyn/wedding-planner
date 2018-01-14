@@ -62,12 +62,17 @@ function retrieveBookedVendors() {
 
 function addDropdownMenuListeners() {
   $(document).on("click", ".card-dropdown", e => {
+    closeDropdowns();
     e.stopPropagation();
     $(e.currentTarget).toggleClass("is-active");
   });
   $(document).on("click", e => {
-    $(".card-dropdown").removeClass("is-active");
+    closeDropdowns();
   });
+}
+
+function closeDropdowns() {
+  $(".card-dropdown").removeClass("is-active");
 }
 
 function updateBookingNotifiers(json) {
@@ -75,8 +80,8 @@ function updateBookingNotifiers(json) {
     let $card = $(".vendor-list-card").find(`[data-vendor-id='${value}']`);
     if ($card.find(".booked").length === 0) {
       $card.find(".book-button").remove();
-      $card.find("footer").prepend(
-        $('<span />', {"class": "card-footer-item has-text-success booked"}).append(
+      $card.find(".dropdown-content").prepend(
+        $('<span />', {"class": "dropdown-item has-text-success booked"}).append(
           $('<span />', {"class": "icon"}).append(
             $('<i />', {"class": "mdi mdi-check-circle"})
           )
@@ -310,7 +315,16 @@ function displayVendors(arr) {
           ),
           $('<div />', {"class": "dropdown-menu", "id": "extra-actions"}).attr("role", "menu").append(
             $('<div />', {"class": "dropdown-content"}).append(
-              $('<a />', {"class": "dropdown-item", "text": "Book Vendor"})
+              $('<a />', {"class": "dropdown-item book-button"}).append(
+                $('<span />', {"class": "icon"}).append(
+                  $('<i />', {"class": "mdi mdi-plus-circle"})
+                )
+              ).append(" Book vendor"),
+              $('<a />', {"class": "dropdown-item"}).attr("href", "/portfolio").append(
+                $('<span />', {"class": "icon"}).append(
+                  $('<i />', {"class": "mdi mdi-treasure-chest"})
+                )
+              ).append(" View Portfolio")
             )
           )
         )
@@ -338,18 +352,6 @@ function displayVendors(arr) {
             $("<small />", {"html": 'Price/Rate: $' + value.price + ".00"})
           )
         )
-      ),
-      $('<footer />', {"class": "card-footer"}).append(
-        $('<a />', {"class": "card-footer-item book-button"}).append(
-          $('<span />', {"class": "icon"}).append(
-            $('<i />', {"class": "mdi mdi-plus-circle"})
-          )
-        ).append(" Book Now"),
-        $('<a />', {"class": "card-footer-item"}).attr("href", "/portfolio").append(
-          $('<span />', {"class": "icon"}).append(
-            $('<i />', {"class": "mdi mdi-treasure-chest"})
-          )
-        ).append(" View Portfolio")
       )
     );
     $vendorCardWrapper.append($card);
