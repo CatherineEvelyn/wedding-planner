@@ -305,7 +305,12 @@ function displayVendors(arr) {
         $('<div />', {"class": "icon card-icon-container"}).append(
           $(icons[value.vendorType])
         ),
-        $('<div />', {"class": "dropdown is-right card-dropdown"}).append(
+        $('<div />', {"class": "book-button shortcut tooltip"}).attr("data-tooltip", "Book").append(
+          $('<div />', {"class": "icon has-text-white book-icon"}).append(
+            $('<i />', {"class": "mdi mdi-plus-circle"})
+          )
+        ),
+        $('<div />', {"class": "dropdown is-right card-dropdown tooltip"}).attr("data-tooltip", "More actions").append(
           $('<div />', {"class": "dropdown-trigger"}).append(
             $('<a class="card-header-icon" aria-controls="dropdown-menu" />').append(
               $('<span class="icon" />').append(
@@ -319,12 +324,12 @@ function displayVendors(arr) {
                 $('<span />', {"class": "icon"}).append(
                   $('<i />', {"class": "mdi mdi-plus-circle"})
                 )
-              ).append(" Book vendor"),
+              ).append(" Book"),
               $('<a />', {"class": "dropdown-item"}).attr("href", "/portfolio").append(
                 $('<span />', {"class": "icon"}).append(
                   $('<i />', {"class": "mdi mdi-treasure-chest"})
                 )
-              ).append(" View Portfolio")
+              ).append(" Portfolio")
             )
           )
         )
@@ -340,14 +345,14 @@ function displayVendors(arr) {
           ),
           $('<div />', {"class": "media-content"}).append(
             $('<div />', {"class": "profile-info-container"}).append(
-              $('<p />', {"class": "title is-4 vendorName"}).text(value.contactName),
+              $('<p />', {"class": "title is-4 vendorName", "text": value.contactName}),
+              $('<div />', {"class": "vendor-location", "text": value.city + ", " + value.state}),
               generateRatingStars(value.rating)
             )
           )
         ),
         $('<div />', {"class": "content"}).append(
-          $('<p />', {"class": "businessName"}).text(value.businessName),
-          $('<p />', {"class": "vendorLocation"}).text(value.city + ", " + value.state),
+          $('<p />', {"class": "vendor-blurb", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."}),
           $("<p />").append(
             $("<small />", {"html": 'Price/Rate: $' + value.price + ".00"})
           )
@@ -368,7 +373,7 @@ function displayVendors(arr) {
 }
 
 function generateRatingStars(rating) {
-  let container = $('<span />', {"class": "rating-container"});
+  let container = $('<div />', {"class": "rating-container", "title": `${rating} out of 5`});
   let starClass;
 
   for (let i = 0; i < 5; i++) {

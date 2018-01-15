@@ -117,7 +117,8 @@
 
 .tile-header {
   display: flex;
-  padding: 0.5rem 0 0.5rem .7rem;
+  justify-content: flex-end;
+  padding: .5rem .7rem;
   border-radius: 6px 6px 0 0;
   background-color: #03a9f4;
 }
@@ -125,23 +126,38 @@
 .icon.card-icon-container {
   position: relative;
   justify-content: flex-start;
-}
-
-.card-dropdown {
-  position: absolute;
-  right: 0.75rem;
-  transition: background 70ms ease-in-out;
-  border-radius: .2rem;
-}
-
-.card-dropdown.is-active,
-.card-dropdown:hover {
-  background: rgba(0, 0, 0, .2);
+  margin-right: auto;
 }
 
 .card-header-icon {
   color: white;
   padding: 0;
+}
+
+.book-button.shortcut {
+  cursor: pointer;
+  margin-right: 0.2rem;
+  height: 1.5rem;
+}
+
+.book-icon {
+  font-size: 1.25rem;
+}
+
+.dropdown-menu {
+  min-width: initial;
+}
+
+.card-dropdown,
+.book-button {
+  transition: background 70ms ease-in-out;
+  border-radius: .2rem;
+}
+
+.card-dropdown.is-active,
+.card-dropdown:hover,
+.book-button:hover {
+  background: rgba(0, 0, 0, .2);
 }
 
 .card-header-icon:hover {
@@ -180,12 +196,40 @@
   margin-bottom: 0px !important;
 }
 
+.rating-container {
+  margin-top: -.25rem;
+}
+
 .filled-star {
   color: #ffe007;
 }
 
 .empty-star {
   color: #dddddd;
+}
+
+.vendor-location {
+  font-size: .75rem;
+  color: #9b9b9b;
+}
+
+.vendor-blurb {
+  font-size: 0.8rem;
+  height: 3.6rem;
+  overflow: hidden;
+  position:  relative;
+}
+
+.vendor-blurb::after {
+  content: "";
+  display: block;
+  position:  absolute;
+  width: 100%;
+  bottom: 0px;
+  left: 0;
+  height: 1.8rem;
+  z-index: 4;
+  background: linear-gradient(transparent, white);
 }
 
 /* Vendor Card Colors */
