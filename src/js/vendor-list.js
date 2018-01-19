@@ -300,7 +300,7 @@ function displayVendors(arr) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
     let value = arr[CURRENT_VENDORS_TOTAL];
     const $level = $(
-      `<nav class="level is-mobile box vendor-details-box">
+      `<nav class="level is-mobile notification vendor-details-box">
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Rate</p>
