@@ -236,6 +236,8 @@ function getVendorByType(type) {
     $(".vendor-list-card-wrapper").empty().hide(); // Empty out vendor list display
     let query = $("#vendorSearch").val();
 
+    console.log("REQUEST COMPLETE");
+
     if (query) {
       filterArray(query);
     } else {
@@ -297,6 +299,26 @@ function displayVendors(arr) {
   while (CURRENT_VENDORS_TOTAL < stoppingPoint && arr[CURRENT_VENDORS_TOTAL] !== undefined) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
     let value = arr[CURRENT_VENDORS_TOTAL];
+    const $level = $(`<nav class="level is-mobile">
+                        <div class="level-item has-text-centered">
+                          <div>
+                            <p class="heading">Rate</p>
+                            <p class="title is-6">$${value.price}/hr</p>
+                          </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                          <div>
+                            <p class="heading">Following</p>
+                            <p class="title is-6">123</p>
+                          </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                          <div>
+                            <p class="heading">Followers</p>
+                            <p class="title is-6">456K</p>
+                          </div>
+                        </div>
+                      </nav>`);
 
     let $card = $("<article />", {"class": "tile is-child card card-" + value.vendorType}).attr("data-vendor-id", value.id);
 
@@ -351,11 +373,9 @@ function displayVendors(arr) {
             )
           )
         ),
+        $level,
         $('<div />', {"class": "content"}).append(
-          $('<p />', {"class": "vendor-blurb", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."}),
-          $("<p />").append(
-            $("<small />", {"html": 'Price/Rate: $' + value.price + ".00"})
-          )
+          $('<p />', {"class": "vendor-blurb", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."})
         )
       )
     );
