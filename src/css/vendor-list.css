@@ -213,6 +213,14 @@
   color: #9b9b9b;
 }
 
+.vendor-details-box {
+  padding: 0.85rem;
+}
+
+.vendor-list-box > .heading {
+  color: #9b9b9b;
+}
+
 .vendor-blurb {
   font-size: 0.8rem;
   height: 3.6rem;

@@ -299,26 +299,28 @@ function displayVendors(arr) {
   while (CURRENT_VENDORS_TOTAL < stoppingPoint && arr[CURRENT_VENDORS_TOTAL] !== undefined) {
     let $vendorCardWrapper = $("<div />", {"class": "tile is-parent vendor-list-card"});
     let value = arr[CURRENT_VENDORS_TOTAL];
-    const $level = $(`<nav class="level is-mobile">
-                        <div class="level-item has-text-centered">
-                          <div>
-                            <p class="heading">Rate</p>
-                            <p class="title is-6">$${value.price}/hr</p>
-                          </div>
-                        </div>
-                        <div class="level-item has-text-centered">
-                          <div>
-                            <p class="heading">Following</p>
-                            <p class="title is-6">123</p>
-                          </div>
-                        </div>
-                        <div class="level-item has-text-centered">
-                          <div>
-                            <p class="heading">Followers</p>
-                            <p class="title is-6">456K</p>
-                          </div>
-                        </div>
-                      </nav>`);
+    const $level = $(
+      `<nav class="level is-mobile box vendor-details-box">
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Rate</p>
+            <p class="title is-6">$${value.price}/hr</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Following</p>
+            <p class="title is-6">123</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Followers</p>
+            <p class="title is-6">456K</p>
+          </div>
+        </div>
+      </nav>`
+    );
 
     let $card = $("<article />", {"class": "tile is-child card card-" + value.vendorType}).attr("data-vendor-id", value.id);
 
