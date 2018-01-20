@@ -171,7 +171,7 @@
 
 .media-content {
   display: flex;
-  max-width: 100%;
+  max-width: calc(100% - 64px - 1rem);
 }
 
 .profile-picture-container {
@@ -184,7 +184,7 @@
 }
 
 .profile-info-container {
-  width: 100%;
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -217,7 +217,7 @@
   padding: 0.85rem;
 }
 
-.vendor-list-box > .heading {
+.vendor-details-box .heading {
   color: #9b9b9b;
 }
 
@@ -226,6 +226,7 @@
   height: 3.6rem;
   overflow: hidden;
   position:  relative;
+  margin-bottom: 0 !important;
 }
 
 .vendor-blurb::after {

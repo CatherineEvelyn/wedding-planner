@@ -304,19 +304,19 @@ function displayVendors(arr) {
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Rate</p>
-            <p class="title is-6">$${value.price}/hr</p>
+            <p class="title is-6 has-text-weight-light">$${value.price}/hr</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Following</p>
-            <p class="title is-6">123</p>
+            <p class="title is-6 has-text-weight-light">123</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Followers</p>
-            <p class="title is-6">456K</p>
+            <p class="title is-6 has-text-weight-light">456K</p>
           </div>
         </div>
       </nav>`
@@ -369,7 +369,7 @@ function displayVendors(arr) {
           ),
           $('<div />', {"class": "media-content"}).append(
             $('<div />', {"class": "profile-info-container"}).append(
-              $('<p />', {"class": "title is-4 vendorName", "text": value.contactName}),
+              $('<p />', {"class": "title is-4 vendorName has-text-weight-light", "text": value.contactName}),
               $('<div />', {"class": "vendor-location", "text": value.city + ", " + value.state}),
               generateRatingStars(value.rating)
             )
@@ -377,7 +377,8 @@ function displayVendors(arr) {
         ),
         $level,
         $('<div />', {"class": "content"}).append(
-          $('<p />', {"class": "vendor-blurb", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."})
+          $('<p />', {"class": "vendor-blurb", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."}),
+          $('<a />', {"class": "is-size-7", "href": "/portfolio", "text": "More..."})
         )
       )
     );
