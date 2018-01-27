@@ -169,8 +169,34 @@
   width: 20px;
 }
 
+.card-content {
+  position: relative;
+  padding-top: 1rem;
+}
+
+.card-content > .header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8em;
+  opacity: .33;
+  background: #c8d9dd;
+}
+
+.media {
+  position: relative;
+  border-radius: 3px;
+  padding: 0.5rem
+}
+
+.media.has-header-image {
+  background: rgba(255, 255, 255, 0.85);
+}
+
 .media-content {
   display: flex;
+  z-index: 1;
   max-width: calc(100% - 64px - 1rem);
 }
 
@@ -189,7 +215,7 @@
   overflow: hidden;
 }
 
-.title.is-4.vendorName {
+.title.is-4.vendor-name {
   max-width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -213,11 +239,13 @@
   color: #9b9b9b;
 }
 
-.vendor-details-box {
+.level.notification {
   padding: 0.85rem;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08), 
+              0 3px 3px -2px rgba(0, 0, 0, .12);
 }
 
-.vendor-details-box .heading {
+.level.notification > .heading {
   color: #9b9b9b;
 }
 
