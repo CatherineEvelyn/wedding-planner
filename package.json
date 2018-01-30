@@ -8,9 +8,9 @@
     "ie > 8"
   ],
   "scripts": {
-    "build": "webpack -p --progress --colors",
+    "build": "webpack -p --progress --display-error-details",
     "watch": "webpack --watch",
-    "heroku-postbuild": "webpack -p --progress"
+    "heroku-postbuild": "webpack -p --progress --display-error-details"
   },
   "repository": {
     "type": "git",
