@@ -55,23 +55,27 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
+        test: /\.(css|sass|scss)$/,
         include: [
+          path.resolve(__dirname, 'src/vendor-plugins'),
           path.resolve(__dirname, 'src/css')
         ],
         use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            use: ['css-loader'],
-        })
-      },
-      {
-        test: /\.(sass|scss)$/,
-        include:[
-          path.resolve(__dirname, 'src/vendor-plugins')
-        ],
-        use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader', 'sass-loader'],
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  minimize: true
+                }
+              },
+              {
+                loader: 'postcss-loader'
+              },
+              {
+                loader: 'sass-loader'
+              }
+            ],
         })
       },
       {

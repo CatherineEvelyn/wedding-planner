@@ -366,43 +366,6 @@ function displayVendors(arr) {
 
     $card.append($cardHeader, $overlay);
 
-    // $card.append(
-    //   $('<div />', {"class": "tile-header card-header-" + value.vendorType}).append(
-    //     $('<div />', {"class": "icon card-icon-container"}).append(
-    //       $(icons[value.vendorType])
-    //     ),
-    //     $('<div />', {"class": "book-button shortcut tooltip"}).attr("data-tooltip", "Book").append(
-    //       $('<div />', {"class": "icon has-text-white book-icon"}).append(
-    //         $('<i />', {"class": "mdi mdi-plus-circle"})
-    //       )
-    //     ),
-    //     $('<div />', {"class": "dropdown is-right card-dropdown tooltip"}).attr("data-tooltip", "More actions").append(
-    //       $('<div />', {"class": "dropdown-trigger"}).append(
-    //         $('<a class="card-header-icon" aria-controls="dropdown-menu" />').append(
-    //           $('<span class="icon" />').append(
-    //             $('<i class="mdi mdi-24px mdi-chevron-down" aria-hidden="true" />')
-    //           )
-    //         )
-    //       ),
-    //       $('<div />', {"class": "dropdown-menu", "id": "extra-actions"}).attr("role", "menu").append(
-    //         $('<div />', {"class": "dropdown-content"}).append(
-    //           $('<a />', {"class": "dropdown-item book-button"}).append(
-    //             $('<span />', {"class": "icon"}).append(
-    //               $('<i />', {"class": "mdi mdi-plus-circle"})
-    //             )
-    //           ).append(" Book"),
-    //           $('<a />', {"class": "dropdown-item"}).attr("href", "/portfolio").append(
-    //             $('<span />', {"class": "icon"}).append(
-    //               $('<i />', {"class": "mdi mdi-treasure-chest"})
-    //             )
-    //           ).append(" Portfolio")
-    //         )
-    //       )
-    //     )
-    //   ),
-    //   $('<div />', {"class": "overlay"})
-    // );
-
     const $ratingStars = generateRatingStars(value.rating);
 
     const $cardContent = $(
@@ -441,29 +404,6 @@ function displayVendors(arr) {
 
     $cardContent.append($level, $vendorBlurb);
     $card.append($cardContent);
-
-    // $card.append(
-    //   $('<div />', {"class": "card-content"}).append(
-    //     $('<div />', {"class": "header"}),
-    //     $('<div />', {"class": "media"}).append(
-    //       $('<div />', {"class": "media-left"}).append(
-    //         $('<div />', {"class": "image is-64x64 profile-picture-container"})
-    //       ),
-    //       $('<div />', {"class": "media-content"}).append(
-    //         $('<div />', {"class": "profile-info-container"}).append(
-    //           $('<p />', {"class": "title is-4 vendorName has-text-weight-light", "text": value.contactName}),
-    //           $('<div />', {"class": "vendor-location", "text": value.city + ", " + value.state}),
-    //           generateRatingStars(value.rating)
-    //         )
-    //       )
-    //     ),
-    //     $level,
-    //     $('<div />', {"class": "content"}).append(
-    //       $('<p />', {"class": "vendor-blurb", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."}),
-    //       $('<a />', {"class": "is-size-7", "href": "/portfolio", "text": "More..."})
-    //     )
-    //   )
-    // );
      
     $vendorCardWrapper.append($card);
     $wrapper.append($vendorCardWrapper);

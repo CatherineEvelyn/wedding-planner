@@ -3,8 +3,12 @@
   "version": "0.0.1",
   "description": "A wedding planner app for vendors and organizers",
   "main": "main.js",
+  "browserslist": [
+    "> 1%",
+    "ie > 8"
+  ],
   "scripts": {
-    "build": "webpack -p --progress",
+    "build": "webpack -p --progress --colors",
     "watch": "webpack --watch",
     "heroku-postbuild": "webpack -p --progress"
   },
@@ -19,6 +23,7 @@
   },
   "homepage": "https://github.com/seanmstevens/wedding-planner#readme",
   "dependencies": {
+    "autoprefixer": "^7.2.5",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.26.0",
@@ -36,6 +41,8 @@
     "jquery": "^3.2.1",
     "mdi": "^2.0.46",
     "node-sass": "^4.7.1",
+    "postcss-import": "^11.0.0",
+    "postcss-loader": "^2.0.10",
     "progressively": "^1.2.5",
     "sass-loader": "^6.0.6",
     "stickybits": "^2.0.13",
