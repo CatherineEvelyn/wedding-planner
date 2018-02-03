@@ -19,6 +19,10 @@ $(function() {
   addBookFulfillmentListener();
   addCloseModalListeners();
 
+  $(document).on("scroll", () => {
+    console.log(document.scrollTop);
+  });
+
   var loc, tag;
   
   update_tag();
