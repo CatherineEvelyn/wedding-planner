@@ -1,5 +1,5 @@
 $(function () {
-  getSessionDetails();
+  // getSessionDetails();
   addDismissNotificationListeners();
   addMobileMenuListener();
   addSignupListener();

@@ -8,7 +8,6 @@
     <% for (var css in htmlWebpackPlugin.files.css) { %>
     <link rel="stylesheet" href="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.css[css] %>') }}">
     <% } %>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/progressively/dist/progressively.min.js"></script> -->
     {% block head %} {% endblock %}
   </head>
   <body>

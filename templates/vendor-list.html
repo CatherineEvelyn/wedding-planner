@@ -2,7 +2,7 @@
 
 {% block head %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='vendorlist.d2019b8880b4302c6278631036db036d.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendorlist.3903260a5e9132de5aa68786511515a3.css') }}">
 
 {% endblock %}
 
@@ -112,7 +112,7 @@
           </p>
           <div class="field">
             <div class="control has-icons-left">
-              <input id="vendorSearch" class="input is-small" type="text" placeholder="Name, type, location...">
+              <input id="vendorSearch" class="input is-small vendor-search" type="text" placeholder="Name, type, location...">
               <span class="icon is-left">
                 <i class="mdi mdi-magnify"></i>
               </span>
@@ -194,9 +194,12 @@
             </svg>
           </div>
         </div>
-        <div class="tile is-ancestor vendor-list-card-wrapper">
+        <p class="results-count">
+          Viewing <span class="results-increment">1 - 18</span> of <span id="vendorTotal">1</span> vendors
+        </p>
+        <ul class="vendor-list-card-wrapper">
           <!-- Populated with vendors through AJAX calls -->
-        </div>
+        </ul>
       </div>
     </div>
   </section>
@@ -205,6 +208,6 @@
 
 {% block scripts %}
 
-<script type="text/javascript" src="{{ url_for('static', filename='vendorlist.bdaa950b9496458945c1.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='vendorlist.2850ad46c54f4461c3ba.js') }}"></script>
 
 {% endblock %}

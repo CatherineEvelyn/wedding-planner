@@ -402,7 +402,6 @@ def bookExternal(vendor_type):
         booking.enabled = True
         db.session.commit()
     else:
-
         new_Booking = UserVendor(vendor_id, user_id, eventDate, eventStartTime, eventEndTime, enabled)
         db.session.add(new_Booking)
         db.session.commit()
@@ -426,10 +425,12 @@ def vendor():
         return jsonify(bookedVendors)
 
     vendor_type = request.args.get("type")
+
     if vendor_type == "all":
         query = Vendor.query.all()
     else:
         query = Vendor.query.filter_by(vendorType=vendor_type)
+
     vendors = []
     for vendor in query:
         if vendor.id in EXTERNAL_VENDOR_IDS:

@@ -15,8 +15,10 @@
 /* Card size adjustments */
 
 .vendor-list-card {
-  width: 33.33%;
   position: relative;
+  padding: .75rem;
+  float: left;
+  width: 33.33%;
 }
 
 @media screen and (max-width: 1280px) {
@@ -37,7 +39,7 @@
   min-width: 228px;
 }
 
-#vendorSearch {
+.vendor-search {
   box-shadow: none;
   border: 1px solid #f9eef6;
   font-size: 0.85rem;
@@ -52,16 +54,16 @@
   background-color: #555555;
 }
 
-#vendorSearch::placeholder {
+.vendor-search::placeholder {
   color: #adadad;
 }
 
-#vendorSearch ~ .icon {
+.vendor-search ~ .icon {
   font-size: 0.85rem;
   color: #adadad;
 }
 
-#vendorSearch:focus ~ .icon {
+.vendor-search:focus ~ .icon {
   color: #4e4e4e;
 }
 
@@ -102,9 +104,22 @@
 
 /* General card styles */
 
+.results-count {
+  font-size: 0.75rem;
+  color: #888888;
+  margin-bottom: 1.5em;
+}
+
+.results-increment {
+  color: #2196F3;
+}
+
 .vendor-list-card-wrapper {
-  flex-wrap: wrap;
   display: none;
+  margin: -0.75em;
+  list-style: none;
+  overflow: hidden;
+  position: relative;
 }
 
 .tile.is-child.card {
@@ -239,13 +254,14 @@
   color: #9b9b9b;
 }
 
-.level.notification {
+.level.box {
+  position: relative;
   padding: 0.85rem;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08), 
               0 3px 3px -2px rgba(0, 0, 0, .12);
 }
 
-.level.notification > .heading {
+.level.box .heading {
   color: #9b9b9b;
 }
 
@@ -433,6 +449,7 @@
 
 .loading-container {
   position: relative;
+  max-width: 73.1em;
 }
 
 .overlay-container {

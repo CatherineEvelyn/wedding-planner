@@ -112,7 +112,7 @@
           </p>
           <div class="field">
             <div class="control has-icons-left">
-              <input id="vendorSearch" class="input is-small" type="text" placeholder="Name, type, location...">
+              <input id="vendorSearch" class="input is-small vendor-search" type="text" placeholder="Name, type, location...">
               <span class="icon is-left">
                 <i class="mdi mdi-magnify"></i>
               </span>
@@ -194,9 +194,12 @@
             </svg>
           </div>
         </div>
-        <div class="tile is-ancestor vendor-list-card-wrapper">
+        <p class="results-count">
+          Viewing <span class="results-increment">1 - 18</span> of <span id="vendorTotal">1</span> vendors
+        </p>
+        <ul class="vendor-list-card-wrapper">
           <!-- Populated with vendors through AJAX calls -->
-        </div>
+        </ul>
       </div>
     </div>
   </section>
