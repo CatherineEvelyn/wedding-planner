@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
 
 {% block head %}
-
-<link rel="stylesheet" href="{{ url_for('static', filename='vendorlist.3903260a5e9132de5aa68786511515a3.css') }}">
-
+<% for (var css in htmlWebpackPlugin.files.css) { %>
+<link rel="stylesheet" href="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.css[css] %>') }}">
+<% } %>
 {% endblock %}
 
 {% block body %}
@@ -207,7 +207,7 @@
 {% endblock %}
 
 {% block scripts %}
-
-<script type="text/javascript" src="{{ url_for('static', filename='vendorlist.2f7e0709feffffc6036e.js') }}"></script>
-
+<% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+<script type="text/javascript" src="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.chunks[chunk].entry %>') }}"></script>
+<% } %>
 {% endblock %}

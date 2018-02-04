@@ -1,0 +1,509 @@
+/* Column and spacing adjustments */
+
+@media screen and (max-width: 1230px) {
+  .spacer-column {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1060px) {
+  .list-container {
+    margin: 0;
+  }
+}
+
+/* Card size adjustments */
+
+.vendor-list-card {
+  position: relative;
+  padding: .75rem;
+  float: left;
+  width: 33.33%;
+}
+
+@media screen and (max-width: 1280px) {
+  .vendor-list-card {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 945px) {
+  .vendor-list-card {
+    width: 100%;
+  }
+}
+
+/* Side menu styles */
+
+.column.is-2 {
+  min-width: 228px;
+}
+
+.vendor-search {
+  box-shadow: none;
+  border: 1px solid #f9eef6;
+  font-size: 0.85rem;
+  border-radius: 4px;
+}
+
+.menu-list a {
+  font-size: 0.85rem;
+}
+
+.menu-list a.is-active {
+  background-color: #555555;
+}
+
+.vendor-search::placeholder {
+  color: #adadad;
+}
+
+.vendor-search ~ .icon {
+  font-size: 0.85rem;
+  color: #adadad;
+}
+
+.vendor-search:focus ~ .icon {
+  color: #4e4e4e;
+}
+
+.menu {
+  max-height: 82.5vh;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+/* Webkit Scrollbar Styling */
+
+.menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.menu:hover::-webkit-scrollbar-thumb {
+  background-color: #e7d7e3;
+}
+
+.getVendorByType.is-active {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Sticky menu */
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 67px;
+}
+
+.sticky:before,
+.sticky:after {
+  content: '';
+  display: table;
+}
+
+/* General card styles */
+
+.results-count {
+  font-size: 0.75rem;
+  color: #888888;
+  margin-bottom: 1.5em;
+}
+
+.results-increment {
+  color: #2196F3;
+}
+
+.vendor-list-card-wrapper {
+  display: none;
+  margin: -0.75em;
+  list-style: none;
+  overflow: hidden;
+  position: relative;
+}
+
+.tile.is-child.card {
+  border-radius: 6px;
+}
+
+.tile .overlay {
+  opacity: 0.8;
+}
+
+.tile-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: .5rem .7rem;
+  border-radius: 6px 6px 0 0;
+  background-color: #03a9f4;
+}
+
+.icon.card-icon-container {
+  position: relative;
+  justify-content: flex-start;
+  margin-right: auto;
+}
+
+.card-header-icon {
+  color: white;
+  padding: 0;
+}
+
+.book-button.shortcut {
+  cursor: pointer;
+  margin-right: 0.2rem;
+  height: 1.5rem;
+}
+
+.book-icon {
+  font-size: 1.25rem;
+}
+
+.dropdown-menu {
+  min-width: initial;
+}
+
+.card-dropdown,
+.book-button {
+  transition: background 70ms ease-in-out;
+  border-radius: .2rem;
+}
+
+.card-dropdown.is-active,
+.card-dropdown:hover,
+.book-button:hover {
+  background: rgba(0, 0, 0, .2);
+}
+
+.card-header-icon:hover {
+  color: white;
+}
+
+.card-icon {
+  height: 20px;
+  width: 20px;
+}
+
+.card-content {
+  position: relative;
+  padding-top: 1rem;
+}
+
+.card-content > .header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8em;
+  opacity: .33;
+  background: #c8d9dd;
+}
+
+.media {
+  position: relative;
+  border-radius: 3px;
+  padding: 0.5rem
+}
+
+.media.has-header-image {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.media-content {
+  display: flex;
+  z-index: 1;
+  max-width: calc(100% - 64px - 1rem);
+}
+
+.profile-picture-container {
+  background: #d7dbdf;
+  background-image: url("http://placekitten.com/70/70");
+  background-size: cover;
+  border: 2px solid;
+  border-radius: 2000px;
+  overflow: hidden;
+}
+
+.profile-info-container {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.title.is-4.vendor-name {
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 0px !important;
+}
+
+.rating-container {
+  margin-top: -.25rem;
+}
+
+.filled-star {
+  color: #ffe007;
+}
+
+.empty-star {
+  color: #dddddd;
+}
+
+.vendor-location {
+  font-size: .75rem;
+  color: #9b9b9b;
+}
+
+.level.box {
+  position: relative;
+  padding: 0.85rem;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.08), 
+              0 3px 3px -2px rgba(0, 0, 0, .12);
+}
+
+.level.box .heading {
+  color: #9b9b9b;
+}
+
+.vendor-blurb {
+  font-size: 0.8rem;
+  height: 3.6rem;
+  overflow: hidden;
+  position:  relative;
+  margin-bottom: 0 !important;
+}
+
+.vendor-blurb::after {
+  content: "";
+  display: block;
+  position:  absolute;
+  width: 100%;
+  bottom: 0px;
+  left: 0;
+  height: 1.8rem;
+  z-index: 4;
+  background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+}
+
+/* Vendor Card Colors */
+
+/* BORDERS */
+
+.vendor-list-card > article.card-videographer .profile-picture-container {
+  border-color: #80DEEA;
+}
+
+.vendor-list-card > article.card-photographer .profile-picture-container {
+  border-color: #f48fb1;
+}
+
+.vendor-list-card > article.card-tailor .profile-picture-container {
+  border-color: #80cbc4;
+}
+
+.vendor-list-card > article.card-caterer .profile-picture-container {
+  border-color: #b39ddb;
+}
+
+.vendor-list-card > article.card-venue .profile-picture-container {
+  border-color: #676c86;
+}
+
+.vendor-list-card > article.card-music .profile-picture-container {
+  border-color: #aed581;
+}
+
+.vendor-list-card > article.card-cosmetics .profile-picture-container {
+  border-color: #ffab91;
+}
+
+/* HEADERS */
+
+.card-header-videographer {
+  background-color: #80DEEA;
+}
+
+.card-header-photographer {
+  background-color: #f48fb1;
+}
+
+.card-header-tailor {
+  background-color: #80cbc4;
+}
+
+.card-header-caterer {
+  background-color: #b39ddb;
+}
+
+.card-header-venue {
+  background-color: #676c86;
+}
+
+.card-header-music {
+  background-color: #aed581;
+}
+
+.card-header-cosmetics {
+  background-color: #ffab91;
+}
+
+/* Datepicker and modal styles */
+
+.modal {
+  z-index: 31;
+}
+
+.modal-background {
+  background-color: hsla(0, 0%, 4%, .60);
+}
+
+.calendar-title-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-title-year {
+  font-size: 0.8rem;
+}
+
+.modal-card {
+  align-self: flex-start;
+  top: 10vh;
+}
+
+.modal-card-body {
+  position: relative;
+}
+
+.modal-card,
+.modal-card-body {
+  overflow: initial;
+}
+
+.modal-card-body .overlay,
+.tile .overlay {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  z-index: 101;
+}
+
+.datepicker .calendar .calendar-header .calendar-date,
+.datepicker .calendar .calendar-body .calendar-date {
+  padding-top: .1rem;
+  padding-bottom: .1rem;
+}
+
+.datepicker .calendar .calendar-body {
+  padding: 0 .2rem .3rem;
+}
+
+.datepicker .calendar .calendar-date {
+  padding: 0.3rem;
+}
+
+.calendar::before {
+  content: '';
+  height: 0;
+  width: 0;
+  border: 8px solid #00d1b2;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  position: absolute;
+  top: -16px;
+  left: 14px;
+}
+
+.hidden {
+  display: none;
+}
+
+.shown {
+  display: block;
+}
+
+#bookingInfoBox,
+#vendorNameBox,
+#vendorBusinessBox {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.confirmationMessage .level {
+  padding: 0 2rem;
+}
+
+.detail {
+  font-size: 1rem;
+}
+
+/* AJAX loader styles */
+
+.loading-container {
+  position: relative;
+  max-width: 73.1em;
+}
+
+.overlay-container {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.ajax-loader {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 20vh;
+}
+
+.circular {
+  animation: rotate 2s linear infinite;
+  height: 100px;
+  width: 100px;
+  position: relative;
+}
+
+.path {
+  stroke-dasharray: 1, 400;
+  stroke: #209cee;
+  stroke-dashoffset: 0;
+  animation:
+    fluid 2s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+@keyframes rotate {
+  100% {
+   transform: rotate(360deg);
+  }
+}
+
+@keyframes fluid {
+  0%{
+    stroke-dasharray: 1, 400;
+    stroke-dashoffset: 0;
+  }
+  50%{
+    stroke-dasharray: 178, 400;
+    stroke-dashoffset: -70;
+  }
+  100%{
+    stroke-dasharray: 178, 400;
+    stroke-dashoffset: -248;
+  }
+}

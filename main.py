@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, render_template, url_for, session, flash, jsonify, Markup, abort
 from flask_sqlalchemy import SQLAlchemy
+from whitenoise import WhiteNoise
 from hashutils import *
 import re
 from faker import Faker
@@ -18,20 +19,21 @@ from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", 'mysql+pymysql://wedding:password@35.197.5.142/wedding')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", 'mysql+pymysql://admin:Password1@wedding-planner.cl1lubxzpscn.us-east-2.rds.amazonaws.com/wedplan')
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "246Pass"
 
-#EXTERNAL_VENDOR_ID = 1
-EXTERNAL_VENDOR_IDS = [ 1,2,3,4,5,6,7 ]
-VENDOR_TYPES = { "venue":1,
-                 "photographer":2,
-                 "videographer":3,
-                 "caterer":4,
-                 "music":5,
-                 "cosmetics":6,
-                 "tailor":7 }
+app.wsgi_app = WhiteNoise(app.wsgi_app, root='static/')
+
+EXTERNAL_VENDOR_IDS = [1, 2, 3, 4, 5, 6, 7]
+VENDOR_TYPES = {"venue": 1,
+                "photographer": 2,
+                "videographer": 3,
+                "caterer": 4,
+                "music": 5,
+                "cosmetics": 6,
+                "tailor": 7}
 
 class UserVendor(db.Model):
     __tablename__ = 'user_vendor'
@@ -97,6 +99,7 @@ class User(db.Model):
     numberOfGuests = db.Column(db.Integer)
     eventDate = db.Column(db.Date)
     budget = db.Column(db.BIGINT)
+    totalSpending = db.Column(db.BIGINT)
     vendors = db.relationship(
         'Vendor',
         secondary='user_vendor'
@@ -109,7 +112,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    blacklist = ['user', 'profile', 'book', ]
+    blacklist = ['user', 'profile', 'book']
     if all([request.endpoint in blacklist, 'email' not in session, '/static/' not in request.path]):
         message = Markup("You must to be <strong>logged in</strong> to access this page.")
         flash(message, "is-danger")
@@ -286,21 +289,6 @@ def cancel(vendor_id):
     booking = UserVendor.query.filter_by(user_id=user.id, vendor_id=vendor_id).first()
     #booking = UserVendor.query.get(booking_id)
 
-    """
-    bookings = UserVendor.query.all()
-    output = ''
-
-    for b in bookings:
-        output += "{} {} {} {} {} {} {}".format(
-            b.id,
-            b.user_id,
-            b.user.name,
-            b.vendor_id,
-            b.vendor.businessName,
-            b.bookedDate,
-            b.enabled)
-    print("UserVendor: {}".format(output), file=sys.stderr)"""
-
     if booking is not None:
        booking.enabled = False
        db.session.add(booking)
@@ -316,18 +304,23 @@ def organizer():
 
     session['url'] = request.path
 
-    user = User.query.filter_by(email=session["email"]).first() #TODO: get user in session
-    user_id = str(user.id) #get user's id - turn to string for query
+    user = User.query.filter_by(email=session["email"]).first()
 
-    result = db.engine.execute("SELECT * FROM user_vendor JOIN vendor ON user_vendor.vendor_id=vendor.id WHERE user_id = '" + user_id + "' AND enabled = 1;")
-
-    #q = session.query(UserVendor).filter(UserVendor).join(UserVendor.vendor_id).filter.all()
-    #usersVendors = UserVendor.query.filter_by(user_id=users_id).first()
-    #vendorName = result.contactName
-    #for item in result:
-        #vendorName == item.contactName
-
-    #if request.method == 'POST':
+    result = UserVendor.query.join(Vendor, UserVendor.vendor_id == Vendor.id).\
+             add_columns(
+                UserVendor.id,
+                UserVendor.user_id,
+                UserVendor.vendor_id, 
+                UserVendor.bookedDate, 
+                UserVendor.eventStartTime, 
+                UserVendor.eventEndTime, 
+                Vendor.contactName, 
+                Vendor.email,
+                Vendor.businessName,
+                Vendor.price,
+                Vendor.vendorType).\
+             filter(UserVendor.user_id == user.id, UserVendor.enabled == 1).\
+             order_by(UserVendor.bookedDate)
 
     venue = []
     photographer = []
@@ -364,48 +357,6 @@ def organizer():
                                                 user=user,
                                                 greenStatus=greenStatus)
 
-
-"""
-    vendorInfo = []
-    '''vendorName = []
-    vendorBusiness = []
-    vendorEmail = []
-    for row in result:
-        vendorName.append("Name: " + row['contactName'])
-        vendorBusiness.append("Business name: " + row['businessName'])
-        vendorEmail.append("Email: " + row['email'])
-    #connection.close()
-    return render_template("testUserVendor.html", vendorName=vendorName, vendorBusiness=vendorBusiness, vendorEmail=vendorEmail)'''
-    '''for row in result:
-
-        vendorInfo.append("Name: " + row['contactName'])
-        vendorInfo.append("Business name: " + row['businessName'])
-        vendorInfo.append("Vendor Type: " + row['vendorType'])
-        vendorInfo.append("Street Address: " + row['streetAddress'])
-        vendorInfo.append("City: " + row['city'])
-        vendorInfo.append("Zipcode: " + str(row['zipcode']))
-
-        vendorInfo.append("State: " + row['state'])
-
-        vendorInfo.append(row)
-
-        if row.vendorType == 'cosmetics':
-            greenStatus = "is-selected"
-        else:
-            greenStatus = ""
-            '''
-    venue = []
-    cosmetics = []
-    for row in result:
-        if row.vendorType == "venue":
-            venue.append(row)
-        elif row.vendorType == "cosmetics":
-            cosmetics.append(row)
-    return render_template("user-account.html", venue =venue, cosmetics= cosmetics)
-
-    #return render_template("user-account.html", vendorInfo = vendorInfo, userName = x, greenStatus = greenStatus, businessName = businessName, contactName = contactName, email = email)
-    #return render_template("testUserVendor.html", vendorInfo = vendorInfo)
-"""
 
 @app.route('/book', methods=['POST'])
 def book():
@@ -451,7 +402,6 @@ def bookExternal(vendor_type):
         booking.enabled = True
         db.session.commit()
     else:
-
         new_Booking = UserVendor(vendor_id, user_id, eventDate, eventStartTime, eventEndTime, enabled)
         db.session.add(new_Booking)
         db.session.commit()
@@ -475,10 +425,12 @@ def vendor():
         return jsonify(bookedVendors)
 
     vendor_type = request.args.get("type")
+
     if vendor_type == "all":
         query = Vendor.query.all()
     else:
         query = Vendor.query.filter_by(vendorType=vendor_type)
+
     vendors = []
     for vendor in query:
         if vendor.id in EXTERNAL_VENDOR_IDS:
@@ -750,7 +702,7 @@ def portfolio():
 def genData():
   vendorTypes = ['venue', 'photographer', 'videographer', 'caterer', 'music', 'cosmetics', 'tailor']
   fake = Faker()
-  for i in range(10):
+  for i in range(25):
     user = User(
       fake.name(),
       fake.email(),
@@ -763,7 +715,7 @@ def genData():
       fake.street_address(),
       fake.city(),
       fake.zipcode(),
-      random.randrange(1, 6),
+      random.randrange(0, 6),
       random.choice(vendorTypes),
       random.randrange(1, 1000),
       make_pw_hash(fake.password(length=10, digits=True, upper_case=True, lower_case=True)),

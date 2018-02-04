@@ -11,6 +11,7 @@ __pycache__/
 env/
 build/
 develop-eggs/
+dist/
 downloads/
 eggs/
 .eggs/
@@ -104,3 +105,7 @@ ENV/
 
 # DS Store
 .DS_Store/
+
+# NPM modules and bundles
+static/
+node_modules/

@@ -4,8 +4,8 @@
 {% block body %}
 <section class="section bg-container">
   <div id="bgImage" class="progressive__bg progressive--not-loaded" 
-  data-progressive="{{ url_for('static', filename='f160142b2436fbd466d42fde1b1e3099.jpg') }}" 
-  style="background-image: url('{{ url_for('static', filename='b230c941c07105d7ec5d70527ea35ed4.jpg')}}');">
+  data-progressive="{{ url_for('static', filename='<%= require('../images/wedding-celebration.jpg') %>') }}" 
+  style="background-image: url('{{ url_for('static', filename='<%= require('../images/wedding-celebration-lowly.jpg') %>')}}');">
   </div>
   <div class="container has-text-centered">
     <h1 class="title is-1 mainpage-title has-text-white">My Wedding Planner</h1>

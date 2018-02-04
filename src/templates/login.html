@@ -1,8 +1,8 @@
 {% extends 'layout.html' %}
 {% block head %}
-
-<link rel="stylesheet" href="{{ url_for('static', filename='login.15b0877c643ceba7399eb941c90111d6.css') }}">
-
+<% for (var css in htmlWebpackPlugin.files.css) { %>
+<link rel="stylesheet" href="{{ url_for('static', filename='<%= htmlWebpackPlugin.files.css[css] %>') }}">
+<% } %>
 {% endblock %}
 {% block body %}
   <div class="wrapper">
